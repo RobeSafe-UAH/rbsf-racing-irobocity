@@ -25,6 +25,7 @@ class KeyboardTeleop(Node):
     def __init__(self):
         super().__init__('keyboard_teleop')
 
+        self._teleop_enabled = self.declare_parameter('teleop_enabled', True).value
         self._forward_speed = self.declare_parameter('forward_speed', 0.8).value
         self._backward_speed = self.declare_parameter('backward_speed', 0.5).value
         self._steering_angle = self.declare_parameter('steering_angle', 0.4).value
@@ -35,12 +36,16 @@ class KeyboardTeleop(Node):
         self._pub = self.create_publisher(AckermannDriveStamped, output_topic, 10)
         self._save_pub = self.create_publisher(Empty, "/save_map_trigger", 10)
 
-        self._tty_fd = sys.stdin.fileno()
-        self._old_tty = termios.tcgetattr(self._tty_fd)
-        new = termios.tcgetattr(self._tty_fd)
-        new[3] &= ~termios.ECHO
-        termios.tcsetattr(self._tty_fd, termios.TCSANOW, new)
-        self.create_timer(1.0 / hz, self._publish)
+        self._old_tty = None
+        if sys.stdin.isatty():
+            self._tty_fd = sys.stdin.fileno()
+            self._old_tty = termios.tcgetattr(self._tty_fd)
+            new = termios.tcgetattr(self._tty_fd)
+            new[3] &= ~termios.ECHO
+            termios.tcsetattr(self._tty_fd, termios.TCSANOW, new)
+
+        if self._teleop_enabled:
+            self.create_timer(1.0 / hz, self._publish)
 
         self._listener = keyboard.Listener(
             on_press=self._on_press,
@@ -48,9 +53,12 @@ class KeyboardTeleop(Node):
         )
         self._listener.start()
 
-        print(f'\nKeyboard teleop active  →  {output_topic}')
-        print('  W / ↑   forward       S / ↓   backward')
-        print('  A / ←   steer left    D / →   steer right')
+        if self._teleop_enabled:
+            print(f'\nKeyboard teleop active  →  {output_topic}')
+            print('  W / ↑   forward       S / ↓   backward')
+            print('  A / ←   steer left    D / →   steer right')
+        else:
+            print('\nKeyboard map trigger active (drive disabled)')
         print('  m       save map')
         print('  q       quit\n')
 
@@ -69,7 +77,7 @@ class KeyboardTeleop(Node):
         if kid == 'm':
             self._save_pub.publish(Empty())
             return
-        if kid in BINDINGS:
+        if self._teleop_enabled and kid in BINDINGS:
             self._active.add(kid)
 
     def _on_release(self, key):
@@ -101,7 +109,8 @@ def main():
     except KeyboardInterrupt:
         pass
     finally:
-        termios.tcsetattr(node._tty_fd, termios.TCSANOW, node._old_tty)
+        if node._old_tty is not None:
+            termios.tcsetattr(node._tty_fd, termios.TCSANOW, node._old_tty)
         node._listener.stop()
         node.destroy_node()
         if rclpy.ok():

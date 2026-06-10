@@ -12,13 +12,9 @@ Quick start:
     ros2 launch stack_launcher 00_teleop_slam.launch.py mode:=real teleop:=controller
     ros2 launch stack_launcher 00_teleop_slam.launch.py max_speed:=2.0           # set max speed (m/s, default 1.0)
 
-Map save (controller):
-    Press button <save_button> (default: 0) on the gamepad.
-
-Map save (keyboard):
-    Call the service manually:
-        ros2 service call /slam_toolbox/save_map slam_toolbox/srv/SaveMap \
-            "name: {data: '/ros2_ws/maps/my_map'}"
+Map save:
+    Controller — press button <save_button> (default: 0) on the gamepad.
+    Keyboard  — press 'm' in the xterm window (keystrokes are hidden).
 """
 
 import os
