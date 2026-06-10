@@ -1,0 +1,27 @@
+[project]
+name = "rbsf_racing_irobocity"
+version = "1.0"
+description = "Code for RBSF Racing Stack at iRoboCity Summer School"
+authors = [
+    { name = "The RobeSafe Racing Team" },
+    { name = "Santiago Montiel-Marín" },
+    { name = "Rodrigo Gutiérrez Moreno" },
+    { name = "Miguel Antunes-García" },
+    { name = "Fabio Sánchez-García" },
+]
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "filterpy>=1.4.5",
+    "matplotlib>=3.10.6",
+    "numpy",
+    "opencv-python>=4.13.0.92",
+    "pyyaml>=6.0.3",
+]
+
+[build-system]
+requires = ["setuptools >= 77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+exclude = ["py_pubsub", "rbsf_racing_irobocity", "test"]
