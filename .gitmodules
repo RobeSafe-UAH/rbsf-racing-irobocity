@@ -1,0 +1,4 @@
+[submodule "src/base_system/f1tenth_system"]
+	path = src/base_system/f1tenth_system
+	url = https://github.com/f1tenth/f1tenth_system.git
+	branch = humble-devel

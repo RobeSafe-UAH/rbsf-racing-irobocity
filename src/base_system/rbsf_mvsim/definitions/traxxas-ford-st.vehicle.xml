@@ -1,0 +1,96 @@
+<!--
+  Vehicle class definition file.
+  Intended to be included into world XML files.
+  Common sensors could be included here, but they are left to be included in 
+  class instantiations.
+  Refer to mvsim_tutorial example files.
+-->
+<vehicle:class name="traxxas-ford-st">
+    <!--  Dynamical model -->
+    <dynamics class="ackermann">
+        <!-- Rear wheels -->
+        <rl_wheel pos="0 0.1405" mass="1.0" width="0.03" diameter="0.076" />
+        <rr_wheel pos="0 -0.1405" mass="1.0" width="0.03" diameter="0.076" />
+        
+        <!-- Front wheels -->
+        <fl_wheel mass="1.0" width="0.03" diameter="0.076" />
+        <fr_wheel mass="1.0" width="0.03" diameter="0.076" />
+        <!-- Wheelbase: Distancia entre ejes a lo largo -->
+        <f_wheels_x>0.324</f_wheels_x>
+        <!-- Track width: Distancia entre ejes a lo ancho -->
+        <f_wheels_d>0.281</f_wheels_d>
+        <max_steer_ang_deg>30.0</max_steer_ang_deg>
+
+        <chassis mass="10.0" zmin="0.021" zmax="0.206">
+            <shape>
+                <pt> 0.43  0.14</pt>
+                <pt> 0.43 -0.14</pt>
+                <pt>-0.11 -0.14</pt>
+                <pt>-0.11  0.14</pt>
+            </shape>
+        </chassis>
+
+        <!--   Motor controller -->
+        <controller class="twist_front_steer_pid">
+            <!-- Params -->
+            <KP>5</KP>
+            <KI>1.0</KI>
+            <I_MAX>1.0</I_MAX>
+            <KD>0.0</KD>
+            <V>0.0</V>
+            <W>0</W>
+            <max_torque>10</max_torque>
+        </controller>
+
+        <!-- Available types: 
+            open_front
+            open_rear
+            open_4wd
+            torsen_front
+            torsen_rear
+            torsen_4wd -->
+        <drivetrain type="torsen_4wd">
+            <front_rear_split>0.5</front_rear_split>
+            <front_rear_bias>1.5</front_rear_bias>
+
+            <front_left_right_split>0.5</front_left_right_split>
+            <front_left_right_bias>1.5</front_left_right_bias>
+
+            <rear_left_right_split>0.5</rear_left_right_split>
+            <rear_left_right_bias>1.5</rear_left_right_bias>
+        </drivetrain>
+
+    </dynamics>
+
+    <!-- Friction force simulation -->
+    <friction class="default">
+        <mu>0.9</mu>
+        <C_damping>0.01</C_damping>
+    </friction>
+
+    <!--<friction class="wardiagnemma">
+        <mu>0.7</mu>
+        <C_damping>10</C_damping>
+        <A_roll>50</A_roll>
+        <R1>0.0075</R1>
+        <R2>0.02</R2>
+    </friction>-->
+
+    <if condition="${default_sensors|true}">
+        <!-- Sensors -->
+        <include file="../definitions/lidar2d.sensor.xml" 
+			sensor_x="0.4" 
+			sensor_z="0.2709" 
+			sensor_yaw="0" 
+			max_range="30.0" 
+			sensor_name="laser1"
+		/>
+
+		<!-- <include file="../definitions/rgbd_camera.sensor.xml" 
+		  sensor_x="0.45"
+		  sensor_z="0.2409"
+		  sensor_period_sec="0.03"
+		  show_3d_pointcloud="false"
+		/> -->
+    </if>
+</vehicle:class>

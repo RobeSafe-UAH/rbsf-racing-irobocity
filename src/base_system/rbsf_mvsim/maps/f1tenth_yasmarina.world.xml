@@ -1,0 +1,2921 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mvsim_world version="1.0">
+    <simul_timestep>0</simul_timestep>
+    <gui>
+        <ortho>true</ortho>
+        <show_forces>false</show_forces>
+        <cam_distance>60.0</cam_distance>
+        <fov_deg>60</fov_deg>
+        <refresh_fps>60</refresh_fps>
+    </gui>
+    <variable name="WALL_H" value="0.3" />
+    <element class="horizontal_plane">
+        <cull_face>BACK</cull_face>
+        <x_min>-63.6684</x_min>
+        <y_min>-64.6828</y_min>
+        <x_max>82.6116</x_max>
+        <y_max>81.5972</y_max>
+        <z>0.0</z>
+        <color>#404040</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>11.1538</x0>
+        <y0>71.7964</y0>
+        <x1>11.3001</x1>
+        <y1>71.5770</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>11.3001</x0>
+        <y0>71.5770</y0>
+        <x1>8.7402</x1>
+        <y1>65.2870</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>8.7402</x0>
+        <y0>65.2870</y0>
+        <x1>8.6671</x1>
+        <y1>64.1899</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>8.6671</x0>
+        <y0>64.1899</y0>
+        <x1>8.9596</x1>
+        <y1>63.3122</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>8.9596</x0>
+        <y0>63.3122</y0>
+        <x1>9.9105</x1>
+        <y1>62.2882</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>9.9105</x0>
+        <y0>62.2882</y0>
+        <x1>12.5435</x1>
+        <y1>61.4105</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>12.5435</x0>
+        <y0>61.4105</y0>
+        <x1>13.7869</x1>
+        <y1>48.9767</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>13.7869</x0>
+        <y0>48.9767</y0>
+        <x1>13.8600</x1>
+        <y1>46.2706</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>13.8600</x0>
+        <y0>46.2706</y0>
+        <x1>13.4212</x1>
+        <y1>42.3210</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>13.4212</x0>
+        <y0>42.3210</y0>
+        <x1>11.1538</x1>
+        <y1>34.4219</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>11.1538</x0>
+        <y0>34.4219</y0>
+        <x1>11.4464</x1>
+        <y1>30.6917</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>11.4464</x0>
+        <y0>30.6917</y0>
+        <x1>12.6898</x1>
+        <y1>28.0587</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>12.6898</x0>
+        <y0>28.0587</y0>
+        <x1>15.3228</x1>
+        <y1>25.1331</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>15.3228</x0>
+        <y0>25.1331</y0>
+        <x1>18.5410</x1>
+        <y1>22.9389</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>18.5410</x0>
+        <y0>22.9389</y0>
+        <x1>24.0996</x1>
+        <y1>21.1835</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>24.0996</x0>
+        <y0>21.1835</y0>
+        <x1>24.9042</x1>
+        <y1>20.5984</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>24.9042</x0>
+        <y0>20.5984</y0>
+        <x1>27.9029</x1>
+        <y1>7.8721</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>27.9029</x0>
+        <y0>7.8721</y0>
+        <x1>28.1223</x1>
+        <y1>5.6047</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>28.1223</x0>
+        <y0>5.6047</y0>
+        <x1>27.6103</x1>
+        <y1>4.7270</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>27.6103</x0>
+        <y0>4.7270</y0>
+        <x1>-9.7642</x1>
+        <y1>-0.1002</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-9.7642</x0>
+        <y0>-0.1002</y0>
+        <x1>-11.1539</x1>
+        <y1>-0.7585</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-11.1539</x0>
+        <y0>-0.7585</y0>
+        <x1>-12.1047</x1>
+        <y1>-2.0750</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-12.1047</x0>
+        <y0>-2.0750</y0>
+        <x1>-12.0315</x1>
+        <y1>-5.0006</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-12.0315</x0>
+        <y0>-5.0006</y0>
+        <x1>-11.0076</x1>
+        <y1>-7.4142</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-11.0076</x0>
+        <y0>-7.4142</y0>
+        <x1>-6.6192</x1>
+        <y1>-15.5327</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-6.6192</x0>
+        <y0>-15.5327</y0>
+        <x1>-5.3027</x1>
+        <y1>-17.0687</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-5.3027</x0>
+        <y0>-17.0687</y0>
+        <x1>-4.2056</x1>
+        <y1>-17.7269</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-4.2056</x0>
+        <y0>-17.7269</y0>
+        <x1>-2.2308</x1>
+        <y1>-17.8732</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-2.2308</x0>
+        <y0>-17.8732</y0>
+        <x1>12.6166</x1>
+        <y1>-15.8253</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>12.6166</x0>
+        <y0>-15.8253</y0>
+        <x1>15.9079</x1>
+        <y1>-16.4104</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>15.9079</x0>
+        <y0>-16.4104</y0>
+        <x1>15.7617</x1>
+        <y1>-23.3587</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>15.7617</x0>
+        <y0>-23.3587</y0>
+        <x1>8.7402</x1>
+        <y1>-24.3827</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>8.7402</x0>
+        <y0>-24.3827</y0>
+        <x1>7.8625</x1>
+        <y1>-24.8215</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>7.8625</x0>
+        <y0>-24.8215</y0>
+        <x1>7.2043</x1>
+        <y1>-25.9186</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>7.2043</x0>
+        <y0>-25.9186</y0>
+        <x1>8.9596</x1>
+        <y1>-34.5491</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>8.9596</x0>
+        <y0>-34.5491</y0>
+        <x1>10.3493</x1>
+        <y1>-36.3045</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>10.3493</x0>
+        <y0>-36.3045</y0>
+        <x1>17.5902</x1>
+        <y1>-41.2049</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>17.5902</x0>
+        <y0>-41.2049</y0>
+        <x1>19.6381</x1>
+        <y1>-42.0094</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>19.6381</x0>
+        <y0>-42.0094</y0>
+        <x1>21.3934</x1>
+        <y1>-42.0094</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>21.3934</x0>
+        <y0>-42.0094</y0>
+        <x1>24.9773</x1>
+        <y1>-41.4243</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>24.9773</x0>
+        <y0>-41.4243</y0>
+        <x1>33.7541</x1>
+        <y1>-40.6929</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>33.7541</x0>
+        <y0>-40.6929</y0>
+        <x1>39.2396</x1>
+        <y1>-39.9615</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>39.2396</x0>
+        <y0>-39.9615</y0>
+        <x1>39.2396</x1>
+        <y1>-48.3726</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>39.2396</x0>
+        <y0>-48.3726</y0>
+        <x1>37.4111</x1>
+        <y1>-48.5920</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>37.4111</x0>
+        <y0>-48.5920</y0>
+        <x1>36.0214</x1>
+        <y1>-49.5428</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>36.0214</x0>
+        <y0>-49.5428</y0>
+        <x1>35.4363</x1>
+        <y1>-50.5668</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>35.4363</x0>
+        <y0>-50.5668</y0>
+        <x1>34.8512</x1>
+        <y1>-52.9804</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>34.8512</x0>
+        <y0>-52.9804</y0>
+        <x1>20.6620</x1>
+        <y1>-45.8858</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>20.6620</x0>
+        <y0>-45.8858</y0>
+        <x1>15.0303</x1>
+        <y1>-42.4483</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>15.0303</x0>
+        <y0>-42.4483</y0>
+        <x1>11.0807</x1>
+        <y1>-39.6689</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>11.0807</x0>
+        <y0>-39.6689</y0>
+        <x1>-4.1324</x1>
+        <y1>-27.0157</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-4.1324</x0>
+        <y0>-27.0157</y0>
+        <x1>-6.9117</x1>
+        <y1>-24.2364</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-6.9117</x0>
+        <y0>-24.2364</y0>
+        <x1>-9.6179</x1>
+        <y1>-20.2137</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-9.6179</x0>
+        <y0>-20.2137</y0>
+        <x1>-11.2270</x1>
+        <y1>-16.1179</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-11.2270</x0>
+        <y0>-16.1179</y0>
+        <x1>-12.9092</x1>
+        <y1>-9.5353</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-12.9092</x0>
+        <y0>-9.5353</y0>
+        <x1>-14.0063</x1>
+        <y1>-8.8039</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-14.0063</x0>
+        <y0>-8.8039</y0>
+        <x1>-17.5902</x1>
+        <y1>-8.9501</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-17.5902</x0>
+        <y0>-8.9501</y0>
+        <x1>-12.0315</x1>
+        <y1>6.4824</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-12.0315</x0>
+        <y0>6.4824</y0>
+        <x1>-9.3985</x1>
+        <y1>15.4055</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-9.3985</x0>
+        <y0>15.4055</y0>
+        <x1>10.6419</x1>
+        <y1>71.2113</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>10.6419</x0>
+        <y0>71.2113</y0>
+        <x1>11.1538</x1>
+        <y1>71.7964</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>11.0807</x0>
+        <y0>71.9427</y0>
+        <x1>10.5687</x1>
+        <y1>71.4307</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>10.5687</x0>
+        <y0>71.4307</y0>
+        <x1>-9.4716</x1>
+        <y1>15.6249</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-9.4716</x0>
+        <y0>15.6249</y0>
+        <x1>-12.1047</x1>
+        <y1>6.7018</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-12.1047</x0>
+        <y0>6.7018</y0>
+        <x1>-17.8096</x1>
+        <y1>-9.0964</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-17.8096</x0>
+        <y0>-9.0964</y0>
+        <x1>-14.0063</x1>
+        <y1>-8.9501</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-14.0063</x0>
+        <y0>-8.9501</y0>
+        <x1>-13.0555</x1>
+        <y1>-9.6084</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-13.0555</x0>
+        <y0>-9.6084</y0>
+        <x1>-11.0076</x1>
+        <y1>-17.2150</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-11.0076</x0>
+        <y0>-17.2150</y0>
+        <x1>-10.2762</x1>
+        <y1>-19.1897</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-10.2762</x0>
+        <y0>-19.1897</y0>
+        <x1>-8.9597</x1>
+        <y1>-21.6034</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-8.9597</x0>
+        <y0>-21.6034</y0>
+        <x1>-6.5460</x1>
+        <y1>-24.8947</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-6.5460</x0>
+        <y0>-24.8947</y0>
+        <x1>0.2560</x1>
+        <y1>-30.8921</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>0.2560</x0>
+        <y0>-30.8921</y0>
+        <x1>11.6658</x1>
+        <y1>-40.3272</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>11.6658</x0>
+        <y0>-40.3272</y0>
+        <x1>17.0050</x1>
+        <y1>-43.9111</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>17.0050</x0>
+        <y0>-43.9111</y0>
+        <x1>21.6129</x1>
+        <y1>-46.5441</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>21.6129</x0>
+        <y0>-46.5441</y0>
+        <x1>34.9975</x1>
+        <y1>-53.1998</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>34.9975</x0>
+        <y0>-53.1998</y0>
+        <x1>35.4363</x1>
+        <y1>-51.0056</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>35.4363</x0>
+        <y0>-51.0056</y0>
+        <x1>36.0946</x1>
+        <y1>-49.6891</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>36.0946</x0>
+        <y0>-49.6891</y0>
+        <x1>37.2648</x1>
+        <y1>-48.8114</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>37.2648</x0>
+        <y0>-48.8114</y0>
+        <x1>39.3859</x1>
+        <y1>-48.5920</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>39.3859</x0>
+        <y0>-48.5920</y0>
+        <x1>39.3859</x1>
+        <y1>-39.7421</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>39.3859</x0>
+        <y0>-39.7421</y0>
+        <x1>33.8272</x1>
+        <y1>-40.5466</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>33.8272</x0>
+        <y0>-40.5466</y0>
+        <x1>25.0504</x1>
+        <y1>-41.2780</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>25.0504</x0>
+        <y0>-41.2780</y0>
+        <x1>20.3695</x1>
+        <y1>-41.9363</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>20.3695</x0>
+        <y0>-41.9363</y0>
+        <x1>18.8335</x1>
+        <y1>-41.6437</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>18.8335</x0>
+        <y0>-41.6437</y0>
+        <x1>17.3707</x1>
+        <y1>-40.9123</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>17.3707</x0>
+        <y0>-40.9123</y0>
+        <x1>10.4224</x1>
+        <y1>-36.1582</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>10.4224</x0>
+        <y0>-36.1582</y0>
+        <x1>9.1059</x1>
+        <y1>-34.5491</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>9.1059</x0>
+        <y0>-34.5491</y0>
+        <x1>7.3506</x1>
+        <y1>-25.9186</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>7.3506</x0>
+        <y0>-25.9186</y0>
+        <x1>7.5700</x1>
+        <y1>-25.3335</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>7.5700</x0>
+        <y0>-25.3335</y0>
+        <x1>8.7402</x1>
+        <y1>-24.5290</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>8.7402</x0>
+        <y0>-24.5290</y0>
+        <x1>15.9079</x1>
+        <y1>-23.5050</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>15.9079</x0>
+        <y0>-23.5050</y0>
+        <x1>16.0542</x1>
+        <y1>-16.2641</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>16.0542</x0>
+        <y0>-16.2641</y0>
+        <x1>13.4943</x1>
+        <y1>-15.7522</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>13.4943</x0>
+        <y0>-15.7522</y0>
+        <x1>12.0315</x1>
+        <y1>-15.7522</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>12.0315</x0>
+        <y0>-15.7522</y0>
+        <x1>-2.8159</x1>
+        <y1>-17.8001</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-2.8159</x0>
+        <y0>-17.8001</y0>
+        <x1>-3.9861</x1>
+        <y1>-17.6538</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-3.9861</x0>
+        <y0>-17.6538</y0>
+        <x1>-5.2295</x1>
+        <y1>-16.9224</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-5.2295</x0>
+        <y0>-16.9224</y0>
+        <x1>-6.3998</x1>
+        <y1>-15.6059</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-6.3998</x0>
+        <y0>-15.6059</y0>
+        <x1>-11.0807</x1>
+        <y1>-6.9754</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-11.0807</x0>
+        <y0>-6.9754</y0>
+        <x1>-11.9584</x1>
+        <y1>-4.6349</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-11.9584</x0>
+        <y0>-4.6349</y0>
+        <x1>-12.1047</x1>
+        <y1>-3.0258</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-12.1047</x0>
+        <y0>-3.0258</y0>
+        <x1>-11.6658</x1>
+        <y1>-1.4899</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-11.6658</x0>
+        <y0>-1.4899</y0>
+        <x1>-10.7882</x1>
+        <y1>-0.6853</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-10.7882</x0>
+        <y0>-0.6853</y0>
+        <x1>-9.4716</x1>
+        <y1>-0.1733</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-9.4716</x0>
+        <y0>-0.1733</y0>
+        <x1>27.1715</x1>
+        <y1>4.4345</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>27.1715</x0>
+        <y0>4.4345</y0>
+        <x1>27.7566</x1>
+        <y1>4.6539</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>27.7566</x0>
+        <y0>4.6539</y0>
+        <x1>28.1955</x1>
+        <y1>5.3853</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>28.1955</x0>
+        <y0>5.3853</y0>
+        <x1>28.1223</x1>
+        <y1>7.5064</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>28.1223</x0>
+        <y0>7.5064</y0>
+        <x1>25.5624</x1>
+        <y1>18.9893</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>25.5624</x0>
+        <y0>18.9893</y0>
+        <x1>24.9773</x1>
+        <y1>20.7447</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>24.9773</x0>
+        <y0>20.7447</y0>
+        <x1>24.3190</x1>
+        <y1>21.2567</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>24.3190</x0>
+        <y0>21.2567</y0>
+        <x1>18.9067</x1>
+        <y1>22.9389</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>18.9067</x0>
+        <y0>22.9389</y0>
+        <x1>17.2245</x1>
+        <y1>23.8897</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>17.2245</x0>
+        <y0>23.8897</y0>
+        <x1>15.0303</x1>
+        <y1>25.5719</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>15.0303</x0>
+        <y0>25.5719</y0>
+        <x1>13.2749</x1>
+        <y1>27.5467</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>13.2749</x0>
+        <y0>27.5467</y0>
+        <x1>12.3241</x1>
+        <y1>28.9364</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>12.3241</x0>
+        <y0>28.9364</y0>
+        <x1>11.5927</x1>
+        <y1>30.6917</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>11.5927</x0>
+        <y0>30.6917</y0>
+        <x1>11.3001</x1>
+        <y1>34.4950</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>11.3001</x0>
+        <y0>34.4950</y0>
+        <x1>13.4212</x1>
+        <y1>41.5896</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>13.4212</x0>
+        <y0>41.5896</y0>
+        <x1>13.8600</x1>
+        <y1>44.2958</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>13.8600</x0>
+        <y0>44.2958</y0>
+        <x1>14.0063</x1>
+        <y1>47.1482</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>14.0063</x0>
+        <y0>47.1482</y0>
+        <x1>12.6898</x1>
+        <y1>61.5568</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>12.6898</x0>
+        <y0>61.5568</y0>
+        <x1>10.2030</x1>
+        <y1>62.2882</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>10.2030</x0>
+        <y0>62.2882</y0>
+        <x1>9.3985</x1>
+        <y1>62.9465</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>9.3985</x0>
+        <y0>62.9465</y0>
+        <x1>8.8134</x1>
+        <y1>64.1167</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>8.8134</x0>
+        <y0>64.1167</y0>
+        <x1>8.9596</x1>
+        <y1>65.5064</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>8.9596</x0>
+        <y0>65.5064</y0>
+        <x1>11.5195</x1>
+        <y1>71.8696</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>11.5195</x0>
+        <y0>71.8696</y0>
+        <x1>11.0807</x1>
+        <y1>71.9427</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>11.0076</x0>
+        <y0>73.9906</y0>
+        <x1>12.4704</x1>
+        <y1>73.7712</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>12.4704</x0>
+        <y0>73.7712</y0>
+        <x1>13.1286</x1>
+        <y1>73.2592</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>13.1286</x0>
+        <y0>73.2592</y0>
+        <x1>13.4943</x1>
+        <y1>72.6010</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>13.4943</x0>
+        <y0>72.6010</y0>
+        <x1>13.4943</x1>
+        <y1>71.5039</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>13.4943</x0>
+        <y0>71.5039</y0>
+        <x1>13.0555</x1>
+        <y1>70.0411</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>13.0555</x0>
+        <y0>70.0411</y0>
+        <x1>10.7881</x1>
+        <y1>64.5556</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>10.7881</x0>
+        <y0>64.5556</y0>
+        <x1>11.3001</x1>
+        <y1>63.9704</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>11.3001</x0>
+        <y0>63.9704</y0>
+        <x1>13.7137</x1>
+        <y1>63.3853</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>13.7137</x0>
+        <y0>63.3853</y0>
+        <x1>14.5914</x1>
+        <y1>62.2882</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>14.5914</x0>
+        <y0>62.2882</y0>
+        <x1>15.9811</x1>
+        <y1>48.3916</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>15.9811</x0>
+        <y0>48.3916</y0>
+        <x1>15.9811</x1>
+        <y1>45.5392</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>15.9811</x0>
+        <y0>45.5392</y0>
+        <x1>15.5422</x1>
+        <y1>41.9553</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>15.5422</x0>
+        <y0>41.9553</y0>
+        <x1>14.8840</x1>
+        <y1>39.1760</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>14.8840</x0>
+        <y0>39.1760</y0>
+        <x1>13.3480</x1>
+        <y1>34.5682</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>13.3480</x0>
+        <y0>34.5682</y0>
+        <x1>13.4943</x1>
+        <y1>31.3500</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>13.4943</x0>
+        <y0>31.3500</y0>
+        <x1>14.2989</x1>
+        <y1>29.5215</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>14.2989</x0>
+        <y0>29.5215</y0>
+        <x1>16.5662</x1>
+        <y1>26.8885</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>16.5662</x0>
+        <y0>26.8885</y0>
+        <x1>18.6141</x1>
+        <y1>25.3525</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>18.6141</x0>
+        <y0>25.3525</y0>
+        <x1>19.9306</x1>
+        <y1>24.6943</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>19.9306</x0>
+        <y0>24.6943</y0>
+        <x1>24.9773</x1>
+        <y1>23.1583</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>24.9773</x0>
+        <y0>23.1583</y0>
+        <x1>26.0013</x1>
+        <y1>22.5732</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>26.0013</x0>
+        <y0>22.5732</y0>
+        <x1>26.8058</x1>
+        <y1>21.6224</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>26.8058</x0>
+        <y0>21.6224</y0>
+        <x1>27.4641</x1>
+        <y1>19.7207</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>27.4641</x0>
+        <y0>19.7207</y0>
+        <x1>30.1702</x1>
+        <y1>7.5795</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>30.1702</x0>
+        <y0>7.5795</y0>
+        <x1>30.1702</x1>
+        <y1>4.9465</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>30.1702</x0>
+        <y0>4.9465</y0>
+        <x1>29.8045</x1>
+        <y1>4.0688</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>29.8045</x0>
+        <y0>4.0688</y0>
+        <x1>28.8537</x1>
+        <y1>2.9717</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>28.8537</x0>
+        <y0>2.9717</y0>
+        <x1>27.6103</x1>
+        <y1>2.4597</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>27.6103</x0>
+        <y0>2.4597</y0>
+        <x1>-9.0328</x1>
+        <y1>-2.1481</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-9.0328</x0>
+        <y0>-2.1481</y0>
+        <x1>-10.0568</x1>
+        <y1>-2.7332</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-10.0568</x0>
+        <y0>-2.7332</y0>
+        <x1>-9.9836</x1>
+        <y1>-4.2692</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-9.9836</x0>
+        <y0>-4.2692</y0>
+        <x1>-9.4716</x1>
+        <y1>-5.7320</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-9.4716</x0>
+        <y0>-5.7320</y0>
+        <x1>-4.4250</x1>
+        <y1>-14.9476</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-4.4250</x0>
+        <y0>-14.9476</y0>
+        <x1>-3.3279</x1>
+        <y1>-15.7522</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-3.3279</x0>
+        <y0>-15.7522</y0>
+        <x1>12.1778</x1>
+        <y1>-13.7042</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>12.1778</x0>
+        <y0>-13.7042</y0>
+        <x1>16.2005</x1>
+        <y1>-14.1431</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>16.2005</x0>
+        <y0>-14.1431</y0>
+        <x1>16.9319</x1>
+        <y1>-14.3625</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>16.9319</x0>
+        <y0>-14.3625</y0>
+        <x1>17.6633</x1>
+        <y1>-15.0208</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>17.6633</x0>
+        <y0>-15.0208</y0>
+        <x1>18.1021</x1>
+        <y1>-16.3373</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>18.1021</x0>
+        <y0>-16.3373</y0>
+        <x1>18.0290</x1>
+        <y1>-22.8467</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>18.0290</x0>
+        <y0>-22.8467</y0>
+        <x1>17.5170</x1>
+        <y1>-24.7484</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>17.5170</x0>
+        <y0>-24.7484</y0>
+        <x1>16.4931</x1>
+        <y1>-25.4798</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>16.4931</x0>
+        <y0>-25.4798</y0>
+        <x1>9.3985</x1>
+        <y1>-26.5037</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>9.3985</x0>
+        <y0>-26.5037</y0>
+        <x1>11.0807</x1>
+        <y1>-33.9640</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>11.0807</x0>
+        <y0>-33.9640</y0>
+        <x1>12.4704</x1>
+        <y1>-35.2074</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>12.4704</x0>
+        <y0>-35.2074</y0>
+        <x1>17.2245</x1>
+        <y1>-38.4256</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>17.2245</x0>
+        <y0>-38.4256</y0>
+        <x1>20.0038</x1>
+        <y1>-39.8884</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>20.0038</x0>
+        <y0>-39.8884</y0>
+        <x1>33.9735</x1>
+        <y1>-38.4987</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>33.9735</x0>
+        <y0>-38.4987</y0>
+        <x1>39.2396</x1>
+        <y1>-37.6210</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>39.2396</x0>
+        <y0>-37.6210</y0>
+        <x1>40.4830</x1>
+        <y1>-37.7673</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>40.4830</x0>
+        <y0>-37.7673</y0>
+        <x1>41.1412</x1>
+        <y1>-38.4256</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>41.1412</x0>
+        <y0>-38.4256</y0>
+        <x1>41.5069</x1>
+        <y1>-41.1317</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>41.5069</x0>
+        <y0>-41.1317</y0>
+        <x1>41.3607</x1>
+        <y1>-49.2503</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>41.3607</x0>
+        <y0>-49.2503</y0>
+        <x1>41.0681</x1>
+        <y1>-49.9085</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>41.0681</x0>
+        <y0>-49.9085</y0>
+        <x1>40.2636</x1>
+        <y1>-50.4937</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>40.2636</x0>
+        <y0>-50.4937</y0>
+        <x1>38.5082</x1>
+        <y1>-50.5668</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>38.5082</x0>
+        <y0>-50.5668</y0>
+        <x1>37.6305</x1>
+        <y1>-51.0056</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>37.6305</x0>
+        <y0>-51.0056</y0>
+        <x1>36.8991</x1>
+        <y1>-54.0044</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>36.8991</x0>
+        <y0>-54.0044</y0>
+        <x1>36.3140</x1>
+        <y1>-54.8821</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>36.3140</x0>
+        <y0>-54.8821</y0>
+        <x1>35.5826</x1>
+        <y1>-55.2478</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>35.5826</x0>
+        <y0>-55.2478</y0>
+        <x1>34.2661</x1>
+        <y1>-55.1015</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>34.2661</x0>
+        <y0>-55.1015</y0>
+        <x1>18.9798</x1>
+        <y1>-47.4218</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>18.9798</x0>
+        <y0>-47.4218</y0>
+        <x1>14.2257</x1>
+        <y1>-44.4962</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>14.2257</x0>
+        <y0>-44.4962</y0>
+        <x1>9.4716</x1>
+        <y1>-41.1317</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>9.4716</x0>
+        <y0>-41.1317</y0>
+        <x1>-5.3027</x1>
+        <y1>-28.8442</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-5.3027</x0>
+        <y0>-28.8442</y0>
+        <x1>-8.3745</x1>
+        <y1>-25.8455</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-8.3745</x0>
+        <y0>-25.8455</y0>
+        <x1>-10.6419</x1>
+        <y1>-22.7005</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-10.6419</x0>
+        <y0>-22.7005</y0>
+        <x1>-12.1778</x1>
+        <y1>-19.8480</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-12.1778</x0>
+        <y0>-19.8480</y0>
+        <x1>-13.4943</x1>
+        <y1>-16.0447</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-13.4943</x0>
+        <y0>-16.0447</y0>
+        <x1>-14.6646</x1>
+        <y1>-10.9981</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-14.6646</x0>
+        <y0>-10.9981</y0>
+        <x1>-18.2484</x1>
+        <y1>-11.1443</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-18.2484</x0>
+        <y0>-11.1443</y0>
+        <x1>-19.1261</x1>
+        <y1>-10.7055</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-19.1261</x0>
+        <y0>-10.7055</y0>
+        <x1>-19.7844</x1>
+        <y1>-9.6815</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-19.7844</x0>
+        <y0>-9.6815</y0>
+        <x1>-19.7844</x1>
+        <y1>-8.7307</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-19.7844</x0>
+        <y0>-8.7307</y0>
+        <x1>-14.0063</x1>
+        <y1>7.3601</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-14.0063</x0>
+        <y0>7.3601</y0>
+        <x1>-11.4464</x1>
+        <y1>16.0637</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-11.4464</x0>
+        <y0>16.0637</y0>
+        <x1>8.6671</x1>
+        <y1>72.0890</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>8.6671</x0>
+        <y0>72.0890</y0>
+        <x1>9.5448</x1>
+        <y1>73.3324</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>9.5448</x0>
+        <y0>73.3324</y0>
+        <x1>11.0076</x1>
+        <y1>73.9906</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>10.6419</x0>
+        <y0>74.0638</y0>
+        <x1>9.4716</x1>
+        <y1>73.4786</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>9.4716</x0>
+        <y0>73.4786</y0>
+        <x1>8.5939</x1>
+        <y1>72.3084</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>8.5939</x0>
+        <y0>72.3084</y0>
+        <x1>-11.5196</x1>
+        <y1>16.2832</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-11.5196</x0>
+        <y0>16.2832</y0>
+        <x1>-14.0795</x1>
+        <y1>7.5795</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-14.0795</x0>
+        <y0>7.5795</y0>
+        <x1>-19.9307</x1>
+        <y1>-8.7307</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-19.9307</x0>
+        <y0>-8.7307</y0>
+        <x1>-19.9307</x1>
+        <y1>-9.6815</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-19.9307</x0>
+        <y0>-9.6815</y0>
+        <x1>-19.4918</x1>
+        <y1>-10.5592</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-19.4918</x0>
+        <y0>-10.5592</y0>
+        <x1>-18.4679</x1>
+        <y1>-11.2175</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-18.4679</x0>
+        <y0>-11.2175</y0>
+        <x1>-14.7377</x1>
+        <y1>-11.2906</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-14.7377</x0>
+        <y0>-11.2906</y0>
+        <x1>-13.4943</x1>
+        <y1>-16.5567</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-13.4943</x0>
+        <y0>-16.5567</y0>
+        <x1>-12.1778</x1>
+        <y1>-20.2137</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-12.1778</x0>
+        <y0>-20.2137</y0>
+        <x1>-10.2030</x1>
+        <y1>-23.6513</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-10.2030</x0>
+        <y0>-23.6513</y0>
+        <x1>-7.7894</x1>
+        <y1>-26.7232</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-7.7894</x0>
+        <y0>-26.7232</y0>
+        <x1>-5.8878</x1>
+        <y1>-28.5517</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-5.8878</x0>
+        <y0>-28.5517</y0>
+        <x1>9.7642</x1>
+        <y1>-41.5706</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>9.7642</x0>
+        <y0>-41.5706</y0>
+        <x1>14.7377</x1>
+        <y1>-45.0082</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>14.7377</x0>
+        <y0>-45.0082</y0>
+        <x1>19.3455</x1>
+        <y1>-47.7875</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>19.3455</x0>
+        <y0>-47.7875</y0>
+        <x1>33.9004</x1>
+        <y1>-55.1015</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>33.9004</x0>
+        <y0>-55.1015</y0>
+        <x1>35.5826</x1>
+        <y1>-55.3940</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>35.5826</x0>
+        <y0>-55.3940</y0>
+        <x1>36.0946</x1>
+        <y1>-55.2478</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>36.0946</x0>
+        <y0>-55.2478</y0>
+        <x1>36.8260</x1>
+        <y1>-54.5164</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>36.8260</x0>
+        <y0>-54.5164</y0>
+        <x1>37.7037</x1>
+        <y1>-51.1519</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>37.7037</x0>
+        <y0>-51.1519</y0>
+        <x1>38.4351</x1>
+        <y1>-50.7131</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>38.4351</x0>
+        <y0>-50.7131</y0>
+        <x1>40.2636</x1>
+        <y1>-50.6399</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>40.2636</x0>
+        <y0>-50.6399</y0>
+        <x1>41.1412</x1>
+        <y1>-50.0548</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>41.1412</x0>
+        <y0>-50.0548</y0>
+        <x1>41.5069</x1>
+        <y1>-49.3234</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>41.5069</x0>
+        <y0>-49.3234</y0>
+        <x1>41.5801</x1>
+        <y1>-39.5227</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>41.5801</x0>
+        <y0>-39.5227</y0>
+        <x1>41.3607</x1>
+        <y1>-38.5718</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>41.3607</x0>
+        <y0>-38.5718</y0>
+        <x1>40.8487</x1>
+        <y1>-37.8404</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>40.8487</x0>
+        <y0>-37.8404</y0>
+        <x1>39.9710</x1>
+        <y1>-37.4747</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>39.9710</x0>
+        <y0>-37.4747</y0>
+        <x1>34.0467</x1>
+        <y1>-38.3524</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>34.0467</x0>
+        <y0>-38.3524</y0>
+        <x1>25.3430</x1>
+        <y1>-39.0838</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>25.3430</x0>
+        <y0>-39.0838</y0>
+        <x1>21.1009</x1>
+        <y1>-39.7421</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>21.1009</x0>
+        <y0>-39.7421</y0>
+        <x1>19.7112</x1>
+        <y1>-39.6689</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>19.7112</x0>
+        <y0>-39.6689</y0>
+        <x1>17.8096</x1>
+        <y1>-38.6450</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>17.8096</x0>
+        <y0>-38.6450</y0>
+        <x1>12.3241</x1>
+        <y1>-34.9148</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>12.3241</x0>
+        <y0>-34.9148</y0>
+        <x1>11.1538</x1>
+        <y1>-33.8177</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>11.1538</x0>
+        <y0>-33.8177</y0>
+        <x1>9.6179</x1>
+        <y1>-26.8694</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>9.6179</x0>
+        <y0>-26.8694</y0>
+        <x1>9.8373</x1>
+        <y1>-26.5037</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>9.8373</x0>
+        <y0>-26.5037</y0>
+        <x1>16.4931</x1>
+        <y1>-25.6261</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>16.4931</x0>
+        <y0>-25.6261</y0>
+        <x1>17.5902</x1>
+        <y1>-24.8947</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>17.5902</x0>
+        <y0>-24.8947</y0>
+        <x1>18.1021</x1>
+        <y1>-23.5781</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>18.1021</x0>
+        <y0>-23.5781</y0>
+        <x1>18.1753</x1>
+        <y1>-15.8984</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>18.1753</x0>
+        <y0>-15.8984</y0>
+        <x1>17.7364</x1>
+        <y1>-14.8745</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>17.7364</x0>
+        <y0>-14.8745</y0>
+        <x1>16.5662</x1>
+        <y1>-14.0699</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>16.5662</x0>
+        <y0>-14.0699</y0>
+        <x1>12.1778</x1>
+        <y1>-13.5580</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>12.1778</x0>
+        <y0>-13.5580</y0>
+        <x1>-3.2547</x1>
+        <y1>-15.6059</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-3.2547</x0>
+        <y0>-15.6059</y0>
+        <x1>-3.9861</x1>
+        <y1>-15.1670</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-3.9861</x0>
+        <y0>-15.1670</y0>
+        <x1>-4.6444</x1>
+        <y1>-14.3625</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-4.6444</x0>
+        <y0>-14.3625</y0>
+        <x1>-9.0328</x1>
+        <y1>-6.2440</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-9.0328</x0>
+        <y0>-6.2440</y0>
+        <x1>-9.8373</x1>
+        <y1>-4.2692</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-9.8373</x0>
+        <y0>-4.2692</y0>
+        <x1>-9.8373</x1>
+        <y1>-2.6601</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-9.8373</x0>
+        <y0>-2.6601</y0>
+        <x1>-8.6671</x1>
+        <y1>-2.2213</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-8.6671</x0>
+        <y0>-2.2213</y0>
+        <x1>27.9029</x1>
+        <y1>2.3866</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>27.9029</x0>
+        <y0>2.3866</y0>
+        <x1>28.7806</x1>
+        <y1>2.7523</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>28.7806</x0>
+        <y0>2.7523</y0>
+        <x1>29.5851</x1>
+        <y1>3.4837</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>29.5851</x0>
+        <y0>3.4837</y0>
+        <x1>30.3165</x1>
+        <y1>4.9465</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>30.3165</x0>
+        <y0>4.9465</y0>
+        <x1>30.4628</x1>
+        <y1>6.4093</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>30.4628</x0>
+        <y0>6.4093</y0>
+        <x1>27.5372</x1>
+        <y1>20.0133</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>27.5372</x0>
+        <y0>20.0133</y0>
+        <x1>26.8789</x1>
+        <y1>21.7687</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>26.8789</x0>
+        <y0>21.7687</y0>
+        <x1>26.0744</x1>
+        <y1>22.7195</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>26.0744</x0>
+        <y0>22.7195</y0>
+        <x1>25.3430</x1>
+        <y1>23.1583</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>25.3430</x0>
+        <y0>23.1583</y0>
+        <x1>20.1501</x1>
+        <y1>24.7674</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>20.1501</x0>
+        <y0>24.7674</y0>
+        <x1>18.4678</x1>
+        <y1>25.6451</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>18.4678</x0>
+        <y0>25.6451</y0>
+        <x1>16.7125</x1>
+        <y1>26.9616</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>16.7125</x0>
+        <y0>26.9616</y0>
+        <x1>14.2989</x1>
+        <y1>29.8141</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>14.2989</x0>
+        <y0>29.8141</y0>
+        <x1>13.6406</x1>
+        <y1>31.3500</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>13.6406</x0>
+        <y0>31.3500</y0>
+        <x1>13.4943</x1>
+        <y1>34.5682</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>13.4943</x0>
+        <y0>34.5682</y0>
+        <x1>15.1765</x1>
+        <y1>39.6880</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>15.1765</x0>
+        <y0>39.6880</y0>
+        <x1>15.9079</x1>
+        <y1>43.3450</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>15.9079</x0>
+        <y0>43.3450</y0>
+        <x1>16.1274</x1>
+        <y1>45.6854</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>16.1274</x0>
+        <y0>45.6854</y0>
+        <x1>16.0542</x1>
+        <y1>49.3424</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>16.0542</x0>
+        <y0>49.3424</y0>
+        <x1>14.6646</x1>
+        <y1>62.5076</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>14.6646</x0>
+        <y0>62.5076</y0>
+        <x1>14.0063</x1>
+        <y1>63.3853</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>14.0063</x0>
+        <y0>63.3853</y0>
+        <x1>11.5195</x1>
+        <y1>64.0436</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>11.5195</x0>
+        <y0>64.0436</y0>
+        <x1>10.9344</x1>
+        <y1>64.5556</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>10.9344</x0>
+        <y0>64.5556</y0>
+        <x1>13.3480</x1>
+        <y1>70.4068</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>13.3480</x0>
+        <y0>70.4068</y0>
+        <x1>13.6406</x1>
+        <y1>72.6010</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>13.6406</x0>
+        <y0>72.6010</y0>
+        <x1>13.2018</x1>
+        <y1>73.4055</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>13.2018</x0>
+        <y0>73.4055</y0>
+        <x1>12.4704</x1>
+        <y1>73.9175</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>12.4704</x0>
+        <y0>73.9175</y0>
+        <x1>11.7390</x1>
+        <y1>74.1369</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>11.7390</x0>
+        <y0>74.1369</y0>
+        <x1>10.6419</x1>
+        <y1>74.0638</y1>
+        <z>0.0</z>
+        <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+</mvsim_world>

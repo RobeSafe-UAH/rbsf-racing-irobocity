@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    F1Tenth-style oval track for MVSim
+    ===================================
+    Geometry:
+      - Focal points at (±5, 0) → 10 m between centers
+      - Semicircle radius: 5 m  (outer) / 3.5 m (inner)
+      - Track width: 1.5 m
+      - Straight length: 10 m  (x = -5 to +5)
+
+    Layout (top view):
+
+         outer wall y=+5 ───────────────────────────
+        inner wall y=+3.5 ──────────────────────────
+                          ← 10 m straights →
+        inner wall y=-3.5 ──────────────────────────
+         outer wall y=-5 ───────────────────────────
+
+    Curves are approximated with 12 segments per semicircle (15° each).
+-->
+<mvsim_world version="1.0">
+
+    <simul_timestep>0</simul_timestep>
+
+    <gui>
+        <ortho>true</ortho>
+        <show_forces>false</show_forces>
+        <cam_distance>35</cam_distance>
+        <fov_deg>60</fov_deg>
+        <refresh_fps>60</refresh_fps>
+    </gui>
+
+    <variable name="WALL_H" value="0.5"/>
+
+    <!-- ================================================
+         GROUND FLOOR  (covers full oval bounding box)
+         ================================================ -->
+    <element class="horizontal_plane">
+        <cull_face>BACK</cull_face>
+        <x_min>-10.0</x_min> <y_min>-5.0</y_min>
+        <x_max> 10.0</x_max> <y_max> 5.0</y_max>
+        <z>0.0</z>
+        <color>#606060</color>
+    </element>
+
+    <!-- ================================================
+         OUTER WALLS  (r = 5 m, color red)
+         ================================================ -->
+
+    <!-- Straight sections -->
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-5.000</x0> <y0> 5.000</y0>
+        <x1> 5.000</x1> <y1> 5.000</y1>
+        <z>0.0</z> <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0> 5.000</x0> <y0>-5.000</y0>
+        <x1>-5.000</x1> <y1>-5.000</y1>
+        <z>0.0</z> <height>$f{WALL_H}</height>
+        <color>#cc2200</color>
+    </element>
+
+    <!-- Right outer semicircle  (center=(5,0), r=5, θ = -90° → +90°) -->
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0> 5.000</x0><y0>-5.000</y0><x1> 6.294</x1><y1>-4.830</y1><z>0.0</z><height>$f{WALL_H}</height><color>#cc2200</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0> 6.294</x0><y0>-4.830</y0><x1> 7.500</x1><y1>-4.330</y1><z>0.0</z><height>$f{WALL_H}</height><color>#cc2200</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0> 7.500</x0><y0>-4.330</y0><x1> 8.536</x1><y1>-3.536</y1><z>0.0</z><height>$f{WALL_H}</height><color>#cc2200</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0> 8.536</x0><y0>-3.536</y0><x1> 9.330</x1><y1>-2.500</y1><z>0.0</z><height>$f{WALL_H}</height><color>#cc2200</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0> 9.330</x0><y0>-2.500</y0><x1> 9.830</x1><y1>-1.294</y1><z>0.0</z><height>$f{WALL_H}</height><color>#cc2200</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0> 9.830</x0><y0>-1.294</y0><x1>10.000</x1><y1> 0.000</y1><z>0.0</z><height>$f{WALL_H}</height><color>#cc2200</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0>10.000</x0><y0> 0.000</y0><x1> 9.830</x1><y1> 1.294</y1><z>0.0</z><height>$f{WALL_H}</height><color>#cc2200</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0> 9.830</x0><y0> 1.294</y0><x1> 9.330</x1><y1> 2.500</y1><z>0.0</z><height>$f{WALL_H}</height><color>#cc2200</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0> 9.330</x0><y0> 2.500</y0><x1> 8.536</x1><y1> 3.536</y1><z>0.0</z><height>$f{WALL_H}</height><color>#cc2200</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0> 8.536</x0><y0> 3.536</y0><x1> 7.500</x1><y1> 4.330</y1><z>0.0</z><height>$f{WALL_H}</height><color>#cc2200</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0> 7.500</x0><y0> 4.330</y0><x1> 6.294</x1><y1> 4.830</y1><z>0.0</z><height>$f{WALL_H}</height><color>#cc2200</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0> 6.294</x0><y0> 4.830</y0><x1> 5.000</x1><y1> 5.000</y1><z>0.0</z><height>$f{WALL_H}</height><color>#cc2200</color></element>
+
+    <!-- Left outer semicircle  (center=(-5,0), r=5, θ = +90° → +270°) -->
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0>-5.000</x0><y0> 5.000</y0><x1>-6.294</x1><y1> 4.830</y1><z>0.0</z><height>$f{WALL_H}</height><color>#cc2200</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0>-6.294</x0><y0> 4.830</y0><x1>-7.500</x1><y1> 4.330</y1><z>0.0</z><height>$f{WALL_H}</height><color>#cc2200</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0>-7.500</x0><y0> 4.330</y0><x1>-8.536</x1><y1> 3.536</y1><z>0.0</z><height>$f{WALL_H}</height><color>#cc2200</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0>-8.536</x0><y0> 3.536</y0><x1>-9.330</x1><y1> 2.500</y1><z>0.0</z><height>$f{WALL_H}</height><color>#cc2200</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0>-9.330</x0><y0> 2.500</y0><x1>-9.830</x1><y1> 1.294</y1><z>0.0</z><height>$f{WALL_H}</height><color>#cc2200</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0>-9.830</x0><y0> 1.294</y0><x1>-10.000</x1><y1>0.000</y1><z>0.0</z><height>$f{WALL_H}</height><color>#cc2200</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0>-10.000</x0><y0>0.000</y0><x1>-9.830</x1><y1>-1.294</y1><z>0.0</z><height>$f{WALL_H}</height><color>#cc2200</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0>-9.830</x0><y0>-1.294</y0><x1>-9.330</x1><y1>-2.500</y1><z>0.0</z><height>$f{WALL_H}</height><color>#cc2200</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0>-9.330</x0><y0>-2.500</y0><x1>-8.536</x1><y1>-3.536</y1><z>0.0</z><height>$f{WALL_H}</height><color>#cc2200</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0>-8.536</x0><y0>-3.536</y0><x1>-7.500</x1><y1>-4.330</y1><z>0.0</z><height>$f{WALL_H}</height><color>#cc2200</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0>-7.500</x0><y0>-4.330</y0><x1>-6.294</x1><y1>-4.830</y1><z>0.0</z><height>$f{WALL_H}</height><color>#cc2200</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0>-6.294</x0><y0>-4.830</y0><x1>-5.000</x1><y1>-5.000</y1><z>0.0</z><height>$f{WALL_H}</height><color>#cc2200</color></element>
+
+    <!-- ================================================
+         INNER WALLS  (r = 3.5 m, color white)
+         ================================================ -->
+
+    <!-- Straight sections -->
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0> 5.000</x0> <y0> 3.500</y0>
+        <x1>-5.000</x1> <y1> 3.500</y1>
+        <z>0.0</z> <height>$f{WALL_H}</height>
+        <color>#dddddd</color>
+    </element>
+    <element class="vertical_plane">
+        <cull_face>NONE</cull_face>
+        <x0>-5.000</x0> <y0>-3.500</y0>
+        <x1> 5.000</x1> <y1>-3.500</y1>
+        <z>0.0</z> <height>$f{WALL_H}</height>
+        <color>#dddddd</color>
+    </element>
+
+    <!-- Right inner semicircle  (center=(5,0), r=3.5, θ = -90° → +90°) -->
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0> 5.000</x0><y0>-3.500</y0><x1> 5.906</x1><y1>-3.381</y1><z>0.0</z><height>$f{WALL_H}</height><color>#dddddd</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0> 5.906</x0><y0>-3.381</y0><x1> 6.750</x1><y1>-3.031</y1><z>0.0</z><height>$f{WALL_H}</height><color>#dddddd</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0> 6.750</x0><y0>-3.031</y0><x1> 7.475</x1><y1>-2.475</y1><z>0.0</z><height>$f{WALL_H}</height><color>#dddddd</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0> 7.475</x0><y0>-2.475</y0><x1> 8.031</x1><y1>-1.750</y1><z>0.0</z><height>$f{WALL_H}</height><color>#dddddd</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0> 8.031</x0><y0>-1.750</y0><x1> 8.381</x1><y1>-0.906</y1><z>0.0</z><height>$f{WALL_H}</height><color>#dddddd</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0> 8.381</x0><y0>-0.906</y0><x1> 8.500</x1><y1> 0.000</y1><z>0.0</z><height>$f{WALL_H}</height><color>#dddddd</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0> 8.500</x0><y0> 0.000</y0><x1> 8.381</x1><y1> 0.906</y1><z>0.0</z><height>$f{WALL_H}</height><color>#dddddd</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0> 8.381</x0><y0> 0.906</y0><x1> 8.031</x1><y1> 1.750</y1><z>0.0</z><height>$f{WALL_H}</height><color>#dddddd</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0> 8.031</x0><y0> 1.750</y0><x1> 7.475</x1><y1> 2.475</y1><z>0.0</z><height>$f{WALL_H}</height><color>#dddddd</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0> 7.475</x0><y0> 2.475</y0><x1> 6.750</x1><y1> 3.031</y1><z>0.0</z><height>$f{WALL_H}</height><color>#dddddd</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0> 6.750</x0><y0> 3.031</y0><x1> 5.906</x1><y1> 3.381</y1><z>0.0</z><height>$f{WALL_H}</height><color>#dddddd</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0> 5.906</x0><y0> 3.381</y0><x1> 5.000</x1><y1> 3.500</y1><z>0.0</z><height>$f{WALL_H}</height><color>#dddddd</color></element>
+
+    <!-- Left inner semicircle  (center=(-5,0), r=3.5, θ = +90° → +270°) -->
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0>-5.000</x0><y0> 3.500</y0><x1>-5.906</x1><y1> 3.381</y1><z>0.0</z><height>$f{WALL_H}</height><color>#dddddd</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0>-5.906</x0><y0> 3.381</y0><x1>-6.750</x1><y1> 3.031</y1><z>0.0</z><height>$f{WALL_H}</height><color>#dddddd</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0>-6.750</x0><y0> 3.031</y0><x1>-7.475</x1><y1> 2.475</y1><z>0.0</z><height>$f{WALL_H}</height><color>#dddddd</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0>-7.475</x0><y0> 2.475</y0><x1>-8.031</x1><y1> 1.750</y1><z>0.0</z><height>$f{WALL_H}</height><color>#dddddd</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0>-8.031</x0><y0> 1.750</y0><x1>-8.381</x1><y1> 0.906</y1><z>0.0</z><height>$f{WALL_H}</height><color>#dddddd</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0>-8.381</x0><y0> 0.906</y0><x1>-8.500</x1><y1> 0.000</y1><z>0.0</z><height>$f{WALL_H}</height><color>#dddddd</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0>-8.500</x0><y0> 0.000</y0><x1>-8.381</x1><y1>-0.906</y1><z>0.0</z><height>$f{WALL_H}</height><color>#dddddd</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0>-8.381</x0><y0>-0.906</y0><x1>-8.031</x1><y1>-1.750</y1><z>0.0</z><height>$f{WALL_H}</height><color>#dddddd</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0>-8.031</x0><y0>-1.750</y0><x1>-7.475</x1><y1>-2.475</y1><z>0.0</z><height>$f{WALL_H}</height><color>#dddddd</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0>-7.475</x0><y0>-2.475</y0><x1>-6.750</x1><y1>-3.031</y1><z>0.0</z><height>$f{WALL_H}</height><color>#dddddd</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0>-6.750</x0><y0>-3.031</y0><x1>-5.906</x1><y1>-3.381</y1><z>0.0</z><height>$f{WALL_H}</height><color>#dddddd</color></element>
+    <element class="vertical_plane"><cull_face>NONE</cull_face><x0>-5.906</x0><y0>-3.381</y0><x1>-5.000</x1><y1>-3.500</y1><z>0.0</z><height>$f{WALL_H}</height><color>#dddddd</color></element>
+
+</mvsim_world>

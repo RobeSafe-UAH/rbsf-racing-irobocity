@@ -1,0 +1,836 @@
+<mvsim_world version="1.0" xmlns:block="block">
+	<!-- General simulation options -->
+	<simul_timestep>0</simul_timestep> <!-- Simulation fixed-time interval for numerical integration [seconds] or 0 to autodetermine -->
+	
+	<joystick_enabled>true</joystick_enabled>
+
+	<!-- Optional: save all sensor data into an MRPT .rawlog dataset file: -->
+	<!-- <save_to_rawlog>warehouse_dataset.rawlog</save_to_rawlog> -->
+	<!-- If save_to_rawlog is enabled, this defines the rate in Hz to generate odometry observations -->
+	<!-- <rawlog_odometry_rate>20.0</rawlog_odometry_rate> -->
+	<!-- <save_ground_truth_trajectory>warehouse_dataset_gt.txt</save_ground_truth_trajectory> -->
+
+	<!-- GUI options -->
+	<gui>
+		<ortho>false</ortho>
+		<show_forces>false</show_forces>  <force_scale>0.01</force_scale>
+		<cam_distance>3</cam_distance>
+		<fov_deg>60</fov_deg>
+		<refresh_fps>60</refresh_fps>
+		<!-- <follow_vehicle>r1</follow_vehicle> -->
+
+	</gui>
+
+	<!-- Light parameters -->
+	<lights>
+		<enable_shadows>false</enable_shadows>
+		<light_azimuth_deg>90.0</light_azimuth_deg>
+		<light_elevation_deg>75.0</light_elevation_deg>
+		<!-- <eye_distance_to_shadow_map_extension>2</eye_distance_to_shadow_map_extension> -->
+		<!-- <minimum_shadow_map_extension_ratio>0.005</minimum_shadow_map_extension_ratio> -->
+	</lights>
+
+	<variable name="CEILING_HEIGHT" value="3.0"></variable>
+
+	<!-- Puertas (0 -> cerrada, 1 -> abierta) -->
+	<variable name="PUERTA_ARRIBA_IZQUIERDA" value="0"/>
+	<variable name="PUERTA_ARRIBA" value="1"/>
+	<variable name="PUERTA_ARRIBA_DERECHA" value="0"/>
+	<variable name="PUERTA_ABAJO_IZQUIERDA" value="0"/>
+	<variable name="PUERTA_ABAJO" value="1"/>
+	<variable name="PUERTA_ABAJO_DERECHA" value="0"/>
+
+	<!-- ========================
+		   PASILLO PRINCIPAL
+	     ======================== -->
+	<!-- ground -->
+	<element class="horizontal_plane">
+		<cull_face>BACK</cull_face>
+		<x_min>-11.065</x_min> <y_min>-1.8375</y_min>
+		<x_max>11.865</x_max> <y_max> 1.8375</y_max>
+		<z>0.0</z>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>2.0</texture_size_x>
+		<texture_size_y>2.0</texture_size_y>
+	</element>
+
+	<!-- ceiling -->
+	<element class="horizontal_plane">
+		<cull_face>FRONT</cull_face>
+		<x_min>-11.865</x_min> <y_min>-1.8375</y_min>
+		<x_max>11.065</x_max> <y_max> 1.8375</y_max>
+		<z>$f{CEILING_HEIGHT}</z>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/BathroomTiles03_1K_BaseColor.png</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- horizontal arriba marco puerta-->
+	<!--
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0></x0> <y0>1.8375</y0>
+		<x1>-1.535</x1> <y1>1.8375</y1>
+		<z>2.05</z> <height>0.95</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+	-->
+
+	<!-- horizontal abajo marco puerta-->
+	<!--
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>-0.135</x0> <y0>-1.8375</y0>
+		<x1>-1.535</x1> <y1>-1.8375</y1>
+		<z>2.05</z> <height>0.95</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+	-->
+
+	<!-- vertical derecha diagonal arriba -->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>11.065</x0> <y0>1.8375</y0>
+		<x1>11.865</x1> <y1>0.475</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+	<!-- vertical derecha -->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>11.865</x0> <y0>0.475</y0>
+		<x1>11.865</x1> <y1>-0.475</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+	<!-- vertical derecha diagonal abajo -->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>11.865</x0> <y0>-0.475</y0>
+		<x1>11.065</x1> <y1>-1.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- ========================
+		LABORATORIO ARRIBA IZQUIERDA
+	 ======================== -->
+	<!-- suelo -->
+	<element class="horizontal_plane">
+		<cull_face>BACK</cull_face>
+		<x_min>-11.065</x_min> <y_min>1.8375</y_min>
+		<x_max>-5.735</x_max><y_max>11.8375</y_max>
+		<z>0.0</z>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>2.0</texture_size_x>
+		<texture_size_y>2.0</texture_size_y>
+	</element>
+
+	<!-- techo -->
+	<element class="horizontal_plane">
+		<cull_face>FRONT</cull_face>
+		<x_min>-11.065</x_min> <y_min>1.8375</y_min>
+		<x_max>-5.735</x_max> <y_max>11.8375</y_max>
+		<z>$f{CEILING_HEIGHT}</z>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/BathroomTiles03_1K_BaseColor.png</texture>
+		<texture_size_x>2.0</texture_size_x>
+		<texture_size_y>2.0</texture_size_y>
+	</element>
+
+	<!-- pared pasillo parte izquierda-->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>-7.96</x0> <y0>1.8375</y0>
+		<x1>-11.065</x1> <y1>1.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+	
+	<!--PUERTA-->
+	<!--cerrada-->
+	<if condition="$f{PUERTA_ARRIBA_IZQUIERDA = 0}">
+		<element class="vertical_plane">
+			<cull_face>NONE</cull_face>
+			<x0>-6.56</x0> <y0>1.8375</y0>
+			<x1>-7.96</x1> <y1>1.8375</y1>
+			<z>0.0</z> <height>2.05</height>
+			<texture>../models/wooden_door.jpg</texture>
+			<texture_size_x>1.4</texture_size_x>
+			<texture_size_y>2.05</texture_size_y>
+		</element>
+	</if>
+	<!--abierta-->
+	<if condition="$f{PUERTA_ARRIBA_IZQUIERDA = 1}">
+		<element class="vertical_plane">
+			<cull_face>NONE</cull_face>
+			<x0>-6.56</x0> <y0>1.83</y0>
+			<x1>-5.3</x1> <y1>1.2</y1>
+			<z>0.0</z> <height>2.05</height>
+			<texture>../models/wooden_door.jpg</texture>
+			<texture_size_x>1.4</texture_size_x>
+			<texture_size_y>2.05</texture_size_y>
+		</element>
+	</if>
+
+	<!--pared pasillo parte derecha-->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>-5.735</x0> <y0>1.8375</y0>
+		<x1>-6.56</x1> <y1>1.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- pared derecha -->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>4.050</x0> <y0>1.8375</y0>
+		<x1>4.050</x1> <y1>11.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- pared izquierda -->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>-11.065</x0> <y0>1.8375</y0>
+		<x1>-11.065</x1> <y1>11.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- pared fondo -->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>-5.735</x0> <y0>11.837</y0>
+		<x1>-11.065</x1> <y1>11.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- ========================
+		LABORATORIO ARRIBA
+	 ======================== -->
+	<!-- suelo -->
+	<element class="horizontal_plane">
+		<cull_face>BACK</cull_face>
+		<x_min>-5.735</x_min> <y_min>1.8375</y_min>
+		<x_max>4.065</x_max> <y_max>11.8375</y_max>
+		<z>0.0</z>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>2.0</texture_size_x>
+		<texture_size_y>2.0</texture_size_y>
+	</element>
+	
+	<!-- techo -->
+	<element class="horizontal_plane">
+		<cull_face>FRONT</cull_face>
+		<x_min>-5.735</x_min> <y_min>1.8375</y_min>
+		<x_max>4.065</x_max> <y_max>11.8375</y_max>
+		<z>$f{CEILING_HEIGHT}</z>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/BathroomTiles03_1K_BaseColor.png</texture>
+		<texture_size_x>2.0</texture_size_x>
+		<texture_size_y>2.0</texture_size_y>
+	</element>
+
+	<!-- pared pasillo parte izquierda-->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>-1.535</x0> <y0>1.8375</y0>
+		<x1>-5.735</x1> <y1>1.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!--PUERTA-->
+	<!--cerrada-->
+	<if condition="$f{PUERTA_ARRIBA = 0}">
+		<element class="vertical_plane">
+			<cull_face>NONE</cull_face>
+			<x0>-0.135</x0> <y0>1.8375</y0>
+			<x1>-1.535</x1> <y1>1.8375</y1>
+			<z>0.0</z> <height>2.05</height>
+			<texture>../models/wooden_door.jpg</texture>
+			<texture_size_x>1.4</texture_size_x>
+			<texture_size_y>2.05</texture_size_y>
+		</element>
+	</if>
+
+	<!--abierta-->
+	<if condition="$f{PUERTA_ARRIBA = 1}">
+		<element class="vertical_plane">
+			<cull_face>NONE</cull_face>
+			<x0>-0.135</x0> <y0>1.83</y0>
+			<x1>1.125</x1> <y1>1.2</y1>
+			<z>0.0</z> <height>2.05</height>
+			<texture>../models/wooden_door.jpg</texture>
+			<texture_size_x>1.4</texture_size_x>
+			<texture_size_y>2.05</texture_size_y>
+		</element>
+	</if>
+
+	<!-- pared pasillo parte derecha-->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>4.89</x0> <y0>1.8375</y0>
+		<x1>-0.135</x1> <y1>1.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- pared derecha -->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>4.065</x0> <y0>1.8375</y0>
+		<x1>4.065</x1> <y1>11.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- pared izquierda -->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>-5.735</x0> <y0>1.8375</y0>
+		<x1>-5.735</x1> <y1>11.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- pared fondo -->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>4.065</x0> <y0>11.837</y0>
+		<x1>-5.735</x1> <y1>11.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- ========================
+		LABORATORIO ARRIBA DERECHA
+	 ======================== -->
+	<!-- suelo -->
+	<element class="horizontal_plane">
+		<cull_face>BACK</cull_face>
+		<x_min>4.065</x_min> <y_min>1.8375</y_min>
+		<x_max>11.865</x_max> <y_max>11.8375</y_max>
+		<z>0.0</z>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>2.0</texture_size_x>
+		<texture_size_y>2.0</texture_size_y>
+	</element>
+	
+	<!-- techo -->
+	<element class="horizontal_plane">
+		<cull_face>FRONT</cull_face>
+		<x_min>4.065</x_min> <y_min>1.8375</y_min>
+		<x_max>11.865</x_max> <y_max>11.8375</y_max>
+		<z>$f{CEILING_HEIGHT}</z>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/BathroomTiles03_1K_BaseColor.png</texture>
+		<texture_size_x>2.0</texture_size_x>
+		<texture_size_y>2.0</texture_size_y>
+	</element>
+
+	<!-- pared pasillo parte izquierda-->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>4.89</x0> <y0>1.8375</y0>
+		<x1>4.065</x1> <y1>1.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!--PUERTA-->
+	<!--cerrada-->
+	<if condition="$f{PUERTA_ARRIBA_DERECHA = 0}">
+		<element class="vertical_plane">
+			<cull_face>NONE</cull_face>
+			<x0>6.29</x0> <y0>1.8375</y0>
+			<x1>4.89</x1> <y1>1.8375</y1>
+			<z>0.0</z> <height>2.05</height>
+			<texture>../models/wooden_door.jpg</texture>
+			<texture_size_x>1.4</texture_size_x>
+			<texture_size_y>2.05</texture_size_y>
+		</element>
+	</if>
+
+	<!--abierta-->
+	<if condition="$f{PUERTA_ARRIBA_DERECHA = 1}">
+		<element class="vertical_plane">
+			<cull_face>NONE</cull_face>
+			<x0>6.29</x0> <y0>1.83</y0>
+			<x1>7.55</x1> <y1>1.2</y1>
+			<z>0.0</z> <height>2.05</height>
+			<texture>../models/wooden_door.jpg</texture>
+			<texture_size_x>1.4</texture_size_x>
+			<texture_size_y>2.05</texture_size_y>
+		</element>
+	</if>
+	<!-- pared pasillo parte derecha-->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>11.065</x0> <y0>1.8375</y0>
+		<x1>6.29</x1> <y1>1.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- pared diagonal derecha -->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>11.065</x0> <y0>1.8375</y0>
+		<x1>11.865</x1> <y1>2.6625</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- pared derecha -->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>11.865</x0> <y0>2.6625</y0>
+		<x1>11.865</x1> <y1>11.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- pared izquierda -->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>4.075</x0> <y0>1.8375</y0>
+		<x1>4.075</x1> <y1>11.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- pared fondo -->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>11.865</x0> <y0>11.837</y0>
+		<x1>4.065</x1> <y1>11.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+	
+	<!-- ========================
+		LABORATORIO ABAJO IZQUIERDA
+	 ======================== -->
+	<!-- suelo -->
+	<element class="horizontal_plane">
+		<cull_face>BACK</cull_face>
+		<x_min>-11.065</x_min> <y_min>-11.8375</y_min>
+		<x_max>-5.735</x_max><y_max>-1.8375</y_max>
+		<z>0.0</z>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>2.0</texture_size_x>
+		<texture_size_y>2.0</texture_size_y>
+	</element>
+
+	<!-- techo -->
+	<element class="horizontal_plane">
+		<cull_face>FRONT</cull_face>
+		<x_min>-11.065</x_min> <y_min>-11.8375</y_min>
+		<x_max>-5.735</x_max> <y_max>-1.8375</y_max>
+		<z>$f{CEILING_HEIGHT}</z>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/BathroomTiles03_1K_BaseColor.png</texture>
+		<texture_size_x>2.0</texture_size_x>
+		<texture_size_y>2.0</texture_size_y>
+	</element>
+
+	<!-- pared pasillo parte izquierda-->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>-7.96</x0> <y0>-1.8375</y0>
+		<x1>-11.065</x1> <y1>-1.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+	
+	<!--PUERTA-->
+	<!--cerrada-->
+	<if condition="$f{PUERTA_ABAJO_IZQUIERDA = 0}">
+		<element class="vertical_plane">
+			<cull_face>NONE</cull_face>
+			<x0>-7.96</x0> <y0>-1.8375</y0>
+			<x1>-6.56</x1> <y1>-1.8375</y1>
+			<z>0.0</z> <height>2.05</height>
+			<texture>../models/wooden_door.jpg</texture>
+			<texture_size_x>1.4</texture_size_x>
+			<texture_size_y>2.05</texture_size_y>
+		</element>
+	</if>
+
+	<!--abierta-->
+	<if condition="$f{PUERTA_ABAJO_IZQUIERDA = 1}">
+		<element class="vertical_plane">
+			<cull_face>NONE</cull_face>
+			<x0>-7.96</x0> <y0>-1.83</y0>
+			<x1>-9.22</x1> <y1>-1.2</y1>
+			<z>0.0</z> <height>2.05</height>
+			<texture>../models/wooden_door.jpg</texture>
+			<texture_size_x>1.4</texture_size_x>
+			<texture_size_y>2.05</texture_size_y>
+		</element>
+	</if>
+
+	<!--pared pasillo parte derecha-->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>-5.735</x0> <y0>-1.8375</y0>
+		<x1>-6.56</x1> <y1>-1.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- pared derecha -->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>4.050</x0> <y0>-1.8375</y0>
+		<x1>4.050</x1> <y1>-11.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- pared izquierda -->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>-11.065</x0> <y0>-1.8375</y0>
+		<x1>-11.065</x1> <y1>-11.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- pared fondo -->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>-5.735</x0> <y0>-11.837</y0>
+		<x1>-11.065</x1> <y1>-11.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- ========================
+		LABORATORIO ABAJO
+	 ======================== -->
+	<!-- suelo -->
+	<element class="horizontal_plane">
+		<cull_face>BACK</cull_face>
+		<x_min>4.065</x_min> <y_min>-1.8375</y_min>
+		<x_max>-5.735</x_max> <y_max>-11.8375</y_max>
+		<z>0.0</z>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>2.0</texture_size_x>
+		<texture_size_y>2.0</texture_size_y>
+	</element>
+
+	<!-- techo -->
+	<element class="horizontal_plane">
+		<cull_face>FRONT</cull_face>
+		<x_min>4.065</x_min> <y_min>-1.8375</y_min>
+		<x_max>-5.735</x_max> <y_max>-11.8375</y_max>
+		<z>$f{CEILING_HEIGHT}</z>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/BathroomTiles03_1K_BaseColor.png</texture>
+		<texture_size_x>2.0</texture_size_x>
+		<texture_size_y>2.0</texture_size_y>
+	</element>
+
+	<!-- pared pasillo parte izquierda-->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>-1.535</x0> <y0>-1.8375</y0>
+		<x1>-5.735</x1> <y1>-1.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!--PUERTA-->
+	<!--cerrada-->
+	<if condition="$f{PUERTA_ABAJO = 0}">
+		<element class="vertical_plane">
+			<cull_face>NONE</cull_face>
+			<x0>-1.535</x0> <y0>-1.8375</y0>
+			<x1>-0.135</x1> <y1>-1.8375</y1>
+			<z>0.0</z> <height>2.05</height>
+			<texture>../models/wooden_door.jpg</texture>
+			<texture_size_x>1.4</texture_size_x>
+			<texture_size_y>2.05</texture_size_y>
+		</element>
+	</if>
+
+	<!--abierta-->
+	<if condition="$f{PUERTA_ABAJO = 1}">
+		<element class="vertical_plane">
+			<cull_face>NONE</cull_face>
+			<x0>-1.535</x0> <y0>-1.83</y0>
+			<x1>-2.8</x1> <y1>-1.2</y1>
+			<z>0.0</z> <height>2.05</height>
+			<texture>../models/wooden_door.jpg</texture>
+			<texture_size_x>1.4</texture_size_x>
+			<texture_size_y>2.05</texture_size_y>
+		</element>
+	</if>
+
+	<!--pared pasillo parte derecha-->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>4.065</x0> <y0>-1.8375</y0>
+		<x1>-0.135</x1> <y1>-1.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- pared derecha -->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>4.065</x0> <y0>-1.8375</y0>
+		<x1>4.065</x1> <y1>-11.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- pared izquierda -->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>-5.735</x0> <y0>-1.8375</y0>
+		<x1>-5.735</x1> <y1>-11.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- pared fondo -->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>4.065</x0> <y0>-11.837</y0>
+		<x1>-5.735</x1> <y1>-11.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- ========================
+		LABORATORIO ABAJO DERECHA
+	 ======================== -->
+	<!-- suelo -->
+	<element class="horizontal_plane">
+		<cull_face>BACK</cull_face>
+		<x_min>11.865</x_min> <y_min>-1.8375</y_min>
+		<x_max>4.065</x_max> <y_max>-11.8375</y_max>
+		<z>0.0</z>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>2.0</texture_size_x>
+		<texture_size_y>2.0</texture_size_y>
+	</element>
+	
+	<!-- techo -->
+	<element class="horizontal_plane">
+		<cull_face>FRONT</cull_face>
+		<x_min>11.865</x_min> <y_min>-1.8375</y_min>
+		<x_max>4.065</x_max> <y_max>-11.8375</y_max>
+		<z>$f{CEILING_HEIGHT}</z>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/BathroomTiles03_1K_BaseColor.png</texture>
+		<texture_size_x>2.0</texture_size_x>
+		<texture_size_y>2.0</texture_size_y>
+	</element>
+
+	<!-- pared pasillo parte izquierda-->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>4.89</x0> <y0>-1.8375</y0>
+		<x1>4.065</x1> <y1>-1.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!--PUERTA-->
+	<!--cerrada-->
+	<if condition="$f{PUERTA_ABAJO_DERECHA == 0}">
+		<element class="vertical_plane">
+			<cull_face>NONE</cull_face>
+			<x0>4.89</x0> <y0>-1.8375</y0>
+			<x1>6.29</x1> <y1>-1.8375</y1>
+			<z>0.0</z> <height>2.05</height>
+			<texture>../models/wooden_door.jpg</texture>
+			<texture_size_x>1.4</texture_size_x>
+			<texture_size_y>2.05</texture_size_y>
+		</element>
+	</if>
+
+	<!--abierta-->
+	<if condition="$f{PUERTA_ABAJO_DERECHA = 1}">
+		<element class="vertical_plane">
+			<cull_face>NONE</cull_face>
+			<x0>4.89</x0> <y0>-1.83</y0>
+			<x1>3.63</x1> <y1>-1.2</y1>
+			<z>0.0</z> <height>2.05</height>
+			<texture>../models/wooden_door.jpg</texture>
+			<texture_size_x>1.4</texture_size_x>
+			<texture_size_y>2.05</texture_size_y>
+		</element>
+	</if>
+
+	<!-- pared pasillo parte derecha-->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>11.065</x0> <y0>-1.8375</y0>
+		<x1>6.29</x1> <y1>-1.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- pared diagonal derecha -->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>11.065</x0> <y0>-1.8375</y0>
+		<x1>11.865</x1> <y1>-2.6625</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- pared derecha -->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>11.865</x0> <y0>-2.6625</y0>
+		<x1>11.865</x1> <y1>-11.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- pared izquierda -->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>4.075</x0> <y0>-1.8375</y0>
+		<x1>4.075</x1> <y1>-11.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- pared fondo -->
+	<element class="vertical_plane">
+		<cull_face>NONE</cull_face>
+		<x0>11.865</x0> <y0>-11.837</y0>
+		<x1>4.065</x1> <y1>-11.8375</y1>
+		<z>0.0</z> <height>$f{CEILING_HEIGHT}</height>
+		<texture>https://mrpt.github.io/mvsim-models/textures-cgbookcase/concrete-ground-1.jpg</texture>
+		<texture_size_x>3.0</texture_size_x>
+		<texture_size_y>3.0</texture_size_y>
+	</element>
+
+	<!-- ========================
+		Obstacle classes definition
+	 ======================== -->
+
+	<block:class name="square_obstacle">
+		<!-- Box -->
+		<geometry type="box" lx="0.4" ly="0.4" lz="0.4"/>
+		<mass>10</mass>
+		<color>#0080ff</color>
+		<ground_friction>0.0</ground_friction>
+	</block:class>
+
+
+	<!-- ========================
+		Obstacle blocks
+	     ======================== -->
+	<!--
+	<block class="square_obstacle">
+		<init_pose>0 0 0</init_pose>
+		<publish>
+			<publish_pose_topic>/obstacle1/pose</publish_pose_topic>
+			<publish_pose_period>10e-3</publish_pose_period>
+		</publish>
+		<animation type="keyframes">
+			<time_pose>0.0 6.0  1.5 0</time_pose>
+			<time_pose>3.0 6.0 -1.75 0</time_pose>
+			<time_pose>6.0 6.0  1.5 0</time_pose>
+		</animation>
+	</block>
+
+	<block class="square_obstacle">
+		<init_pose>0 0 0</init_pose>
+		<publish>
+			<publish_pose_topic>/obstacle2/pose</publish_pose_topic>
+			<publish_pose_period>10e-3</publish_pose_period>
+		</publish>
+		<animation type="keyframes">
+			<time_pose>0.0 3.0  1.5 0</time_pose>
+			<time_pose>4.0 3.0 -1.75 0</time_pose>
+			<time_pose>8.0 3.0  1.5 0</time_pose>
+		</animation>
+	</block>
+	-->
+	<!--
+	<block class="square_obstacle"><init_pose>-1.0 -5 0</init_pose></block>
+	<block class="square_obstacle"><init_pose>-1.0 3 0</init_pose></block>
+	-->
+	<!--<block class="marco_puerta"><init_pose>-0.835 -1.8375005 0.0</init_pose></block>-->
+	
+	</mvsim_world>

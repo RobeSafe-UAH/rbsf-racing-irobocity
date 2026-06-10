@@ -1,0 +1,15 @@
+worlds:
+  f1tenth_catalunya.world.xml:
+    init_pose: "-39.8089 -23.5941 -67.9"
+
+  f1tenth_saopaulo.world.xml:
+    init_pose: "19.5131 18.4754 -125.8"
+
+  f1tenth_yasmarina.world.xml:
+    init_pose: "8.0820 1.0700 -172.9"
+
+  simple_oval.world.xml:
+    init_pose: "0.0 4.25 0.0"
+
+  hallway_simulation_sci.world.xml:
+    init_pose: "1 0 0"
