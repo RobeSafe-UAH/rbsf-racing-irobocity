@@ -10,6 +10,7 @@ Quick start:
     ros2 launch stack_launcher 00_teleop_slam.launch.py                          # sim + keyboard
     ros2 launch stack_launcher 00_teleop_slam.launch.py teleop:=controller       # sim + gamepad
     ros2 launch stack_launcher 00_teleop_slam.launch.py mode:=real teleop:=controller
+    ros2 launch stack_launcher 00_teleop_slam.launch.py max_speed:=2.0           # set max speed (m/s, default 1.0)
 
 Map save (controller):
     Press button <save_button> (default: 0) on the gamepad.
@@ -187,7 +188,7 @@ def generate_launch_description():
         DeclareLaunchArgument(
             "max_speed",
             default_value="1.0",
-            description="Maximum longitudinal speed in m/s  [mode:=real, converted to ERPM for VESC]",
+            description="Maximum longitudinal speed in m/s — caps keyboard teleop commands (all modes) and VESC ERPM limits (mode:=real)",
         ),
 
         # --- map saver ------------------------------------------------- #
