@@ -6,6 +6,7 @@ src/install/
 src/log/
 /move_sequence
 /eval*
+/maps
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

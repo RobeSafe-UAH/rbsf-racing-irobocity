@@ -14,6 +14,7 @@ from rclpy.callback_groups import ReentrantCallbackGroup
 from rclpy.node import Node
 from sensor_msgs.msg import Joy
 from slam_toolbox.srv import SaveMap, SerializePoseGraph
+from std_msgs.msg import Empty
 
 
 class MapSaverNode(Node):
@@ -35,11 +36,20 @@ class MapSaverNode(Node):
         )
 
         self.create_subscription(Joy, "/joy", self._joy_callback, 10)
+        self.create_subscription(Empty, "/save_map_trigger", self._trigger_callback, 10)
         self.get_logger().info(
             f"MapSaverNode ready — press button "
             f"{self.get_parameter('save_button').get_parameter_value().integer_value} "
-            f"to save map."
+            f"(controller) or 'm' (keyboard) to save map."
         )
+
+    def _trigger_callback(self, _msg: Empty) -> None:
+        with self._save_lock:
+            if self._saving:
+                self.get_logger().warn("Map save already in progress, ignoring.")
+            else:
+                self._saving = True
+                threading.Thread(target=self._do_save, daemon=True).start()
 
     def _joy_callback(self, msg: Joy) -> None:
         idx = self.get_parameter("save_button").get_parameter_value().integer_value
@@ -47,12 +57,7 @@ class MapSaverNode(Node):
             return
         current = msg.buttons[idx]
         if current == 1 and self._last_button == 0:
-            with self._save_lock:
-                if self._saving:
-                    self.get_logger().warn("Map save already in progress, ignoring.")
-                else:
-                    self._saving = True
-                    threading.Thread(target=self._do_save, daemon=True).start()
+            self._trigger_callback(None)
         self._last_button = current
 
     def _do_save(self) -> None:

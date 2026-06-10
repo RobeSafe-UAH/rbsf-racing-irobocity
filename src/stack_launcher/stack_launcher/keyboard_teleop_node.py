@@ -5,6 +5,7 @@ from ackermann_msgs.msg import AckermannDriveStamped
 import rclpy
 from rclpy.node import Node
 from pynput import keyboard
+from std_msgs.msg import Empty
 
 
 BINDINGS = {
@@ -32,6 +33,7 @@ class KeyboardTeleop(Node):
 
         self._active = set()
         self._pub = self.create_publisher(AckermannDriveStamped, output_topic, 10)
+        self._save_pub = self.create_publisher(Empty, "/save_map_trigger", 10)
 
         self._tty_fd = sys.stdin.fileno()
         self._old_tty = termios.tcgetattr(self._tty_fd)
@@ -49,6 +51,7 @@ class KeyboardTeleop(Node):
         print(f'\nKeyboard teleop active  →  {output_topic}')
         print('  W / ↑   forward       S / ↓   backward')
         print('  A / ←   steer left    D / →   steer right')
+        print('  m       save map')
         print('  q       quit\n')
 
     def _key_id(self, key):
@@ -62,6 +65,9 @@ class KeyboardTeleop(Node):
         if kid == 'q':
             self.get_logger().info('Keyboard teleop stopped.')
             rclpy.shutdown()
+            return
+        if kid == 'm':
+            self._save_pub.publish(Empty())
             return
         if kid in BINDINGS:
             self._active.add(kid)
