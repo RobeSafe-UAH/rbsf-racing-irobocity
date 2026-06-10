@@ -71,7 +71,7 @@ RUN ROS_APT_SOURCE_VERSION=$(curl -s https://api.github.com/repos/ros-infrastruc
         ros-humble-urg-node \
         ros-humble-slam-toolbox \
     && echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc \
-    && echo "alias set_ros='source /ros2_ws/install/setup.bash'" >> ~/.bashrc
+    && echo 'CB() { pushd /ros2_ws > /dev/null; colcon build && source install/local_setup.bash; popd > /dev/null; }' >> ~/.bashrc
 
 # Create ROS 2 workspace and run initial build.
 WORKDIR /ros2_ws/src
