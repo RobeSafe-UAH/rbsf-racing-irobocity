@@ -1,8 +1,7 @@
-# 01 — Autonomous Wall Following
+# 02 — Autonomous SLAM Mapping
 
-Drive the car autonomously along a wall using a simple PID controller that reads
-distance from the LiDAR and outputs Ackermann steering commands.
-No localization or mapping — pure reactive control.
+Drive the car autonomously along a wall using a PID controller while SLAM Toolbox
+builds a map of the environment in the background.
 Supports simulation (`mvsim`) and the physical car (`real`).
 
 ---
@@ -11,16 +10,16 @@ Supports simulation (`mvsim`) and the physical car (`real`).
 
 ```bash
 # Simulation — right wall (default)
-ros2 launch stack_launcher 01_wall_following.launch.py
+ros2 launch stack_launcher 02_autonomous_slam.launch.py
 
 # Simulation — left wall
-ros2 launch stack_launcher 01_wall_following.launch.py side:=left
+ros2 launch stack_launcher 02_autonomous_slam.launch.py side:=left
 
 # Physical car — right wall
-ros2 launch stack_launcher 01_wall_following.launch.py mode:=real
+ros2 launch stack_launcher 02_autonomous_slam.launch.py mode:=real
 
 # Physical car — left wall, slower
-ros2 launch stack_launcher 01_wall_following.launch.py mode:=real side:=left speed:=0.4
+ros2 launch stack_launcher 02_autonomous_slam.launch.py mode:=real side:=left speed:=0.4
 ```
 
 ---
@@ -65,6 +64,13 @@ Pass `auto` (the default) to use the value from the YAML file unchanged.
 | `kd` | `0.08` | `0.08` | Derivative gain |
 | `params_file` | `auto` | `auto` | Full path to a custom params YAML |
 
+### Map saving
+
+| Argument | Default | Description |
+|---|---|---|
+| `map_output_dir` | `/ros2_ws/maps` | Directory where map files are written |
+| `save_button` | `0` | Gamepad button index that triggers a save |
+
 ---
 
 ## How the PID controller works
@@ -89,6 +95,16 @@ centred at ±90° (right/left).  The steering sign is flipped automatically when
 
 ---
 
+## Saving a map
+
+An xterm window opens automatically. **Click on it to give it focus**, then press `m`
+(keystrokes are hidden) to save the map.  Alternatively, press button `save_button`
+(default: **A / button 0**) on a connected gamepad.
+
+The map is saved to `map_output_dir` with a timestamp: `map_YYYYMMDD_HHMMSS/`.
+
+---
+
 ## Config files
 
 Default PID parameters live in `rbsf_wall_follower/config/`:
@@ -98,8 +114,12 @@ Default PID parameters live in `rbsf_wall_follower/config/`:
 | `pid_params_sim.yaml` | `mode:=mvsim` |
 | `pid_params_real.yaml` | `mode:=real` |
 
-Edit these files to persist your tuned gains, or pass individual gains as launch
-arguments for quick experiments without changing the files.
+SLAM Toolbox parameters live in `rbsf_slam_toolbox/config/`:
+
+| File | Used when |
+|---|---|
+| `mapper_params_sim.yaml` | `mode:=mvsim` |
+| `mapper_params_real.yaml` | `mode:=real` |
 
 ---
 
@@ -110,4 +130,7 @@ arguments for quick experiments without changing the files.
 | `mvsim` | `mvsim` | `mode:=mvsim` |
 | `bringup` (VESC, LiDAR, camera) | `rbsf_bringup` | `mode:=real` |
 | `pid_controller` | `rbsf_wall_follower` | always |
+| `async_slam_toolbox_node` | `slam_toolbox` | always |
+| `map_saver_node` | `rbsf_slam_toolbox` | always |
+| `keyboard_map_trigger` | `stack_launcher` | always |
 | `ackermann_to_twist` | `stack_launcher` | `mode:=mvsim` |
