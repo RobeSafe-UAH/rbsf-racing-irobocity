@@ -38,7 +38,7 @@ build:
 	@echo "Run 'make run' to start the container."
 
 run:
-	xhost +local:docker
+	@[ -n "$(DISPLAY)" ] && xhost +local:docker || true
 	$(call run_docker, "source /ros2_ws/entrypoint.sh && bash")
 
 attach:
