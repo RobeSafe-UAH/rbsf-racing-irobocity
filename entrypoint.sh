@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "🚀 Starting RBSF iRoboCity container..."
+echo "🚀 Starting RBSF Racing iRoboCity container..."
 echo "📂 Current directory: $(pwd)"
 echo ""
 
@@ -7,7 +7,6 @@ source /opt/ros/humble/setup.bash
 cd /ros2_ws
 colcon build
 source /ros2_ws/install/local_setup.bash
-
 
 echo -e "\n---------------------------------------------------------------------------\n"
 figlet -c "RBSF iRoboCity"
@@ -31,6 +30,13 @@ if [ ! -d ".venv" ]; then
   echo "✅ .venv updated"
 else
   echo "✅ .venv found"
+fi
+
+echo ""
+if [ "${ROS_DOMAIN_ID}" = "999" ]; then
+  echo "⚠️  Warning: ROS_DOMAIN_ID is set to 999. Please change it to your position number."
+else
+  echo "✅ ROS_DOMAIN_ID is set to ${ROS_DOMAIN_ID}"
 fi
 
 echo -e "\n---------------------------------------------------------------------------\n"

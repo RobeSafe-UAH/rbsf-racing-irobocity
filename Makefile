@@ -1,17 +1,21 @@
-USER_NAME := $(shell whoami)
-IMAGE_NAME := rbsf_racing_irobocity
-TAG_NAME := v0.0.1
-CONTAINER_NAME := $(IMAGE_NAME)_container
 GPU_ID := 0
-ROS_DOMAIN_ID := 8
+ROS_DOMAIN_ID := 999
+
+BASE_TAG := base
+COURSE_TAG := racing
+IMAGE_NAME := curso_uah_irobocity
+CONTAINER_NAME := $(IMAGE_NAME)_$(COURSE_TAG)_container
 
 UID := $(shell id -u)
 GID := $(shell id -g)
+USER_NAME := $(shell whoami)
+
 
 define run_docker
 	@docker run -it --rm \
 		--net host \
 		--ipc host \
+		--gpus device=$(GPU_ID) \
 		--ulimit memlock=-1 \
 		--ulimit stack=67108864 \
 		--name=$(CONTAINER_NAME) \
@@ -27,13 +31,21 @@ define run_docker
 		-e TERM=xterm-256color \
 		-e DISPLAY=$(DISPLAY) \
 		-e ROS_DOMAIN_ID=$(ROS_DOMAIN_ID) \
-		$(IMAGE_NAME):$(TAG_NAME) \
+		$(IMAGE_NAME):$(COURSE_TAG) \
 		/bin/bash -c $(1)
 endef
 
-.PHONY: build run attach clear
-build:
-	docker build . -t $(IMAGE_NAME):$(TAG_NAME) --build-arg USER=$(USER_NAME) --build-arg UID=$(UID) --build-arg GID=$(GID)
+.PHONY: build run attach clear build_base
+
+build_base:
+	docker build ./deploy -f deploy/Dockerfile.base \
+		-t $(IMAGE_NAME):$(BASE_TAG) \
+		--build-arg USER=$(USER_NAME) \
+		--build-arg UID=$(UID) \
+		--build-arg GID=$(GID)
+
+build: build_base
+	docker build ./deploy -f deploy/Dockerfile.racing -t $(IMAGE_NAME):$(COURSE_TAG) --build-arg USER=$(USER_NAME) --build-arg UID=$(UID) --build-arg GID=$(GID)
 	@echo "\nBuild complete!"
 	@echo "Run 'make run' to start the container."
 
