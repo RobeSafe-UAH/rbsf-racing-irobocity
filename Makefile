@@ -13,9 +13,10 @@ USER_NAME := $(shell whoami)
 
 define run_docker
 	@docker run -it --rm \
+		--runtime=nvidia \
+		--gpus device=$(GPU_ID) \
 		--net host \
 		--ipc host \
-		--gpus device=$(GPU_ID) \
 		--ulimit memlock=-1 \
 		--ulimit stack=67108864 \
 		--name=$(CONTAINER_NAME) \
