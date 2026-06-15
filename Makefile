@@ -1,5 +1,5 @@
 GPU_ID := 0
-ROS_DOMAIN_ID := 999
+ROS_DOMAIN_ID := 200
 
 BASE_TAG := base
 COURSE_TAG := racing

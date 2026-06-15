@@ -33,8 +33,8 @@ else
 fi
 
 echo ""
-if [ "${ROS_DOMAIN_ID}" = "999" ]; then
-  echo "⚠️  Warning: ROS_DOMAIN_ID is set to 999. Please change it to your position number."
+if [ "${ROS_DOMAIN_ID}" = "200" ]; then
+  echo "⚠️  Warning: ROS_DOMAIN_ID is set to 200. Please change it to your position number."
 else
   echo "✅ ROS_DOMAIN_ID is set to ${ROS_DOMAIN_ID}"
 fi
