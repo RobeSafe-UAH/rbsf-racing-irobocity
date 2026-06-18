@@ -26,11 +26,7 @@ def launch_setup(context, *args, **kwargs):
         init_pose,
     )
 
-    joy_teleop_config = os.path.join(
-        get_package_share_directory('rbsf_mvsim'),
-        'config',
-        'joy_teleop.yaml'
-    )
+    joy_teleop_config = LaunchConfiguration('joy_config').perform(context)
     mux_config = os.path.join(
         get_package_share_directory('rbsf_mvsim'),
         'config',
@@ -85,6 +81,13 @@ def generate_launch_description():
             default_value='controller',
             description="Teleop input device: 'controller' (gamepad) or 'keyboard'",
             choices=['controller', 'keyboard'],
+        ),
+        DeclareLaunchArgument(
+            'joy_config',
+            default_value=os.path.join(
+                get_package_share_directory('rbsf_mvsim'), 'config', 'joy_teleop.yaml'
+            ),
+            description='Path to joy / joy_teleop config YAML (overridable per use-case)',
         ),
         DeclareLaunchArgument(
             "world_file",

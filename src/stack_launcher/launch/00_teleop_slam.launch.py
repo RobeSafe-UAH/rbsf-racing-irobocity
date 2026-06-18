@@ -62,6 +62,12 @@ def launch_setup(context, *args, **kwargs):
             "world_config_file":  LaunchConfiguration("world_config_file"),
             "init_pose":          LaunchConfiguration("init_pose"),
         })
+        if teleop == "controller":
+            world_args["joy_config"] = os.path.join(
+                get_package_share_directory("rbsf_mvsim"),
+                "config",
+                "joy_teleop_slam.yaml",
+            )
 
     if mode == "real":
         erpm = max_speed * _SPEED_TO_ERPM_GAIN
@@ -69,6 +75,12 @@ def launch_setup(context, *args, **kwargs):
             "speed_max_erpm": str(erpm),
             "speed_min_erpm": str(-erpm),
         })
+        if teleop == "controller":
+            world_args["joy_config"] = os.path.join(
+                get_package_share_directory("f1tenth_stack"),
+                "config",
+                "joy_teleop_slam.yaml",
+            )
 
     world_bringup = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(world_launch[mode]),
@@ -108,9 +120,11 @@ def launch_setup(context, *args, **kwargs):
     nodes = [world_bringup, slam, map_saver]
 
     # ------------------------------------------------------------------ #
-    # mvsim only: bridge AckermannDriveStamped → Twist for the simulator  #
+    # mvsim + keyboard: bridge AckermannDriveStamped → Twist.             #
+    # mvsim + controller: joy_teleop publishes Twist directly to cmd_vel  #
+    # (see joy_teleop_slam.yaml), so the bridge is not needed.            #
     # ------------------------------------------------------------------ #
-    if mode == "mvsim":
+    if mode == "mvsim" and teleop != "controller":
         nodes.append(Node(
             package="stack_launcher",
             executable="ackermann_to_twist",
