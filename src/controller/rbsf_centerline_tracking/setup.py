@@ -3,7 +3,7 @@ from glob import glob
 
 from setuptools import find_packages, setup
 
-package_name = "rbsf_wall_follower"
+package_name = "rbsf_centerline_tracking"
 launch_files = glob(os.path.join("launch", "*.launch.py")) + glob(
     os.path.join("launch", "*_launch.py")
 )
@@ -26,14 +26,14 @@ setup(
     ],
     install_requires=["setuptools"],
     zip_safe=True,
-    maintainer="Rodrigo Gutiérrez-Moreno",
-    maintainer_email="rodrigo.gutierrez@uah.es",
-    description="Simple PID wall follower using LaserScan and Ackermann commands.",
-    license="MIT",
+    maintainer="santi",
+    maintainer_email="santi@todo.todo",
+    description="Didactic centerline tracking using nav_msgs/Path and odometry.",
+    license="TODO: License declaration",
     extras_require={"test": ["pytest"]},
     entry_points={
         "console_scripts": [
-            "wall_follower = rbsf_wall_follower.wall_follower_node:main",
+            "centerline_tracker = rbsf_centerline_tracking.centerline_tracker_node:main",
         ],
     },
 )

@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>rbsf_wall_follower</name>
+  <name>rbsf_wall_following</name>
   <version>0.0.0</version>
-  <description>Simple PID wall follower using LaserScan and Ackermann commands.</description>
-  <maintainer email="rodrigo.gutierrez@uah.es">Rodrigo Gutiérrez-Moreno</maintainer>
-  <license>MIT</license>
+  <description>Simple PID wall following using LaserScan and Ackermann commands.</description>
+  <maintainer email="santi@todo.todo">santi</maintainer>
+  <license>TODO: License declaration</license>
 
   <depend>ackermann_msgs</depend>
   <depend>rclpy</depend>

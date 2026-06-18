@@ -1,0 +1,11 @@
+wall_follower:
+  ros__parameters:
+    scan_topic: /scan
+    drive_topic: /drive
+    desired_distance: 0.7
+    speed: 0.6
+    distance_kp: 1.0
+    distance_ki: 0.0
+    orientation_kp: 1.0
+    orientation_ki: 0.0
+    use_sim_time: false

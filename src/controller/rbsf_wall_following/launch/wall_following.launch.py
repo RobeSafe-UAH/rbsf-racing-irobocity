@@ -11,15 +11,15 @@ def launch_setup(context, *args, **kwargs):
     mode = LaunchConfiguration("mode").perform(context)
     params_file_arg = LaunchConfiguration("params_file").perform(context)
 
-    rbsf_wall_follower_share = FindPackageShare("rbsf_wall_follower").find(
-        "rbsf_wall_follower"
+    rbsf_wall_following_share = FindPackageShare("rbsf_wall_following").find(
+        "rbsf_wall_following"
     )
     params_files = {
         "real": os.path.join(
-            rbsf_wall_follower_share, "config", "pid_params_real.yaml"
+            rbsf_wall_following_share, "config", "wall_following_real.yaml"
         ),
         "mvsim": os.path.join(
-            rbsf_wall_follower_share, "config", "pid_params_sim.yaml"
+            rbsf_wall_following_share, "config", "wall_following_sim.yaml"
         ),
     }
 
@@ -34,9 +34,9 @@ def launch_setup(context, *args, **kwargs):
 
     return [
         Node(
-            package="rbsf_wall_follower",
+            package="rbsf_wall_following",
             executable="wall_follower",
-            name="pid_controller",
+            name="wall_follower",
             output="screen",
             parameters=[params_file],
         )
@@ -55,7 +55,7 @@ def generate_launch_description():
             DeclareLaunchArgument(
                 "params_file",
                 default_value="auto",
-                description="PID controller parameters YAML.",
+                description="Wall-following controller parameters YAML.",
             ),
             OpaqueFunction(function=launch_setup),
         ]

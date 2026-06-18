@@ -1,16 +1,3 @@
-"""
-01_wall_following — Autonomous wall-following with a PID controller.
-
-The car follows the wall on the selected side at a configurable distance.
-No localization or mapping — pure reactive control.  Works in simulation
-(mvsim) and on the physical car (real).
-
-Quick start:
-    ros2 launch stack_launcher 01_wall_following.launch.py                   # sim, right wall
-    ros2 launch stack_launcher 01_wall_following.launch.py mode:=real        # physical car
-    ros2 launch stack_launcher 01_wall_following.launch.py side:=left        # left wall
-"""
-
 import os
 
 from launch import LaunchDescription
@@ -19,8 +6,9 @@ from launch.actions import (
     IncludeLaunchDescription,
     OpaqueFunction,
 )
+from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution, PythonExpression
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
@@ -28,60 +16,50 @@ from launch_ros.substitutions import FindPackageShare
 def launch_setup(context, *args, **kwargs):
     mode = LaunchConfiguration("mode").perform(context)
 
-    # Routes to packages.
     rbsf_bringup_share = FindPackageShare("rbsf_bringup").find("rbsf_bringup")
     rbsf_mvsim_share = FindPackageShare("rbsf_mvsim").find("rbsf_mvsim")
-    rbsf_wall_following_share = FindPackageShare("rbsf_wall_following").find(
-        "rbsf_wall_following"
+    rbsf_centerline_tracking_share = FindPackageShare("rbsf_centerline_tracking").find(
+        "rbsf_centerline_tracking"
     )
 
-    # Load bringup or simulation world.
-    world_launch_files = {
-        "real": os.path.join(
-            rbsf_bringup_share, "launch", "bringup.launch.py"
-        ),
-        "mvsim": os.path.join(
-            rbsf_mvsim_share, "launch", "launch_world.launch.py"
-        ),
+    bringup_launch_files = {
+        "real": os.path.join(rbsf_bringup_share, "launch", "bringup.launch.py"),
+        "mvsim": os.path.join(rbsf_mvsim_share, "launch", "launch_world.launch.py"),
     }
 
-    if mode not in world_launch_files:
+    if mode not in bringup_launch_files:
         raise RuntimeError(
-            f"Unknown mode '{mode}'. Valid options: {list(world_launch_files)}"
+            f"Unknown mode '{mode}'. Valid options: {list(bringup_launch_files)}"
         )
 
-    world_launch_arguments = {}
+    bringup_launch_arguments = {}
     if mode == "mvsim":
-        world_launch_arguments = {
+        bringup_launch_arguments = {
             "world_file": LaunchConfiguration("world_file"),
             "vehicle_config_file": LaunchConfiguration("vehicle_config_file"),
             "world_config_file": LaunchConfiguration("world_config_file"),
             "init_pose": LaunchConfiguration("init_pose"),
         }
 
-    world_bringup = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(world_launch_files[mode]),
-        launch_arguments=world_launch_arguments.items(),
+    bringup = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(bringup_launch_files[mode]),
+        launch_arguments=bringup_launch_arguments.items(),
     )
 
-    # Load wall-following controller launch file.
     controller = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(
-                rbsf_wall_following_share,
+                rbsf_centerline_tracking_share,
                 "launch",
-                "wall_following.launch.py",
+                "centerline_tracking.launch.py",
             )
         ),
-        launch_arguments={
-            "mode": mode,
-        }.items(),
+        launch_arguments={"mode": mode}.items(),
     )
 
-    nodes = [world_bringup, controller]
+    nodes = [bringup, controller]
 
     if mode == "mvsim":
-        # Bridge Ackermann commands to the Twist interface used by MVSim.
         nodes.append(
             Node(
                 package="stack_launcher",
@@ -95,6 +73,22 @@ def launch_setup(context, *args, **kwargs):
 
 
 def generate_launch_description():
+    centerline_publisher = Node(
+        package="rbsf_slam_toolbox",
+        executable="centerline_publisher",
+        name="centerline_publisher",
+        output="screen",
+        parameters=[
+            {
+                "csv_path": LaunchConfiguration("centerline_csv"),
+                "topic": LaunchConfiguration("centerline_topic"),
+            }
+        ],
+        condition=IfCondition(
+            PythonExpression(["'", LaunchConfiguration("centerline_csv"), "' != ''"])
+        ),
+    )
+
     return LaunchDescription(
         [
             DeclareLaunchArgument(
@@ -135,6 +129,17 @@ def generate_launch_description():
                 default_value="",
                 description="MVSim initial pose override used when mode:=mvsim",
             ),
+            DeclareLaunchArgument(
+                "centerline_csv",
+                default_value="",
+                description="Optional CSV file used to publish nav_msgs/Path.",
+            ),
+            DeclareLaunchArgument(
+                "centerline_topic",
+                default_value="/centerline",
+                description="Topic where the centerline path is published.",
+            ),
             OpaqueFunction(function=launch_setup),
+            centerline_publisher,
         ]
     )

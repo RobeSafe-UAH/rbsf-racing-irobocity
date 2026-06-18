@@ -1,0 +1,10 @@
+centerline_tracker:
+  ros__parameters:
+    path_topic: /centerline
+    odom_topic: /odom
+    drive_topic: /drive
+    speed: 0.8
+    lookahead_distance: 1.0
+    kp: 0.8
+    ki: 0.0
+    use_sim_time: false
