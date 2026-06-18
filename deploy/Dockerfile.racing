@@ -3,6 +3,8 @@ FROM ${BASE_IMAGE}
 
 ARG USER
 
+ENV PYTHONPATH="/ros2_ws/.venv/lib/python3.10/site-packages:${PYTHONPATH}"
+
 WORKDIR /ros2_ws
 
 RUN echo "PS1='\[\e[1;34m\]\u\[\e[1;37m\]@\[\e[1;33m\]\h\[\e[1;37m\]:\[\e[0;37m\]\w\[\e[1;37m\] → \[\e[0m\]'" >> ~/.bashrc \
