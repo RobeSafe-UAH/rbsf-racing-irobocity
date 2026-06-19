@@ -1,25 +1,17 @@
 """
-00_teleop_slam — Teleoperated mapping session.
+00_teleop_slam — Teleoperated mapping session (controller only).
 
-Drive the car manually while SLAM Toolbox builds a map.  Works in
-simulation (mvsim) and on the physical car (real).  Map is saved by
-pressing a gamepad button (controller mode) or calling the SLAM Toolbox
-service directly (keyboard mode).
+Drive the car with a gamepad while SLAM Toolbox builds a map.  Works in
+simulation (mvsim) and on the physical car (real).  Press save_button on
+the gamepad to save the map.
 
 Quick start:
-    ros2 launch stack_launcher 00_teleop_slam.launch.py                          # sim + keyboard
-    ros2 launch stack_launcher 00_teleop_slam.launch.py teleop:=controller       # sim + gamepad
-    ros2 launch stack_launcher 00_teleop_slam.launch.py mode:=real teleop:=controller
-    ros2 launch stack_launcher 00_teleop_slam.launch.py max_speed:=2.0           # set max speed (m/s, default 1.0)
-
-Map save:
-    Controller — press button <save_button> (default: 0) on the gamepad.
-    Keyboard  — press 'm' in the xterm window (keystrokes are hidden).
+    ros2 launch stack_launcher 00_teleop_slam.launch.py                   # real car
+    ros2 launch stack_launcher 00_teleop_slam.launch.py mode:=mvsim       # simulation
 """
 
 import os
 
-from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, OpaqueFunction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
@@ -28,142 +20,75 @@ from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
 
-# Must match speed_to_erpm_gain in f1tenth_stack/config/vesc.yaml.
-_SPEED_TO_ERPM_GAIN = 4420.0
-
-
 def launch_setup(context, *args, **kwargs):
     mode = LaunchConfiguration("mode").perform(context)
-    teleop = LaunchConfiguration("teleop").perform(context)
-    max_speed = float(LaunchConfiguration("max_speed").perform(context))
-    map_output_dir = LaunchConfiguration("map_output_dir").perform(context)
-    save_button = int(LaunchConfiguration("save_button").perform(context))
 
     rbsf_bringup_share = FindPackageShare("rbsf_bringup").find("rbsf_bringup")
     rbsf_mvsim_share = FindPackageShare("rbsf_mvsim").find("rbsf_mvsim")
     rbsf_slam_toolbox_share = FindPackageShare("rbsf_slam_toolbox").find("rbsf_slam_toolbox")
 
-    # ------------------------------------------------------------------ #
-    # World bringup                                                        #
-    # ------------------------------------------------------------------ #
-    world_launch = {
+    world_launch_files = {
         "real":  os.path.join(rbsf_bringup_share, "launch", "bringup.launch.py"),
         "mvsim": os.path.join(rbsf_mvsim_share,   "launch", "launch_world.launch.py"),
     }
-    if mode not in world_launch:
-        raise RuntimeError(f"Unknown mode '{mode}'. Choose from: {list(world_launch)}")
 
-    world_args = {"teleop_device": teleop}
+    if mode not in world_launch_files:
+        raise RuntimeError(f"Unknown mode '{mode}'. Choose from: {list(world_launch_files)}")
+
+    world_args = {"teleop_device": "controller"}
 
     if mode == "mvsim":
         world_args.update({
-            "world_file":         LaunchConfiguration("world_file"),
+            "world_file":          LaunchConfiguration("world_file"),
             "vehicle_config_file": LaunchConfiguration("vehicle_config_file"),
-            "world_config_file":  LaunchConfiguration("world_config_file"),
-            "init_pose":          LaunchConfiguration("init_pose"),
+            "world_config_file":   LaunchConfiguration("world_config_file"),
+            "init_pose":           LaunchConfiguration("init_pose"),
+            "joy_config":          os.path.join(rbsf_mvsim_share, "config", "joy_teleop_slam.yaml"),
         })
-        if teleop == "controller":
-            world_args["joy_config"] = os.path.join(
-                get_package_share_directory("rbsf_mvsim"),
-                "config",
-                "joy_teleop_slam.yaml",
-            )
-
-    if mode == "real":
-        erpm = max_speed * _SPEED_TO_ERPM_GAIN
-        world_args.update({
-            "speed_max_erpm": str(erpm),
-            "speed_min_erpm": str(-erpm),
-        })
-        if teleop == "controller":
-            world_args["joy_config"] = os.path.join(
-                get_package_share_directory("f1tenth_stack"),
-                "config",
-                "joy_teleop_slam.yaml",
-            )
 
     world_bringup = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(world_launch[mode]),
+        PythonLaunchDescriptionSource(world_launch_files[mode]),
         launch_arguments=world_args.items(),
     )
 
-    # ------------------------------------------------------------------ #
-    # SLAM Toolbox — online async mapping                                  #
-    # ------------------------------------------------------------------ #
-    slam_config = {
+    # SLAM Toolbox — auto-select params by mode or use override.
+    default_slam_params = {
         "real":  os.path.join(rbsf_slam_toolbox_share, "config", "mapper_params_real.yaml"),
         "mvsim": os.path.join(rbsf_slam_toolbox_share, "config", "mapper_params_sim.yaml"),
     }
+    slam_params_file = LaunchConfiguration("slam_params_file").perform(context)
+    resolved_slam_params = default_slam_params[mode] if slam_params_file == "auto" else slam_params_file
+
     slam = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(get_package_share_directory("rbsf_slam_toolbox"), "launch", "mapping.launch.py")
+            os.path.join(rbsf_slam_toolbox_share, "launch", "mapping.launch.py")
         ),
         launch_arguments={
-            "slam_params_file": slam_config[mode],
+            "slam_params_file": resolved_slam_params,
             "use_sim_time":     "true" if mode == "mvsim" else "false",
         }.items(),
     )
 
-    # ------------------------------------------------------------------ #
-    # Map saver — triggered by gamepad button press                        #
-    # ------------------------------------------------------------------ #
     map_saver = Node(
         package="rbsf_slam_toolbox",
         executable="map_saver",
         name="map_saver_node",
         parameters=[{
-            "map_output_dir": map_output_dir,
-            "save_button": save_button,
+            "map_output_dir": LaunchConfiguration("map_output_dir"),
+            "save_button":    LaunchConfiguration("save_button"),
         }],
     )
 
-    nodes = [world_bringup, slam, map_saver]
-
-    # ------------------------------------------------------------------ #
-    # mvsim + keyboard: bridge AckermannDriveStamped → Twist.             #
-    # mvsim + controller: joy_teleop publishes Twist directly to cmd_vel  #
-    # (see joy_teleop_slam.yaml), so the bridge is not needed.            #
-    # ------------------------------------------------------------------ #
-    if mode == "mvsim" and teleop != "controller":
-        nodes.append(Node(
-            package="stack_launcher",
-            executable="ackermann_to_twist",
-            name="ackermann_to_twist",
-            parameters=[{"input_topic": "/ackermann_drive"}],
-        ))
-
-    # ------------------------------------------------------------------ #
-    # Keyboard teleop — opens in its own xterm window                     #
-    # ------------------------------------------------------------------ #
-    if teleop == "keyboard":
-        nodes.append(Node(
-            package="stack_launcher",
-            executable="keyboard_teleop",
-            name="keyboard_teleop",
-            prefix="xterm -e",
-            parameters=[{
-                "output_topic":    "teleop",
-                "forward_speed":   max_speed,
-                "backward_speed":  max_speed,
-            }],
-        ))
-
-    return nodes
+    return [world_bringup, slam, map_saver]
 
 
 def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument(
             "mode",
-            default_value="mvsim",
+            default_value="real",
             choices=["real", "mvsim"],
             description="Bringup mode: 'real' (physical car) or 'mvsim' (simulator)",
-        ),
-        DeclareLaunchArgument(
-            "teleop",
-            default_value="keyboard",
-            choices=["controller", "keyboard"],
-            description="Input device: 'controller' (gamepad) or 'keyboard' (WASD / arrow keys)",
         ),
 
         # --- mvsim arguments ------------------------------------------- #
@@ -194,11 +119,14 @@ def generate_launch_description():
             description="Initial pose override: 'x y yaw_deg'  [mode:=mvsim]",
         ),
 
-        # --- real arguments -------------------------------------------- #
+        # --- SLAM ------------------------------------------------------- #
         DeclareLaunchArgument(
-            "max_speed",
-            default_value="1.0",
-            description="Maximum longitudinal speed in m/s — caps keyboard teleop commands (all modes) and VESC ERPM limits (mode:=real)",
+            "slam_params_file",
+            default_value="auto",
+            description=(
+                "Path to slam_toolbox params YAML. "
+                "Default 'auto' selects mapper_params_real.yaml or mapper_params_sim.yaml by mode."
+            ),
         ),
 
         # --- map saver ------------------------------------------------- #
@@ -210,7 +138,7 @@ def generate_launch_description():
         DeclareLaunchArgument(
             "save_button",
             default_value="0",
-            description="Gamepad button index that triggers a map save  [teleop:=controller]",
+            description="Gamepad button index that triggers a map save",
         ),
 
         OpaqueFunction(function=launch_setup),
