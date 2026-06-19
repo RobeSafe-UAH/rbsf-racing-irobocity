@@ -2,11 +2,13 @@
 02_autonomous_slam — Autonomous wall-following with SLAM mapping.
 
 Same as 01_wall_following but adds slam_toolbox online-async mapping in the
-background.  Works in simulation (mvsim) and on the physical car (real).
+background.  Works in simulation (mvsim), on the physical car (real), and in
+distributed mode where hardware runs on a separate embedded device.
 
 Quick start:
-    ros2 launch stack_launcher 02_autonomous_slam.launch.py                   # real car
-    ros2 launch stack_launcher 02_autonomous_slam.launch.py mode:=mvsim       # simulation
+    ros2 launch stack_launcher 02_autonomous_slam.launch.py                        # real car
+    ros2 launch stack_launcher 02_autonomous_slam.launch.py mode:=mvsim            # simulation
+    ros2 launch stack_launcher 02_autonomous_slam.launch.py mode:=distributed      # compute node only
 """
 
 import os
@@ -21,6 +23,22 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
+
+
+# Maps the top-level mode to the config mode expected by sub-launchers.
+# Sub-launchers (wall_following, slam_toolbox, etc.) only understand "real" and
+# "mvsim"; "distributed" uses the same hardware config as "real".
+_CONTROLLER_MODE = {
+    "real":        "real",
+    "mvsim":       "mvsim",
+    "distributed": "real",
+}
+
+_SLAM_PARAMS_KEY = {
+    "real":        "real",
+    "mvsim":       "mvsim",
+    "distributed": "real",
+}
 
 
 def launch_setup(context, *args, **kwargs):
@@ -46,24 +64,30 @@ def launch_setup(context, *args, **kwargs):
         ),
     }
 
-    if mode not in world_launch_files:
+    if mode not in _CONTROLLER_MODE:
         raise RuntimeError(
-            f"Unknown mode '{mode}'. Valid options: {list(world_launch_files)}"
+            f"Unknown mode '{mode}'. Valid options: {list(_CONTROLLER_MODE)}"
         )
 
-    world_launch_arguments = {}
-    if mode == "mvsim":
-        world_launch_arguments = {
-            "world_file": LaunchConfiguration("world_file"),
-            "vehicle_config_file": LaunchConfiguration("vehicle_config_file"),
-            "world_config_file": LaunchConfiguration("world_config_file"),
-            "init_pose": LaunchConfiguration("init_pose"),
-        }
+    nodes = []
 
-    world_bringup = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(world_launch_files[mode]),
-        launch_arguments=world_launch_arguments.items(),
-    )
+    # In distributed mode the embedded device runs 00_distributed_bringup;
+    # skip hardware/simulation bringup on this compute node.
+    if mode != "distributed":
+        world_launch_arguments = {}
+        if mode == "mvsim":
+            world_launch_arguments = {
+                "world_file": LaunchConfiguration("world_file"),
+                "vehicle_config_file": LaunchConfiguration("vehicle_config_file"),
+                "world_config_file": LaunchConfiguration("world_config_file"),
+                "init_pose": LaunchConfiguration("init_pose"),
+            }
+
+        world_bringup = IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(world_launch_files[mode]),
+            launch_arguments=world_launch_arguments.items(),
+        )
+        nodes.append(world_bringup)
 
     # Load wall-following controller launch file.
     controller = IncludeLaunchDescription(
@@ -75,9 +99,10 @@ def launch_setup(context, *args, **kwargs):
             )
         ),
         launch_arguments={
-            "mode": mode,
+            "mode": _CONTROLLER_MODE[mode],
         }.items(),
     )
+    nodes.append(controller)
 
     # Resolve slam params file: auto-select by mode or use the override.
     default_slam_params = {
@@ -85,7 +110,11 @@ def launch_setup(context, *args, **kwargs):
         "mvsim": os.path.join(rbsf_slam_toolbox_share, "config", "mapper_params_sim.yaml"),
     }
     slam_params_file = LaunchConfiguration("slam_params_file").perform(context)
-    resolved_slam_params = default_slam_params[mode] if slam_params_file == "auto" else slam_params_file
+    resolved_slam_params = (
+        default_slam_params[_SLAM_PARAMS_KEY[mode]]
+        if slam_params_file == "auto"
+        else slam_params_file
+    )
 
     use_sim_time = "true" if mode == "mvsim" else "false"
 
@@ -98,8 +127,7 @@ def launch_setup(context, *args, **kwargs):
             "use_sim_time": use_sim_time,
         }.items(),
     )
-
-    nodes = [world_bringup, controller, slam]
+    nodes.append(slam)
 
     if mode == "mvsim":
         # Bridge Ackermann commands to the Twist interface used by MVSim.
@@ -121,8 +149,13 @@ def generate_launch_description():
             DeclareLaunchArgument(
                 "mode",
                 default_value="real",
-                description="Bringup mode: 'real' or 'mvsim'",
-                choices=["real", "mvsim"],
+                description=(
+                    "Bringup mode: 'real' (full stack on this machine), "
+                    "'mvsim' (simulation), or 'distributed' (compute node only — "
+                    "hardware runs on a separate embedded device via "
+                    "00_distributed_bringup.launch.py)"
+                ),
+                choices=["real", "mvsim", "distributed"],
             ),
             DeclareLaunchArgument(
                 "world_file",
