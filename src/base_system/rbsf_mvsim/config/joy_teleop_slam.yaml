@@ -1,0 +1,41 @@
+joy:
+  ros__parameters:
+    device_id: 0
+    deadzone: 0.01
+    autorepeat_rate: 20.0
+    coalesce_interval: 0.01
+
+# Publishes geometry_msgs/Twist directly to cmd_vel instead of going through
+# the AckermannDriveStamped → ackermann_mux → ackermann_to_twist chain.
+# This avoids the bicycle-model coupling (angular.z = speed * tan(delta) / L)
+# that makes steering ineffective at low or zero speed in simulation.
+joy_teleop:
+  ros__parameters:
+    default:
+      type: topic
+      interface_type: geometry_msgs/msg/Twist
+      topic_name: cmd_vel
+      axis_mappings:
+        linear-x:
+          axis: 1
+          scale: 0.0
+          offset: 0.0
+        angular-z:
+          axis: 3
+          scale: 0.0
+          offset: 0.0
+
+    human_control:
+      type: topic
+      interface_type: geometry_msgs/msg/Twist
+      topic_name: cmd_vel
+      deadman_buttons: [4]
+      axis_mappings:
+        linear-x:
+          axis: 1
+          scale: 2.0
+          offset: 0.0
+        angular-z:
+          axis: 3
+          scale: 1.5
+          offset: 0.0

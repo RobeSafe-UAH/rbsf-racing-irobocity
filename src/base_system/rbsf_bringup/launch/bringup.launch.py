@@ -34,11 +34,7 @@ import os
 def launch_setup(context, *args, **kwargs):
     teleop_device = LaunchConfiguration('teleop_device').perform(context)
 
-    joy_teleop_config = os.path.join(
-        get_package_share_directory('f1tenth_stack'),
-        'config',
-        'joy_teleop.yaml'
-    )
+    joy_teleop_config = LaunchConfiguration('joy_config').perform(context)
     vesc_config = os.path.join(
         get_package_share_directory('f1tenth_stack'),
         'config',
