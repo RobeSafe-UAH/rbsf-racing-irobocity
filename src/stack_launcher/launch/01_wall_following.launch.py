@@ -1,14 +1,13 @@
 """
 01_wall_following — Autonomous wall-following with a PID controller.
 
-The car follows the wall on the selected side at a configurable distance.
+The car follows the wall at a configurable distance.
 No localization or mapping — pure reactive control.  Works in simulation
 (mvsim) and on the physical car (real).
 
 Quick start:
-    ros2 launch stack_launcher 01_wall_following.launch.py                   # sim, right wall
-    ros2 launch stack_launcher 01_wall_following.launch.py mode:=real        # physical car
-    ros2 launch stack_launcher 01_wall_following.launch.py side:=left        # left wall
+    ros2 launch stack_launcher 01_wall_following.launch.py                   # real car
+    ros2 launch stack_launcher 01_wall_following.launch.py mode:=mvsim       # simulation
 """
 
 import os
