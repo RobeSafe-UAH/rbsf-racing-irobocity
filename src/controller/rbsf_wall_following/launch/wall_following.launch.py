@@ -1,7 +1,7 @@
 import os
 
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, OpaqueFunction
+from launch.actions import DeclareLaunchArgument, OpaqueFunction, TimerAction
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
@@ -10,6 +10,7 @@ from launch_ros.substitutions import FindPackageShare
 def launch_setup(context, *args, **kwargs):
     mode = LaunchConfiguration("mode").perform(context)
     params_file_arg = LaunchConfiguration("params_file").perform(context)
+    startup_delay = float(LaunchConfiguration("startup_delay").perform(context))
 
     rbsf_wall_following_share = FindPackageShare("rbsf_wall_following").find(
         "rbsf_wall_following"
@@ -33,12 +34,17 @@ def launch_setup(context, *args, **kwargs):
     )
 
     return [
-        Node(
-            package="rbsf_wall_following",
-            executable="wall_follower",
-            name="wall_follower",
-            output="screen",
-            parameters=[params_file],
+        TimerAction(
+            period=startup_delay,
+            actions=[
+                Node(
+                    package="rbsf_wall_following",
+                    executable="wall_follower",
+                    name="wall_follower",
+                    output="screen",
+                    parameters=[params_file],
+                )
+            ],
         )
     ]
 
@@ -56,6 +62,11 @@ def generate_launch_description():
                 "params_file",
                 default_value="auto",
                 description="Wall-following controller parameters YAML.",
+            ),
+            DeclareLaunchArgument(
+                "startup_delay",
+                default_value="5.0",
+                description="Seconds to wait before starting the wall_follower node.",
             ),
             OpaqueFunction(function=launch_setup),
         ]
