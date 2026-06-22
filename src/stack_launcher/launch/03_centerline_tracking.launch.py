@@ -54,6 +54,7 @@ def launch_setup(context, *args, **kwargs):
                 "centerline_tracking.launch.py",
             )
         ),
+        launch_arguments={"mode": mode}.items(),
     )
 
     nodes = [bringup, controller]

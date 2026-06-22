@@ -47,10 +47,11 @@ Available worlds in `rbsf_mvsim/maps/`:
 
 ### Controller configuration
 
-The topics, references and PI gains are configured directly in Exercise 0 of
-`rbsf_wall_following/rbsf_wall_following/wall_follower_node.py`. The
-wall-following controller does not load a parameter file or expose tuning
-arguments through the launcher.
+The controller is implemented in
+`rbsf_wall_following/rbsf_wall_following/wall_follower_node.py`. Its topics,
+references and PI gains are defined directly in the source code; it does not
+load a parameter file or expose tuning arguments through the launcher.
+The `/scan` subscription is remapped to `/laser1` only in MVSim mode.
 
 ---
 

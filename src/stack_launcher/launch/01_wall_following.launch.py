@@ -91,6 +91,7 @@ def launch_setup(context, *args, **kwargs):
             )
         ),
         launch_arguments={
+            "mode":          _CONTROLLER_MODE[mode],
             "startup_delay": LaunchConfiguration("startup_delay"),
         }.items(),
     )

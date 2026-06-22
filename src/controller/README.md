@@ -49,8 +49,8 @@ Ackermann steering command at constant speed.
 | Input | `/laser1` | `sensor_msgs/LaserScan` | MVSim LiDAR scan |
 | Output | `/drive` | `ackermann_msgs/AckermannDriveStamped` | Speed and steering command |
 
-Set `scan_topic` directly in `wall_follower_node.py` for the environment being
-used.
+The controller always subscribes to `/scan`. In MVSim, the launcher remaps that
+topic to `/laser1`; in real mode no remapping is applied.
 
 #### Controller pipeline
 
@@ -75,28 +75,6 @@ orientation_steering = orientation_kp * orientation_error
 
 steering = distance_steering + orientation_steering
 ```
-
-#### Exercises — `wall_follower_node.py`
-
-Complete the exercises in order in
-`rbsf_wall_following/rbsf_wall_following/wall_follower_node.py`. Exercise 0
-initializes the node, followed by five controller exercises. Exercises 0–4 end
-with a temporary `return`; remove it after completing that exercise to continue
-to the next one.
-
-0. **Controller initialization** — fill in the topics, vehicle references and
-   controller gains directly in `__init__`.
-1. **Sampling period** — obtain `dt` from the current and previous
-   LiDAR timestamps, using `scan_time` for the first message. The conversion
-   of the ROS timestamp to seconds is provided.
-2. **Lateral ray and distance error** — convert the lateral angle to a scan
-   index, obtain its Cartesian point and compute the distance error.
-3. **Forward-left ray and orientation error** — obtain the second Cartesian
-   point, estimate the wall orientation and compute its error.
-4. **PI steering** — integrate both errors with `dt`, retain the supplied
-   anti-windup clamps and combine the proportional and integral terms.
-5. **Ackermann command** — fill the speed and steering fields and publish the
-   command on `/drive`.
 
 #### Run
 
@@ -128,23 +106,8 @@ The centerline can be loaded from a CSV file by
 `rbsf_slam_toolbox/centerline_publisher_node`.
 
 Topics, speed, lookahead distance and PI gains are configured directly in
-`centerline_tracker_node.py`. The node subscribes to both `/odom` and
-`/base_pose_ground_truth`, so it does not need separate real and simulation
-parameter files.
-
-#### Exercises — `centerline_tracker_node.py`
-
-Complete the exercises in order. Exercises 1 and 2 end with a temporary
-`return`; remove it after completing that exercise to continue to the next
-one. Timestamp handling, vehicle pose, quaternion conversion, closest-point
-search and integral anti-windup are already provided.
-
-1. **Lookahead target** — walk forward from the closest centerline point and
-   select the first cyclic path point at the configured lookahead distance.
-2. **Orientation error** — compute the desired angle, subtract the current
-   vehicle angle and then normalize the result to `[-pi, pi]`.
-3. **PI control and command** — integrate the angular error, compute steering
-   and publish the constant-speed Ackermann command.
+`centerline_tracker_node.py`. The node always subscribes to `/odom`; in MVSim,
+the launcher remaps that topic to `/base_pose_ground_truth`.
 
 #### Run
 

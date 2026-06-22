@@ -1,8 +1,4 @@
-"""Resolved centerline-tracking controller for the iRobocity course.
-
-The node receives an ordered centerline and vehicle odometry, selects a
-lookahead point and publishes a constant-speed Ackermann command.
-"""
+"""Centerline-tracking exercises for the iRobocity course."""
 
 import math
 
@@ -14,34 +10,23 @@ from rclpy.node import Node
 
 class CenterlineTrackerNode(Node):
     def __init__(self) -> None:
-        super().__init__("centerline_tracker")
+        super().__init__("centerline_tracker_student")
 
-        # ------------------------------------------------------------------
-        # Controller configuration
-        # ------------------------------------------------------------------
         self.path_topic = "/centerline"
         self.odom_topic = "/odom"
         self.drive_topic = "/drive"
 
-        # Vehicle references.
         self.speed = 1.0
         self.lookahead_distance = 1.0
 
-        # Orientation controller gains.
         self.kp = 1.0
         self.ki = 0.0
         self.orientation_integral_limit = 1.0
 
-        # Previous odometry timestamp, used to estimate the sampling period.
         self.previous_time = None
-
-        # Accumulated orientation error used by the integral term.
         self.orientation_error_integral = 0.0
-
-        # Centerline path received by the node.
         self.path = None
 
-        # ROS interfaces.
         self.publisher = self.create_publisher(
             AckermannDriveStamped,
             self.drive_topic,
@@ -56,34 +41,12 @@ class CenterlineTrackerNode(Node):
         )
 
     def path_callback(self, path: Path) -> None:
-        # ------------------------------------------------------------------
-        # Objective:
-        #   Store the centerline path. The control action is computed when an
-        #   odometry message is received.
-        # ------------------------------------------------------------------
         self.path = path
 
     def odom_callback(self, odom: Odometry) -> None:
-        # ------------------------------------------------------------------
-        # Objective:
-        #   Compute one Ackermann control command for each incoming odometry
-        #   message.
-        #
-        # Method:
-        #   1. Read the current vehicle pose.
-        #   2. Select a lookahead target on the centerline.
-        #   3. Compute the orientation error to the target point.
-        #   4. Compute the steering command and publish it.
-        #
-        # The longitudinal speed is constant. The controller only modifies the
-        # steering angle.
-        # ------------------------------------------------------------------
-
-        # The controller can only run after receiving the centerline path.
         if self.path is None or not self.path.poses:
             return
 
-        # Sampling period.
         stamp = odom.header.stamp
         current_time = stamp.sec + stamp.nanosec * 1e-9
 
@@ -94,18 +57,15 @@ class CenterlineTrackerNode(Node):
 
         self.previous_time = current_time
 
-        # Vehicle pose.
         pose = odom.pose.pose
         vehicle_x = pose.position.x
         vehicle_y = pose.position.y
 
-        # Yaw is obtained from the quaternion orientation.
         q = pose.orientation
         siny_cosp = 2.0 * (q.w * q.z + q.x * q.y)
         cosy_cosp = 1.0 - 2.0 * (q.y * q.y + q.z * q.z)
         vehicle_yaw = math.atan2(siny_cosp, cosy_cosp)
 
-        # Closest centerline point.
         closest_index = 0
         closest_distance = math.inf
 
@@ -118,52 +78,48 @@ class CenterlineTrackerNode(Node):
                 closest_index = index
 
         # ------------------------------------------------------------------
-        # Lookahead target.
+        # Exercise 1: Lookahead target
         # ------------------------------------------------------------------
-
+        # TODO: Starting at the closest point, move forward through the cyclic
+        #       path until reaching the configured lookahead distance.
         path_length = len(self.path.poses)
-        target_index = closest_index
+        target_index = ...
 
         for steps_ahead in range(path_length):
-            index = (closest_index + steps_ahead) % path_length
-
+            index = ...
             point = self.path.poses[index].pose.position
-            distance = math.hypot(point.x - vehicle_x, point.y - vehicle_y)
+            distance = ...
 
-            if distance >= self.lookahead_distance:
-                target_index = index
+            if ...:
+                target_index = ...
                 break
 
-        target = self.path.poses[target_index].pose.position
+        target = ...
+
+        return  # Remove this line after completing Exercise 1.
 
         # ------------------------------------------------------------------
-        # Orientation error.
+        # Exercise 2: Orientation error
         # ------------------------------------------------------------------
-        # The target vector is expressed in the global frame.
         dx = target.x - vehicle_x
         dy = target.y - vehicle_y
 
-        # The desired yaw is the orientation of the vector that joins the
-        # vehicle position with the lookahead target.
-        desired_yaw = math.atan2(dy, dx)
-
-        # The orientation error is the difference between the desired yaw and
-        # the current vehicle yaw.
-        oe = desired_yaw - vehicle_yaw
+        # TODO: Compute the desired yaw and its difference from vehicle_yaw.
+        desired_yaw = ...
+        oe = ...
 
         # Normalize the error to [-pi, pi].
         oe = math.atan2(math.sin(oe), math.cos(oe))
 
-        # ------------------------------------------------------------------
-        # PI control and Ackermann command.
-        # ------------------------------------------------------------------
-        # A PI controller uses the accumulated orientation error, not only
-        # the error from the current sampling period. Invalid or repeated
-        # timestamps are not integrated.
-        if math.isfinite(dt) and dt > 0.0:
-            self.orientation_error_integral += oe * dt
+        return  # Remove this line after completing Exercise 2.
 
-            # Clamp the accumulator to avoid integral windup.
+        # ------------------------------------------------------------------
+        # Exercise 3: PI control and Ackermann command
+        # ------------------------------------------------------------------
+        # TODO: Integrate the orientation error using dt.
+        if math.isfinite(dt) and dt > 0.0:
+            self.orientation_error_integral += ...
+
             self.orientation_error_integral = max(
                 -self.orientation_integral_limit,
                 min(
@@ -172,13 +128,14 @@ class CenterlineTrackerNode(Node):
                 ),
             )
 
-        steering = oe * self.kp + self.orientation_error_integral * self.ki
+        # TODO: Compute steering, fill the command and publish it.
+        steering = ...
 
         msg = AckermannDriveStamped()
         msg.header.stamp = odom.header.stamp
-        msg.drive.speed = self.speed
-        msg.drive.steering_angle = steering
-        self.publisher.publish(msg)
+        msg.drive.speed = ...
+        msg.drive.steering_angle = ...
+        self.publisher.publish(...)
 
 
 def main(args=None) -> None:

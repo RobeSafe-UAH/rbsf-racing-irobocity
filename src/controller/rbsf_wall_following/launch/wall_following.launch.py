@@ -5,7 +5,10 @@ from launch_ros.actions import Node
 
 
 def launch_setup(context, *args, **kwargs):
+    mode = LaunchConfiguration("mode").perform(context)
     startup_delay = float(LaunchConfiguration("startup_delay").perform(context))
+
+    remappings = [("/scan", "/laser1")] if mode == "mvsim" else []
 
     return [
         TimerAction(
@@ -16,6 +19,7 @@ def launch_setup(context, *args, **kwargs):
                     executable="wall_follower",
                     name="wall_follower",
                     output="screen",
+                    remappings=remappings,
                 )
             ],
         )
@@ -25,6 +29,12 @@ def launch_setup(context, *args, **kwargs):
 def generate_launch_description():
     return LaunchDescription(
         [
+            DeclareLaunchArgument(
+                "mode",
+                default_value="real",
+                description="Controller mode: 'real' or 'mvsim'",
+                choices=["real", "mvsim"],
+            ),
             DeclareLaunchArgument(
                 "startup_delay",
                 default_value="2.5",
