@@ -65,7 +65,7 @@ def generate_launch_description():
             ),
             DeclareLaunchArgument(
                 "startup_delay",
-                default_value="5.0",
+                default_value="2.5",
                 description="Seconds to wait before starting the wall_follower node.",
             ),
             OpaqueFunction(function=launch_setup),

@@ -9,6 +9,9 @@ Quick start:
     ros2 launch stack_launcher 02_autonomous_slam.launch.py                        # real car
     ros2 launch stack_launcher 02_autonomous_slam.launch.py mode:=mvsim            # simulation
     ros2 launch stack_launcher 02_autonomous_slam.launch.py mode:=distributed      # compute node only
+
+Map save (mvsim):
+    Press 'm' in the xterm window that opens automatically.
 """
 
 import os
@@ -137,6 +140,16 @@ def launch_setup(context, *args, **kwargs):
                 executable="ackermann_to_twist",
                 name="ackermann_to_twist",
                 parameters=[{"input_topic": "/drive"}],
+            )
+        )
+        # Keyboard map trigger — 'm' saves the map, drive keys disabled.
+        nodes.append(
+            Node(
+                package="stack_launcher",
+                executable="keyboard_teleop",
+                name="keyboard_map_trigger",
+                prefix="xterm -e",
+                parameters=[{"teleop_enabled": False}],
             )
         )
 
