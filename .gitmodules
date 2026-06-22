@@ -2,3 +2,7 @@
 	path = src/base_system/f1tenth_system
 	url = https://github.com/RobeSafe-UAH/f1tenth_system
 	branch = humble-devel
+[submodule "scripts/f1tenth_racetracks"]
+	path = scripts/f1tenth_racetracks
+	url = https://github.com/f1tenth/f1tenth_racetracks
+	branch = main
