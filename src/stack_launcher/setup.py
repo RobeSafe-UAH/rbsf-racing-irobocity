@@ -23,7 +23,7 @@ setup(
     zip_safe=True,
     maintainer='santi',
     maintainer_email='santi@todo.todo',
-    description='TODO: Package description',
+    description='Launch files and utilities for the iRobocity racing stack.',
     license='TODO: License declaration',
     extras_require={
         'test': [

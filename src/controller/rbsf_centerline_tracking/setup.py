@@ -18,10 +18,6 @@ setup(
             ["resource/" + package_name],
         ),
         ("share/" + package_name, ["package.xml"]),
-        (
-            "share/" + package_name + "/config",
-            glob(os.path.join("config", "*.yaml")),
-        ),
         ("share/" + package_name + "/launch", launch_files),
     ],
     install_requires=["setuptools"],

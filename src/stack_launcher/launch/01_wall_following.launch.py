@@ -1,5 +1,5 @@
 """
-01_wall_following — Autonomous wall-following with a PID controller.
+01_wall_following — Autonomous wall-following with a PI controller.
 
 The car follows the wall at a configurable distance.
 No localization or mapping — pure reactive control.  Works in simulation
@@ -91,7 +91,6 @@ def launch_setup(context, *args, **kwargs):
             )
         ),
         launch_arguments={
-            "mode":          _CONTROLLER_MODE[mode],
             "startup_delay": LaunchConfiguration("startup_delay"),
         }.items(),
     )
