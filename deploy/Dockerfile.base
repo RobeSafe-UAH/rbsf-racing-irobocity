@@ -72,6 +72,7 @@ RUN ROS_APT_SOURCE_VERSION=$(curl -s https://api.github.com/repos/ros-infrastruc
         ros-humble-laser-proc \
         ros-humble-urg-node \
         ros-humble-slam-toolbox \
+        ros-humble-realsense2-camera \
     && rm -rf /var/lib/apt/lists/*
 
 # Install UV
