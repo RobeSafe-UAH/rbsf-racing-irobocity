@@ -5,7 +5,7 @@
 - **Docker** with NVIDIA Container Toolkit
 - **NVIDIA drivers** installed on the host
 - **Git**
-- **xhost** (for GUI forwarding — usually pre-installed on Ubuntu)
+- **xhost** (for GUI forwarding - usually pre-installed on Ubuntu)
 
 ---
 

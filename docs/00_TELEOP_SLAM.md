@@ -1,24 +1,25 @@
-# 00 — Teleoperated SLAM Mapping
+# 00 - Teleoperated SLAM Mapping
 
 Drive the car manually while SLAM Toolbox builds a map of the environment.
 Supports simulation (`mvsim`) and the physical car (`real`), with keyboard or gamepad control.
+Keyboard teleoperation is only available in simulation (`mode:=mvsim`).
 
 ---
 
 ## Quick start
 
 ```bash
-# Simulation + keyboard (default)
+# Physical car + gamepad (default)
 ros2 launch stack_launcher 00_teleop_slam.launch.py
 
-# Simulation + gamepad
-ros2 launch stack_launcher 00_teleop_slam.launch.py teleop:=controller
-
-# Physical car + gamepad
+# Physical car + gamepad (explicit)
 ros2 launch stack_launcher 00_teleop_slam.launch.py mode:=real teleop:=controller
 
-# Physical car + keyboard
-ros2 launch stack_launcher 00_teleop_slam.launch.py mode:=real teleop:=keyboard
+# Simulation + gamepad
+ros2 launch stack_launcher 00_teleop_slam.launch.py mode:=mvsim
+
+# Simulation + keyboard
+ros2 launch stack_launcher 00_teleop_slam.launch.py mode:=mvsim teleop:=keyboard
 ```
 
 ---
@@ -29,8 +30,8 @@ ros2 launch stack_launcher 00_teleop_slam.launch.py mode:=real teleop:=keyboard
 
 | Argument | Default | Choices | Description |
 |---|---|---|---|
-| `mode` | `mvsim` | `mvsim`, `real` | Run in simulation or on the physical car |
-| `teleop` | `keyboard` | `keyboard`, `controller` | Input device |
+| `mode` | `real` | `mvsim`, `real` | Run in simulation or on the physical car |
+| `teleop` | `controller` | `keyboard`, `controller` | Input device (`keyboard` is `mode:=mvsim` only) |
 
 ### Simulation (`mode:=mvsim`)
 
@@ -49,11 +50,17 @@ Available worlds in `rbsf_mvsim/maps/`:
 - `hallway_simulation_sci.world.xml`
 - `simple_oval.world.xml`
 
-### Physical car (`mode:=real`)
+### Keyboard (`mode:=mvsim teleop:=keyboard`)
 
 | Argument | Default | Description |
 |---|---|---|
-| `max_speed` | `1.0` | Maximum speed in m/s, converted to ERPM for the VESC driver |
+| `max_speed` | `1.0` | Maximum speed in m/s for keyboard teleop |
+
+### SLAM
+
+| Argument | Default | Description |
+|---|---|---|
+| `slam_params_file` | `auto` | Path to slam_toolbox params YAML. `auto` selects `mapper_params_real.yaml` or `mapper_params_sim.yaml` by mode |
 
 ### Map saving
 
@@ -66,14 +73,14 @@ Available worlds in `rbsf_mvsim/maps/`:
 
 ## Keyboard controls
 
-When `teleop:=keyboard`, an xterm window opens automatically. **Click on it to give it focus**, then use:
+When `mode:=mvsim teleop:=keyboard`, an xterm window opens automatically. **Click on it to give it focus**, then use:
 
 | Key | Action |
 |---|---|
-| `W` / `↑` | Forward |
-| `S` / `↓` | Backward |
-| `A` / `←` | Steer left |
-| `D` / `→` | Steer right |
+| `W` / `Up` | Forward |
+| `S` / `Down` | Backward |
+| `A` / `Left` | Steer left |
+| `D` / `Right` | Steer right |
 | `q` | Quit keyboard node |
 
 ---
@@ -107,4 +114,4 @@ ros2 service call /slam_toolbox/save_map slam_toolbox/srv/SaveMap \
 | `map_saver_node` | `rbsf_slam_toolbox` | always |
 | `ackermann_to_twist` | `stack_launcher` | `mode:=mvsim` |
 | `joy` + `joy_teleop` | `joy`, `joy_teleop` | `teleop:=controller` |
-| `keyboard_teleop` | `stack_launcher` | `teleop:=keyboard` |
+| `keyboard_teleop` | `stack_launcher` | `mode:=mvsim` AND `teleop:=keyboard` |
