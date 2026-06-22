@@ -27,9 +27,15 @@ class CenterlineTrackerNode(Node):
         # Orientation controller gains.
         self.kp = self.declare_parameter("kp", 1.0).value
         self.ki = self.declare_parameter("ki", 0.0).value
+        self.orientation_integral_limit = abs(
+            self.declare_parameter("orientation_integral_limit", 1.0).value
+        )
 
         # Previous odometry timestamp, used to estimate the sampling period.
         self.previous_time = None
+
+        # Accumulated orientation error used by the integral term.
+        self.orientation_error_integral = 0.0
 
         # Centerline path received by the node.
         self.path = None
@@ -152,8 +158,25 @@ class CenterlineTrackerNode(Node):
         # ------------------------------------------------------------------
         # 6. Steering command.
         # ------------------------------------------------------------------
-        # The orientation error defines the steering contribution.
-        steering = oe * self.kp + oe * self.ki * dt
+        # A PI controller uses the accumulated orientation error, not only
+        # the error from the current sampling period. Invalid or repeated
+        # timestamps are not integrated.
+        if math.isfinite(dt) and dt > 0.0:
+            self.orientation_error_integral += oe * dt
+
+            # Clamp the accumulator to avoid integral windup.
+            self.orientation_error_integral = max(
+                -self.orientation_integral_limit,
+                min(
+                    self.orientation_integral_limit,
+                    self.orientation_error_integral,
+                ),
+            )
+
+        steering = (
+            oe * self.kp
+            + self.orientation_error_integral * self.ki
+        )
 
         # ------------------------------------------------------------------
         # 7. Ackermann command.

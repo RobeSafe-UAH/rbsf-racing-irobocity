@@ -35,13 +35,23 @@ class WallFollowerNode(Node):
         # Distance controller gains.
         self.distance_kp = self.declare_parameter("distance_kp", 1.0).value
         self.distance_ki = self.declare_parameter("distance_ki", 0.0).value
+        self.distance_integral_limit = abs(
+            self.declare_parameter("distance_integral_limit", 1.0).value
+        )
 
         # Orientation controller gains.
         self.orientation_kp = self.declare_parameter("orientation_kp", 1.0).value
         self.orientation_ki = self.declare_parameter("orientation_ki", 0.0).value
+        self.orientation_integral_limit = abs(
+            self.declare_parameter("orientation_integral_limit", 1.0).value
+        )
 
         # Previous LiDAR timestamp, used to estimate the sampling period.
         self.previous_time = None
+
+        # Accumulated errors used by the two integral terms.
+        self.distance_error_integral = 0.0
+        self.orientation_error_integral = 0.0
 
         # ------------------------------------------------------------------
         # 2. ROS interfaces
@@ -134,11 +144,37 @@ class WallFollowerNode(Node):
         # ------------------------------------------------------------------
         # 6. Steering command.
         # ------------------------------------------------------------------
-        # Each error contributes to the final steering command.
-        distance_steering = de * self.distance_kp + de * self.distance_ki * dt
+        # A PI controller uses the accumulated error, not only the error from
+        # the current sampling period. Invalid or repeated timestamps are not
+        # integrated.
+        if math.isfinite(dt) and dt > 0.0:
+            self.distance_error_integral += de * dt
+            self.orientation_error_integral += oe * dt
+
+            # Clamp both accumulators to avoid integral windup.
+            self.distance_error_integral = max(
+                -self.distance_integral_limit,
+                min(
+                    self.distance_integral_limit,
+                    self.distance_error_integral,
+                ),
+            )
+            self.orientation_error_integral = max(
+                -self.orientation_integral_limit,
+                min(
+                    self.orientation_integral_limit,
+                    self.orientation_error_integral,
+                ),
+            )
+
+        # Each error contributes a proportional and an integral term.
+        distance_steering = (
+            de * self.distance_kp
+            + self.distance_error_integral * self.distance_ki
+        )
         orientation_steering = (
             oe * self.orientation_kp
-            + oe * self.orientation_ki * dt
+            + self.orientation_error_integral * self.orientation_ki
         )
 
         steering = distance_steering + orientation_steering
