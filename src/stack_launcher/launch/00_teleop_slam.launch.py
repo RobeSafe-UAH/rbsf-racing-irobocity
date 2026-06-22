@@ -139,7 +139,7 @@ def generate_launch_description():
         DeclareLaunchArgument(
             "world_file",
             default_value=PathJoinSubstitution([
-                FindPackageShare("rbsf_mvsim"), "maps", "f1tenth_catalunya.world.xml",
+                FindPackageShare("rbsf_mvsim"), "maps", "club_circuit.world.xml",
             ]),
             description="MVSim world file  [mode:=mvsim]",
         ),

@@ -16,7 +16,7 @@ def generate_launch_description():
     # args that can be set from the command line or a default will be used
     world_file_launch_arg = DeclareLaunchArgument(
         "world_file",
-        default_value= os.path.join(get_package_share_directory('rbsf_mvsim'),'maps','simple_oval.world.xml'),
+        default_value= os.path.join(get_package_share_directory('rbsf_mvsim'),'maps','club_circuit.world.xml'),
         description='Path to the *.world.xml file to load')
 
 

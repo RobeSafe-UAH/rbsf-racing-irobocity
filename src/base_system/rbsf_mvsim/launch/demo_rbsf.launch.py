@@ -23,7 +23,7 @@ def generate_launch_description():
     #     rbsf_mvsim_dir, 'maps', 'simple_oval.world.xml'
     # )
     world_file = os.path.join(
-        '/ros2_ws/src/base_system/rbsf_mvsim/maps/f1tenth_catalunya.world.xml'
+        '/ros2_ws/src/base_system/rbsf_mvsim/maps/club_circuit.world.xml'
     )
     rviz_config_file = os.path.join(
         mvsim_dir, 'mvsim_tutorial', 'demo_warehouse_ros2.rviz'

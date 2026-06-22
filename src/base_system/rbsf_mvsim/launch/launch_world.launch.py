@@ -94,7 +94,7 @@ def generate_launch_description():
             default_value=os.path.join(
                 get_package_share_directory('rbsf_mvsim'),
                 'maps',
-                'f1tenth_catalunya.world.xml'
+                'club_circuit.world.xml'
             ),
             description='Path to the *.world.xml file to load',
         ),

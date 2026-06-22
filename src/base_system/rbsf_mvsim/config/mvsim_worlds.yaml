@@ -13,3 +13,6 @@ worlds:
 
   hallway_simulation_sci.world.xml:
     init_pose: "1 0 0"
+
+  club_circuit.world.xml:
+    init_pose: "0.0 -4.65 -9.6"
