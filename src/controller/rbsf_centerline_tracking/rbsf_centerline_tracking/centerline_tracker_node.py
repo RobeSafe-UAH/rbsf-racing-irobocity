@@ -1,3 +1,9 @@
+"""Centerline tracking exercise for the iRobocity course.
+
+The node receives an ordered centerline and vehicle odometry, selects a
+lookahead point and publishes a constant-speed Ackermann command.
+"""
+
 import math
 
 import rclpy
@@ -11,25 +17,22 @@ class CenterlineTrackerNode(Node):
         super().__init__("centerline_tracker")
 
         # ------------------------------------------------------------------
-        # 1. Parameters
+        # Controller configuration
         # ------------------------------------------------------------------
-        # ROS topics.
-        self.path_topic = self.declare_parameter("path_topic", "/centerline").value
-        self.odom_topic = self.declare_parameter("odom_topic", "/odom").value
-        self.drive_topic = self.declare_parameter("drive_topic", "/drive").value
+        # Both odometry topics are subscribed so the same source works on the
+        # physical car and in MVSim without an external parameter file.
+        self.path_topic = "/centerline"
+        self.odom_topics = ("/odom", "/base_pose_ground_truth")
+        self.drive_topic = "/drive"
 
         # Vehicle references.
-        self.speed = self.declare_parameter("speed", 1.0).value
-        self.lookahead_distance = self.declare_parameter(
-            "lookahead_distance", 1.0
-        ).value
+        self.speed = 1.0
+        self.lookahead_distance = 1.0
 
         # Orientation controller gains.
-        self.kp = self.declare_parameter("kp", 1.0).value
-        self.ki = self.declare_parameter("ki", 0.0).value
-        self.orientation_integral_limit = abs(
-            self.declare_parameter("orientation_integral_limit", 1.0).value
-        )
+        self.kp = 1.0
+        self.ki = 0.0
+        self.orientation_integral_limit = 1.0
 
         # Previous odometry timestamp, used to estimate the sampling period.
         self.previous_time = None
@@ -40,16 +43,22 @@ class CenterlineTrackerNode(Node):
         # Centerline path received by the node.
         self.path = None
 
-        # ------------------------------------------------------------------
-        # 2. ROS interfaces
-        # ------------------------------------------------------------------
+        # ROS interfaces.
         self.publisher = self.create_publisher(
             AckermannDriveStamped,
             self.drive_topic,
             10,
         )
         self.create_subscription(Path, self.path_topic, self.path_callback, 10)
-        self.create_subscription(Odometry, self.odom_topic, self.odom_callback, 10)
+        self.odom_subscriptions = [
+            self.create_subscription(
+                Odometry,
+                topic,
+                self.odom_callback,
+                10,
+            )
+            for topic in self.odom_topics
+        ]
 
     def path_callback(self, path: Path) -> None:
         # ------------------------------------------------------------------
@@ -76,12 +85,10 @@ class CenterlineTrackerNode(Node):
         # ------------------------------------------------------------------
 
         # The controller can only run after receiving the centerline path.
-        if self.path is None:
+        if self.path is None or not self.path.poses:
             return
 
-        # ------------------------------------------------------------------
-        # 1. Sampling period.
-        # ------------------------------------------------------------------
+        # Sampling period.
         stamp = odom.header.stamp
         current_time = stamp.sec + stamp.nanosec * 1e-9
 
@@ -92,9 +99,7 @@ class CenterlineTrackerNode(Node):
 
         self.previous_time = current_time
 
-        # ------------------------------------------------------------------
-        # 2. Vehicle pose.
-        # ------------------------------------------------------------------
+        # Vehicle pose.
         pose = odom.pose.pose
         vehicle_x = pose.position.x
         vehicle_y = pose.position.y
@@ -105,9 +110,7 @@ class CenterlineTrackerNode(Node):
         cosy_cosp = 1.0 - 2.0 * (q.y * q.y + q.z * q.z)
         vehicle_yaw = math.atan2(siny_cosp, cosy_cosp)
 
-        # ------------------------------------------------------------------
-        # 3. Closest centerline point.
-        # ------------------------------------------------------------------
+        # Closest centerline point.
         closest_index = 0
         closest_distance = math.inf
 
@@ -120,25 +123,30 @@ class CenterlineTrackerNode(Node):
                 closest_index = index
 
         # ------------------------------------------------------------------
-        # 4. Lookahead target.
+        # Exercise 1: Lookahead target
         # ------------------------------------------------------------------
+
+        # TODO: Starting at the closest point, move forward through the cyclic
+        #       path until reaching the configured lookahead distance.
         path_length = len(self.path.poses)
-        target_index = closest_index
+        target_index = ...
 
         for steps_ahead in range(path_length):
-            index = (closest_index + steps_ahead) % path_length
+            index = ...
 
             point = self.path.poses[index].pose.position
-            distance = math.hypot(point.x - vehicle_x, point.y - vehicle_y)
+            distance = ...
 
-            if distance >= self.lookahead_distance:
-                target_index = index
+            if ...:
+                target_index = ...
                 break
 
-        target = self.path.poses[target_index].pose.position
+        target = ...
+
+        return  # Remove this line after completing Exercise 1.
 
         # ------------------------------------------------------------------
-        # 5. Control error.
+        # Exercise 2: Orientation error
         # ------------------------------------------------------------------
         # The target vector is expressed in the global frame.
         dx = target.x - vehicle_x
@@ -146,23 +154,28 @@ class CenterlineTrackerNode(Node):
 
         # The desired yaw is the orientation of the vector that joins the
         # vehicle position with the lookahead target.
-        desired_yaw = math.atan2(dy, dx)
+        # TODO: Compute the desired yaw towards the lookahead target.
+        desired_yaw = ...
 
-        # oe is the orientation error between the vehicle yaw and the desired
-        # yaw. The atan2 expression normalizes the error to [-pi, pi].
-        oe = math.atan2(
-            math.sin(desired_yaw - vehicle_yaw),
-            math.cos(desired_yaw - vehicle_yaw),
-        )
+        # The orientation error is the difference between the desired yaw and
+        # the current vehicle yaw.
+        # TODO: Compute the orientation error.
+        oe = ...
+
+        # Normalize the error to [-pi, pi].
+        oe = math.atan2(math.sin(oe), math.cos(oe))
+
+        return  # Remove this line after completing Exercise 2.
 
         # ------------------------------------------------------------------
-        # 6. Steering command.
+        # Exercise 3: PI control and Ackermann command
         # ------------------------------------------------------------------
         # A PI controller uses the accumulated orientation error, not only
         # the error from the current sampling period. Invalid or repeated
         # timestamps are not integrated.
+        # TODO: Integrate the orientation error using dt.
         if math.isfinite(dt) and dt > 0.0:
-            self.orientation_error_integral += oe * dt
+            self.orientation_error_integral += ...
 
             # Clamp the accumulator to avoid integral windup.
             self.orientation_error_integral = max(
@@ -173,19 +186,15 @@ class CenterlineTrackerNode(Node):
                 ),
             )
 
-        steering = (
-            oe * self.kp
-            + self.orientation_error_integral * self.ki
-        )
+        # TODO: Compute the PI steering command.
+        steering = ...
 
-        # ------------------------------------------------------------------
-        # 7. Ackermann command.
-        # ------------------------------------------------------------------
+        # TODO: Fill and publish the Ackermann command.
         msg = AckermannDriveStamped()
         msg.header.stamp = self.get_clock().now().to_msg()
-        msg.drive.speed = self.speed
-        msg.drive.steering_angle = steering
-        self.publisher.publish(msg)
+        msg.drive.speed = ...
+        msg.drive.steering_angle = ...
+        self.publisher.publish(...)
 
 
 def main(args=None) -> None:

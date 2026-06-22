@@ -1,3 +1,21 @@
+"""wall_follower_node.py — Wall-following exercise for the iRobocity course.
+
+Subscribed topics (inputs):
+    /scan or /laser1    sensor_msgs/LaserScan
+        LiDAR scan from the physical car or MVSim.
+
+Published topics (outputs):
+    /drive              ackermann_msgs/AckermannDriveStamped
+        Constant-speed command with PI-controlled steering.
+
+Controller outline:
+    1. Estimate the sampling period from LiDAR timestamps.
+    2. Read one lateral and one forward-left LiDAR ray.
+    3. Estimate distance and orientation relative to the left wall.
+    4. Apply distance and orientation PI controllers.
+    5. Publish the resulting Ackermann command.
+"""
+
 import math
 
 import rclpy
@@ -20,31 +38,28 @@ class WallFollowerNode(Node):
         super().__init__("wall_follower")
 
         # ------------------------------------------------------------------
-        # 1. Parameters
+        # Exercise 0: Controller initialization
         # ------------------------------------------------------------------
-        # ROS topics.
-        self.scan_topic = self.declare_parameter("scan_topic", "/scan").value
-        self.drive_topic = self.declare_parameter("drive_topic", "/drive").value
+
+        # TODO: Fill in the topics, vehicle references and controller gains
+        self.drive_topic = ...
+        self.scan_topic = ...
 
         # Vehicle references.
-        self.desired_distance = self.declare_parameter(
-            "desired_distance", 0.7
-        ).value
-        self.speed = self.declare_parameter("speed", 0.6).value
+        self.reference_distance = ...
+        self.speed = ...
 
-        # Distance controller gains.
-        self.distance_kp = self.declare_parameter("distance_kp", 1.0).value
-        self.distance_ki = self.declare_parameter("distance_ki", 0.0).value
-        self.distance_integral_limit = abs(
-            self.declare_parameter("distance_integral_limit", 1.0).value
-        )
+        # Distance-controller gains and integral limit.
+        self.distance_kp = ...
+        self.distance_ki = ...
+        self.distance_integral_limit = 1.0
 
-        # Orientation controller gains.
-        self.orientation_kp = self.declare_parameter("orientation_kp", 1.0).value
-        self.orientation_ki = self.declare_parameter("orientation_ki", 0.0).value
-        self.orientation_integral_limit = abs(
-            self.declare_parameter("orientation_integral_limit", 1.0).value
-        )
+        # Orientation-controller gains and integral limit.
+        self.orientation_kp = ...
+        self.orientation_ki = ...
+        self.orientation_integral_limit = 1.0
+
+        return  # Remove this line after completing Exercise 0.
 
         # Previous LiDAR timestamp, used to estimate the sampling period.
         self.previous_time = None
@@ -53,9 +68,7 @@ class WallFollowerNode(Node):
         self.distance_error_integral = 0.0
         self.orientation_error_integral = 0.0
 
-        # ------------------------------------------------------------------
-        # 2. ROS interfaces
-        # ------------------------------------------------------------------
+        # ROS interfaces.
         self.publisher = self.create_publisher(
             AckermannDriveStamped, self.drive_topic, 10
         )
@@ -82,74 +95,76 @@ class WallFollowerNode(Node):
         # ------------------------------------------------------------------
 
         # ------------------------------------------------------------------
-        # 1. Sampling period.
+        # Exercise 1: Sampling period
         # ------------------------------------------------------------------
+
+        # TODO: Compute the sampling period from the previous scan timestamp.
         stamp = scan.header.stamp
-        current_time = stamp.sec + stamp.nanosec * 1e-9
+        current_time = float(stamp.sec) + float(stamp.nanosec) * 1e-9
 
         if self.previous_time is None:
-            dt = scan.scan_time
+            dt = ...
         else:
-            dt = current_time - self.previous_time
+            dt = ...
 
-        self.previous_time = current_time
+        self.previous_time = ...
+
+        return  # Remove this line after completing Exercise 1.
 
         # ------------------------------------------------------------------
-        # 2. Lateral ray.
+        # Exercise 2: Lateral ray and distance error
         # ------------------------------------------------------------------
+
         # This ray points directly towards the left wall.
+        # TODO: Convert LATERAL_ANGLE_RAD to a LaserScan index, read its range,
+        #       and convert the polar measurement to Cartesian coordinates.
         lateral_index = round(
-            (LATERAL_ANGLE_RAD - scan.angle_min) / scan.angle_increment
+            (... - scan.angle_min) / scan.angle_increment
         )
-        lateral_distance = scan.ranges[lateral_index]
-        lateral_x = lateral_distance * math.cos(LATERAL_ANGLE_RAD)
-        lateral_y = lateral_distance * math.sin(LATERAL_ANGLE_RAD)
+        lateral_distance = scan.ranges[...]
+        x_lat = ...
+        y_lat = ...
+
+        # TODO: Compute the distance error.
+        de = ...
+
+        return  # Remove this line after completing Exercise 2.
 
         # ------------------------------------------------------------------
-        # 3. Forward-left ray.
+        # Exercise 3: Forward-left ray and orientation error
         # ------------------------------------------------------------------
-        # Together with the lateral ray, this point defines an approximation
-        # of the local wall direction.
+
+        # TODO: Repeat the index, range and Cartesian conversion for the
+        #       forward-left ray at FORWARD_ANGLE_RAD.
         forward_index = round(
-            (FORWARD_ANGLE_RAD - scan.angle_min) / scan.angle_increment
+            (... - scan.angle_min) / scan.angle_increment
         )
-        forward_distance = scan.ranges[forward_index]
-        forward_x = forward_distance * math.cos(FORWARD_ANGLE_RAD)
-        forward_y = forward_distance * math.sin(FORWARD_ANGLE_RAD)
+        forward_distance = scan.ranges[...]
+        x_fwd = ...
+        y_fwd = ...
 
-        # ------------------------------------------------------------------
-        # 4. Wall distance and wall orientation.
-        # ------------------------------------------------------------------
-        # The y coordinate of the lateral point is the left-wall distance.
-        wall_distance = abs(lateral_y)
-
-        # The orientation is obtained from the segment joining the two points
-        # measured by the LiDAR rays.
+        # TODO: Compute its orientation with atan2(delta_y, delta_x).
         wall_orientation = math.atan2(
-            forward_y - lateral_y,
-            forward_x - lateral_x,
+            ...,
+            ...,
         )
 
-        # ------------------------------------------------------------------
-        # 5. Control errors.
-        # ------------------------------------------------------------------
-        # de is positive when the vehicle is farther than the reference
-        # distance from the left wall.
-        de = wall_distance - self.desired_distance
+        # TODO: Compute the orientation error.
+        oe = ...
 
-        # oe is zero when the longitudinal axis of the vehicle is parallel to
-        # the estimated wall direction.
-        oe = wall_orientation
+        return  # Remove this line after completing Exercise 3.
 
         # ------------------------------------------------------------------
-        # 6. Steering command.
+        # Exercise 4: PI steering
         # ------------------------------------------------------------------
+
         # A PI controller uses the accumulated error, not only the error from
         # the current sampling period. Invalid or repeated timestamps are not
         # integrated.
+        # TODO: Integrate both errors using the sampling period dt.
         if math.isfinite(dt) and dt > 0.0:
-            self.distance_error_integral += de * dt
-            self.orientation_error_integral += oe * dt
+            self.distance_error_integral += ...
+            self.orientation_error_integral += ...
 
             # Clamp both accumulators to avoid integral windup.
             self.distance_error_integral = max(
@@ -167,26 +182,25 @@ class WallFollowerNode(Node):
                 ),
             )
 
-        # Each error contributes a proportional and an integral term.
-        distance_steering = (
-            de * self.distance_kp
-            + self.distance_error_integral * self.distance_ki
-        )
-        orientation_steering = (
-            oe * self.orientation_kp
-            + self.orientation_error_integral * self.orientation_ki
-        )
+        # TODO: Compute the proportional and integral contribution of each
+        #       error, then combine both steering contributions.
+        distance_steering = ...
+        orientation_steering = ...
 
-        steering = distance_steering + orientation_steering
+        steering = ...
+
+        return  # Remove this line after completing Exercise 4.
 
         # ------------------------------------------------------------------
-        # 7. Ackermann command.
+        # Exercise 5: Ackermann command
         # ------------------------------------------------------------------
+
+        # TODO: Fill the speed and steering fields and publish the command.
         msg = AckermannDriveStamped()
         msg.header.stamp = self.get_clock().now().to_msg()
-        msg.drive.speed = self.speed
-        msg.drive.steering_angle = steering
-        self.publisher.publish(msg)
+        msg.drive.speed = ...
+        msg.drive.steering_angle = ...
+        self.publisher.publish(...)
 
 
 def main(args=None) -> None:

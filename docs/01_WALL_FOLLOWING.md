@@ -1,6 +1,6 @@
 # 01 — Autonomous Wall Following
 
-Drive the car autonomously along a wall using a simple PID controller that reads
+Drive the car autonomously along a wall using a simple PI controller that reads
 distance from the LiDAR and outputs Ackermann steering commands.
 No localization or mapping — pure reactive control.
 Supports simulation (`mvsim`) and the physical car (`real`).
@@ -10,17 +10,11 @@ Supports simulation (`mvsim`) and the physical car (`real`).
 ## Quick start
 
 ```bash
-# Simulation — right wall (default)
-ros2 launch stack_launcher 01_wall_following.launch.py
+# Simulation
+ros2 launch stack_launcher 01_wall_following.launch.py mode:=mvsim
 
-# Simulation — left wall
-ros2 launch stack_launcher 01_wall_following.launch.py side:=left
-
-# Physical car — right wall
+# Physical car
 ros2 launch stack_launcher 01_wall_following.launch.py mode:=real
-
-# Physical car — left wall, slower
-ros2 launch stack_launcher 01_wall_following.launch.py mode:=real side:=left speed:=0.4
 ```
 
 ---
@@ -31,8 +25,8 @@ ros2 launch stack_launcher 01_wall_following.launch.py mode:=real side:=left spe
 
 | Argument | Default | Choices | Description |
 |---|---|---|---|
-| `mode` | `mvsim` | `mvsim`, `real` | Run in simulation or on the physical car |
-| `side` | `right` | `left`, `right` | Wall side to follow |
+| `mode` | `real` | `mvsim`, `real`, `distributed` | Select the stack environment |
+| `startup_delay` | `2.5` | Any non-negative number | Delay before starting the controller |
 
 ### Simulation (`mode:=mvsim`)
 
@@ -51,55 +45,33 @@ Available worlds in `rbsf_mvsim/maps/`:
 - `hallway_simulation_sci.world.xml`
 - `simple_oval.world.xml`
 
-### PID controller
+### Controller configuration
 
-These override the values in `pid_params_sim.yaml` / `pid_params_real.yaml`.
-Pass `auto` (the default) to use the value from the YAML file unchanged.
-
-| Argument | Sim default | Real default | Description |
-|---|---|---|---|
-| `desired_distance` | `0.5` | `0.7` | Target wall distance in metres |
-| `speed` | `3.0` | `0.6` | Forward speed in m/s |
-| `kp` | `0.9` | `1.0` | Proportional gain |
-| `ki` | `0.02` | `0.0` | Integral gain |
-| `kd` | `0.08` | `0.08` | Derivative gain |
-| `params_file` | `auto` | `auto` | Full path to a custom params YAML |
+The topics, references and PI gains are configured directly in Exercise 0 of
+`rbsf_wall_following/rbsf_wall_following/wall_follower_node.py`. The
+wall-following controller does not load a parameter file or expose tuning
+arguments through the launcher.
 
 ---
 
-## How the PID controller works
+## How the PI controller works
 
 ```
-error  =  desired_distance − measured_distance
-steering  =  Kp·error + Ki·∫error dt + Kd·(Δerror/Δt)
+distance_error = measured_distance - reference_distance
+steering = distance_Kp·distance_error + distance_Ki·∫distance_error dt
+         + orientation_Kp·orientation_error + orientation_Ki·∫orientation_error dt
 ```
 
-The wall distance is measured by averaging LiDAR returns in a narrow angular sector
-centred at ±90° (right/left).  The steering sign is flipped automatically when
-`side:=left` so the car turns toward the wall when too far, away when too close.
+The left-wall geometry is estimated from two LiDAR rays at 90 and 60 degrees.
 
 ### Tuning tips
 
 | Symptom | Likely cause | Try |
 |---|---|---|
 | Slow oscillations | `Kp` too low | Increase `Kp` |
-| Fast oscillations | `Kp` too high | Reduce `Kp`, increase `Kd` |
+| Fast oscillations | `Kp` too high | Reduce `Kp` |
 | Steady offset from wall | No integral term | Add a small `Ki` |
 | Windup / drift | `Ki` too large | Reduce `Ki` |
-
----
-
-## Config files
-
-Default PID parameters live in `rbsf_wall_follower/config/`:
-
-| File | Used when |
-|---|---|
-| `pid_params_sim.yaml` | `mode:=mvsim` |
-| `pid_params_real.yaml` | `mode:=real` |
-
-Edit these files to persist your tuned gains, or pass individual gains as launch
-arguments for quick experiments without changing the files.
 
 ---
 
@@ -109,5 +81,5 @@ arguments for quick experiments without changing the files.
 |---|---|---|
 | `mvsim` | `mvsim` | `mode:=mvsim` |
 | `bringup` (VESC, LiDAR, camera) | `rbsf_bringup` | `mode:=real` |
-| `pid_controller` | `rbsf_wall_follower` | always |
+| `wall_follower` | `rbsf_wall_following` | always |
 | `ackermann_to_twist` | `stack_launcher` | `mode:=mvsim` |
