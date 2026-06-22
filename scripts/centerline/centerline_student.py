@@ -1,5 +1,5 @@
 """
-Racetrack centerline extraction — STUDENT TEMPLATE.
+Racetrack centerline extraction -- STUDENT TEMPLATE.
 
 Seven self-contained exercises that build the full algorithm step by step.
 Complete the TODO blocks in order; run the script after each one to see
@@ -18,12 +18,12 @@ Run:
 
 Output (created next to this script):
     {CIRCUIT_NAME}_{YYYY-MM-DD}/
-        <original map image>     — copy of the source PNG/PGM
-        <original map YAML>      — copy of the source YAML
-        centerline_output.csv    — x_meters, y_meters  (n_out waypoints, no duplicate)
+        <original map image>     -- copy of the source PNG/PGM
+        <original map YAML>      -- copy of the source YAML
+        centerline_output.csv    -- x_meters, y_meters  (n_out waypoints, no duplicate)
 
 The CSV is designed to be published as nav_msgs/Path for cyclic following
-(controller iterates with  idx % n_waypoints — no duplicate first point).
+(controller iterates with  idx % n_waypoints -- no duplicate first point).
 """
 
 import os
@@ -35,7 +35,7 @@ import matplotlib.pyplot as plt
 from datetime import date
 from scipy.interpolate import CubicSpline
 
-# ── Configuration ──────────────────────────────────────────────────────────────
+# -- Configuration --------------------------------------------------------------
 
 SCRIPT_DIR     = os.path.dirname(os.path.abspath(__file__))
 RACETRACKS_DIR = os.path.join(SCRIPT_DIR, "..", "f1tenth_racetracks")
@@ -47,32 +47,32 @@ CIRCUIT_NAME    = os.path.basename(MAP_PATH).split("_map")[0]
 POINT_SPACING_M = 0.10   # target arc-length spacing between output points (metres)
 
 
-# ── Utility ────────────────────────────────────────────────────────────────────
+# -- Utility --------------------------------------------------------------------
 
 def _pause(title: str) -> None:
     plt.tight_layout()
     plt.show(block=False)
     plt.pause(0.1)
-    input(f"\n[{title}] Press ENTER to continue to the next exercise…\n")
+    input(f"\n[{title}] Press ENTER to continue to the next exercise...\n")
     plt.close("all")
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# EXERCISE 1 — Load the Map and Detect Walls
-# ══════════════════════════════════════════════════════════════════════════════
+# ==============================================================================
+# EXERCISE 1 -- Load the Map and Detect Walls
+# ==============================================================================
 #
 # CONCEPT
 # -------
 # All map images we use share the same pixel-intensity convention after
 # pre-processing:
 #
-#   pixel > 240  →  free / drivable space  (white)
-#   pixel < 80   →  wall / obstacle        (dark)
-#   80 – 240     →  unknown / outside      (gray)
+#   pixel > 240  ->  free / drivable space  (white)
+#   pixel < 80   ->  wall / obstacle        (dark)
+#   80 -- 240     ->  unknown / outside      (gray)
 #
 # A single threshold separates walls from everything else:
 #
-#   cv2.THRESH_BINARY_INV  →  pixels below the threshold become 255 (walls),
+#   cv2.THRESH_BINARY_INV  ->  pixels below the threshold become 255 (walls),
 #                              pixels above become 0.
 #
 # The map YAML stores physical metadata (resolution in m/px, origin in
@@ -90,21 +90,21 @@ def ex1_load_and_threshold(map_path: str, yaml_path: str):
             "For diagram PNGs, run  python preprocess_maps.py  first."
         )
 
-    # ── TODO 1-A ───────────────────────────────────────────────────────────────
+    # -- TODO 1-A ---------------------------------------------------------------
     # Create a binary wall mask.
     # Dark pixels (intensity < 80) are walls; everything else is free or unknown.
     # Use cv2.threshold with THRESH_BINARY_INV so walls = 255, rest = 0.
     #
-    _, walls = None, None  # ← replace with: cv2.threshold(img, ..., ..., ...)
+    _, walls = None  # <- replace with: cv2.threshold(img, ..., ..., ...)
 
     fig, axes = plt.subplots(1, 3, figsize=(16, 5))
     axes[0].imshow(img, cmap="gray")
     axes[0].set_title("Original map")
 
-    # ── TODO 1-B ───────────────────────────────────────────────────────────────
+    # -- TODO 1-B ---------------------------------------------------------------
     # Show the wall mask on axes[1] and give it a title.
     #
-    pass  # ← axes[1].imshow(walls, cmap="gray") and axes[1].set_title(...)
+    pass  # <- axes[1].imshow(walls, cmap="gray") and axes[1].set_title(...)
 
     overlay = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
     overlay[walls == 255] = [220, 80, 80]
@@ -113,28 +113,28 @@ def ex1_load_and_threshold(map_path: str, yaml_path: str):
 
     for ax in axes:
         ax.axis("off")
-    fig.suptitle("Exercise 1 — Load & Threshold", fontsize=13, fontweight="bold")
+    fig.suptitle("Exercise 1 -- Load & Threshold", fontsize=13, fontweight="bold")
     _pause("Ex 1")
 
-    print(f"[Ex 1] {img.shape[1]}×{img.shape[0]} px  "
+    print(f"[Ex 1] {img.shape[1]}x{img.shape[0]} px  "
           f"resolution={meta['resolution']} m/px  "
           f"wall pixels={int(walls.sum() // 255)}")
     return meta, img, walls
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# EXERCISE 2 — Build the Free-Space Mask
-# ══════════════════════════════════════════════════════════════════════════════
+# ==============================================================================
+# EXERCISE 2 -- Build the Free-Space Mask
+# ==============================================================================
 #
 # CONCEPT
 # -------
 # After preprocessing, pixels fall into three distinct intensity bands:
 #
-#   > 240  (white) →  drivable corridor  ← the only region we want
-#   ≈ 127  (gray)  →  outer background and infield  (already excluded)
-#   < 80   (dark)  →  wall lines
+#   > 240  (white) ->  drivable corridor  <- the only region we want
+#   ~ 127  (gray)  ->  outer background and infield  (already excluded)
+#   < 80   (dark)  ->  wall lines
 #
-# A simple threshold at 240 isolates the corridor directly — no need to
+# A simple threshold at 240 isolates the corridor directly -- no need to
 # invert a wall mask.  This only works because preprocess_maps.py already
 # separated the corridor (white) from background and infield (gray).
 #
@@ -151,41 +151,41 @@ def ex2_build_free_mask(img: np.ndarray) -> np.ndarray:
     _, free_raw = cv2.threshold(img, 240, 255, cv2.THRESH_BINARY)
     kernel      = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7))
 
-    # ── TODO 2-A ───────────────────────────────────────────────────────────────
+    # -- TODO 2-A ---------------------------------------------------------------
     # Remove isolated noise pixels from free_raw using morphological OPEN.
     # Assign the cleaned result to free_mask.
     #
-    free_mask = None  # ← replace with: cv2.morphologyEx(free_raw, ..., kernel)
+    free_mask = None  # <- replace with: cv2.morphologyEx(free_raw, ..., kernel)
 
     fig, axes = plt.subplots(1, 2, figsize=(12, 5))
     axes[0].imshow(free_raw,  cmap="gray")
-    axes[0].set_title("Free space — raw (before opening)")
+    axes[0].set_title("Free space -- raw (before opening)")
     axes[1].imshow(free_mask, cmap="gray")
     axes[1].set_title("Free-space mask (Ex 2)")
     for ax in axes:
         ax.axis("off")
-    fig.suptitle("Exercise 2 — Free-Space Mask", fontsize=13, fontweight="bold")
+    fig.suptitle("Exercise 2 -- Free-Space Mask", fontsize=13, fontweight="bold")
     _pause("Ex 2")
 
     print(f"[Ex 2] Free pixels: {int(free_mask.sum() // 255)}")
     return free_mask
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# EXERCISE 3 — Extract Inner and Outer Wall Contours
-# ══════════════════════════════════════════════════════════════════════════════
+# ==============================================================================
+# EXERCISE 3 -- Extract Inner and Outer Wall Contours
+# ==============================================================================
 #
 # CONCEPT
 # -------
 # cv2.findContours with RETR_CCOMP returns every contour together with a
 # two-level parent-child hierarchy:
 #
-#   hierarchy[i][3] == -1   →  level 0: outer boundary of a white blob
-#   hierarchy[i][3] != -1   →  level 1: hole inside a white blob
+#   hierarchy[i][3] == -1   ->  level 0: outer boundary of a white blob
+#   hierarchy[i][3] != -1   ->  level 1: hole inside a white blob
 #
 # For a ring-shaped free-space mask (corridor only, after preprocessing):
-#   • One large OUTER contour  — the track's outer edge
-#   • One large HOLE contour   — the dark hole in the ring  =  the inner wall
+#   - One large OUTER contour  -- the track's outer edge
+#   - One large HOLE contour   -- the dark hole in the ring  =  the inner wall
 #
 # Selecting the largest of each by area is sufficient for our maps.
 # The production script adds a proximity filter to reject infield regions or
@@ -205,18 +205,18 @@ def ex3_find_wall_contours(free_mask: np.ndarray):
     hole_contours  = [c.reshape(-1, 2) for i, c in enumerate(contours)
                       if hierarchy[i][3] != -1]
 
-    # ── TODO 3-A ───────────────────────────────────────────────────────────────
+    # -- TODO 3-A ---------------------------------------------------------------
     # Select the largest outer contour by enclosed area.
     # Hint: max(outer_contours, key=lambda c: cv2.contourArea(c))
     # Cast the result to float32.
     #
-    outer = None  # ← replace with the max(...) call above
+    outer = None  # <- replace with the max(...) call above
 
-    # ── TODO 3-B ───────────────────────────────────────────────────────────────
+    # -- TODO 3-B ---------------------------------------------------------------
     # Select the largest hole contour (= the inner wall).
     # Cast to float32.
     #
-    inner = None  # ← replace with the max(...) call for hole_contours
+    inner = None  # <- replace with the max(...) call for hole_contours
 
     outer_c = np.vstack([outer, outer[:1]])
     inner_c = np.vstack([inner, inner[:1]])
@@ -227,16 +227,16 @@ def ex3_find_wall_contours(free_mask: np.ndarray):
     ax.invert_yaxis()
     ax.set_aspect("equal")
     ax.legend()
-    ax.set_title("Exercise 3 — Wall Contours", fontsize=13, fontweight="bold")
+    ax.set_title("Exercise 3 -- Wall Contours", fontsize=13, fontweight="bold")
     _pause("Ex 3")
 
     print(f"[Ex 3] Outer: {len(outer)} pts  |  Inner: {len(inner)} pts")
     return outer, inner
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# EXERCISE 4 — Arc-Length Resampling
-# ══════════════════════════════════════════════════════════════════════════════
+# ==============================================================================
+# EXERCISE 4 -- Arc-Length Resampling
+# ==============================================================================
 #
 # CONCEPT
 # -------
@@ -259,26 +259,26 @@ def ex4_resample_arc_length(pts: np.ndarray, n: int) -> np.ndarray:
     diffs   = np.diff(pts, axis=0, append=pts[:1])       # wrap-around differences
     seg_len = np.hypot(diffs[:, 0], diffs[:, 1])         # length of each segment
 
-    # ── TODO 4-A ───────────────────────────────────────────────────────────────
+    # -- TODO 4-A ---------------------------------------------------------------
     # Compute the cumulative arc length.
     # cum_len[0] = 0.0; cum_len[k] = sum of the first k segment lengths.
     # Hint: np.concatenate([[0.0], np.cumsum(seg_len)])
     #
-    cum_len = None  # ← replace with the np.concatenate(...) call above
-    total   = None  # ← replace with: cum_len[-1]
+    cum_len = None  # <- replace with the np.concatenate(...) call above
+    total   = None  # <- replace with: cum_len[-1]
 
-    # Close the coordinate arrays so np.interp can handle the last→first segment.
+    # Close the coordinate arrays so np.interp can handle the last->first segment.
     x_ext = np.append(pts[:, 0], pts[0, 0])
     y_ext = np.append(pts[:, 1], pts[0, 1])
 
     t = np.linspace(0.0, total, n, endpoint=False)       # N equally-spaced targets
 
-    # ── TODO 4-B ───────────────────────────────────────────────────────────────
+    # -- TODO 4-B ---------------------------------------------------------------
     # Interpolate x and y at each target position t.
     # Hint: np.interp(t, cum_len, x_ext)
     #
-    x_new = None  # ← replace with np.interp(...)
-    y_new = None  # ← replace with np.interp(...)
+    x_new = None  # <- replace with np.interp(...)
+    y_new = None  # <- replace with np.interp(...)
 
     return np.column_stack([x_new, y_new])
 
@@ -291,23 +291,23 @@ def _show_ex4(outer: np.ndarray, outer_r: np.ndarray) -> None:
         ax.invert_yaxis()
 
     axes[0].scatter(outer[:, 0],   outer[:, 1],   s=1,  color="gray",   label=f"Raw ({len(outer)} pts)")
-    axes[0].set_title(f"Raw outer contour — uneven spacing")
+    axes[0].set_title(f"Raw outer contour -- uneven spacing")
     axes[0].legend(markerscale=6)
 
     axes[1].scatter(outer_r[:, 0], outer_r[:, 1], s=8,  color="orange", label=f"Resampled ({len(outer_r)} pts)")
-    axes[1].set_title(f"After arc-length resampling — uniform spacing")
+    axes[1].set_title(f"After arc-length resampling -- uniform spacing")
     axes[1].legend(markerscale=3)
 
-    fig.suptitle("Exercise 4 — Arc-Length Resampling", fontsize=13, fontweight="bold")
+    fig.suptitle("Exercise 4 -- Arc-Length Resampling", fontsize=13, fontweight="bold")
     _pause("Ex 4")
 
     sp = np.linalg.norm(np.diff(outer_r, axis=0, append=outer_r[:1]), axis=1)
-    print(f"[Ex 4] Spacing (px) — min: {sp.min():.2f}  mean: {sp.mean():.2f}  max: {sp.max():.2f}")
+    print(f"[Ex 4] Spacing (px) -- min: {sp.min():.2f}  mean: {sp.mean():.2f}  max: {sp.max():.2f}")
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# EXERCISE 5 — Raw Centerline by Midpoint Matching
-# ══════════════════════════════════════════════════════════════════════════════
+# ==============================================================================
+# EXERCISE 5 -- Raw Centerline by Midpoint Matching
+# ==============================================================================
 #
 # CONCEPT
 # -------
@@ -315,14 +315,14 @@ def _show_ex4(outer: np.ndarray, outer_r: np.ndarray) -> None:
 # centerline by pairing each outer point with its nearest inner-wall point
 # and taking the midpoint:
 #
-#   j* = argmin_j  ||outer[i] − inner[j]||²
+#   j* = argmin_j  ||outer[i] - inner[j]||^2
 #   centerline[i] = (outer[i] + inner[j*]) / 2
 #
-# NumPy broadcasting computes all N × M squared distances at once:
+# NumPy broadcasting computes all N x M squared distances at once:
 #
-#   diffs  shape: (N, 1, 2) − (1, M, 2)  →  (N, M, 2)
-#   sq_dist       (diffs**2).sum(axis=2)  →  (N, M)
-#   idx           argmin along axis=1     →  (N,)
+#   diffs  shape: (N, 1, 2) - (1, M, 2)  ->  (N, M, 2)
+#   sq_dist       (diffs**2).sum(axis=2)  ->  (N, M)
+#   idx           argmin along axis=1     ->  (N,)
 
 def ex5_raw_centerline(outer_r: np.ndarray, inner: np.ndarray) -> np.ndarray:
     """
@@ -332,21 +332,21 @@ def ex5_raw_centerline(outer_r: np.ndarray, inner: np.ndarray) -> np.ndarray:
     inner_f = inner.astype(np.float64)
     diffs   = outer_r[:, None, :] - inner_f[None, :, :]   # (N, M, 2)
 
-    # ── TODO 5-A ───────────────────────────────────────────────────────────────
+    # -- TODO 5-A ---------------------------------------------------------------
     # For each outer point find the index of the nearest inner-wall point.
     # Use argmin on (diffs**2).sum(axis=2) along axis=1.
     #
-    idx = None  # ← replace with: np.argmin((diffs**2).sum(axis=2), axis=1)
+    idx = None  # <- replace with: np.argmin((diffs**2).sum(axis=2), axis=1)
 
     inner_matched = inner_f[idx]                           # (N, 2)
 
-    # ── TODO 5-B ───────────────────────────────────────────────────────────────
+    # -- TODO 5-B ---------------------------------------------------------------
     # Compute the raw centerline as the midpoint of each (outer, inner) pair.
     #
-    raw_cl = None  # ← replace with: (outer_r + inner_matched) / 2.0
+    raw_cl = None  # <- replace with: (outer_r + inner_matched) / 2.0
 
     widths_px = np.linalg.norm(outer_r - inner_matched, axis=1)
-    print(f"[Ex 5] Track width (px) — min: {widths_px.min():.1f}  "
+    print(f"[Ex 5] Track width (px) -- min: {widths_px.min():.1f}  "
           f"mean: {widths_px.mean():.1f}  max: {widths_px.max():.1f}")
 
     outer_rc = np.vstack([outer_r, outer_r[:1]])
@@ -359,15 +359,15 @@ def ex5_raw_centerline(outer_r: np.ndarray, inner: np.ndarray) -> np.ndarray:
     ax.invert_yaxis()
     ax.set_aspect("equal")
     ax.legend(markerscale=4)
-    ax.set_title("Exercise 5 — Raw Centerline", fontsize=13, fontweight="bold")
+    ax.set_title("Exercise 5 -- Raw Centerline", fontsize=13, fontweight="bold")
     _pause("Ex 5")
 
     return raw_cl
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# EXERCISE 6 — Periodic Cubic Spline Interpolation
-# ══════════════════════════════════════════════════════════════════════════════
+# ==============================================================================
+# EXERCISE 6 -- Periodic Cubic Spline Interpolation
+# ==============================================================================
 #
 # CONCEPT
 # -------
@@ -376,15 +376,15 @@ def ex5_raw_centerline(outer_r: np.ndarray, inner: np.ndarray) -> np.ndarray:
 # midpoints but not through them (it shortens corners).
 #
 # A periodic cubic spline INTERPOLATES the data: the curve passes EXACTLY
-# through every input point and is C² smooth (continuous curvature) between
+# through every input point and is C^2 smooth (continuous curvature) between
 # them.  This is the right choice when the midpoints are already good
 # estimates of where the centreline should be.
 #
 # scipy.interpolate.CubicSpline(t, y, bc_type='periodic') fits piecewise
 # cubics through all N control points with:
-#   • exact interpolation at every point
-#   • continuous first and second derivatives everywhere
-#   • seamless join at the loop boundary  (requires y[0] == y[-1])
+#   - exact interpolation at every point
+#   - continuous first and second derivatives everywhere
+#   - seamless join at the loop boundary  (requires y[0] == y[-1])
 #
 # We parameterise by cumulative arc length t, append the first point at
 # t = t_total to close the loop, then evaluate at N_POINTS_OUT uniform
@@ -403,13 +403,13 @@ def ex6_smooth_centerline(raw_cl: np.ndarray, n_out: int) -> np.ndarray:
     x_full = np.append(raw_cl[:, 0], raw_cl[0, 0])
     y_full = np.append(raw_cl[:, 1], raw_cl[0, 1])
 
-    # ── TODO 6-A ───────────────────────────────────────────────────────────────
+    # -- TODO 6-A ---------------------------------------------------------------
     # Fit periodic cubic splines for x and y.
     # Use CubicSpline(t_full, x_full, bc_type='periodic') and the same for y.
     # bc_type='periodic' ensures the curve joins smoothly at the loop seam.
     #
-    cs_x = None  # ← CubicSpline(t_full, x_full, bc_type='periodic')
-    cs_y = None  # ← CubicSpline(t_full, y_full, bc_type='periodic')
+    cs_x = None  # <- CubicSpline(t_full, x_full, bc_type='periodic')
+    cs_y = None  # <- CubicSpline(t_full, y_full, bc_type='periodic')
 
     # Evaluate at n_out uniform arc-length positions
     t_eval    = np.linspace(0.0, t_total, n_out, endpoint=False)
@@ -424,15 +424,15 @@ def ex6_smooth_centerline(raw_cl: np.ndarray, n_out: int) -> np.ndarray:
     ax.invert_yaxis()
     ax.set_aspect("equal")
     ax.legend(markerscale=4)
-    ax.set_title("Exercise 6 — Cubic Spline Interpolation", fontsize=13, fontweight="bold")
+    ax.set_title("Exercise 6 -- Cubic Spline Interpolation", fontsize=13, fontweight="bold")
     _pause("Ex 6")
 
     return smooth_cl
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# EXERCISE 7 — World-Frame Coordinate Export
-# ══════════════════════════════════════════════════════════════════════════════
+# ==============================================================================
+# EXERCISE 7 -- World-Frame Coordinate Export
+# ==============================================================================
 #
 # CONCEPT
 # -------
@@ -443,9 +443,9 @@ def ex6_smooth_centerline(raw_cl: np.ndarray, n_out: int) -> np.ndarray:
 # Conversion from pixel (col, row) to world (x_w, y_w):
 #
 #   x_w = origin_x + col * resolution
-#   y_w = origin_y + (H − row) * resolution
+#   y_w = origin_y + (H - row) * resolution
 #
-# The (H − row) term flips the y-axis: row 0 is the top of the image, but
+# The (H - row) term flips the y-axis: row 0 is the top of the image, but
 # the bottom-left corner is the map origin, so row 0 maps to y = H * resolution.
 #
 # The exported CSV is the format consumed by the ROS centerline publisher node.
@@ -458,18 +458,18 @@ def ex7_world_frame_export(smooth_cl: np.ndarray, meta: dict, img: np.ndarray,
     origin_y = meta["origin"][1]
     H        = img.shape[0]            # image height in pixels
 
-    # ── TODO 7-A ───────────────────────────────────────────────────────────────
+    # -- TODO 7-A ---------------------------------------------------------------
     # Convert pixel column (smooth_cl[:, 0]) to world x.
     # x_world = origin_x + col * resolution
     #
-    x_world = None  # ← replace with the formula above
+    x_world = None  # <- replace with the formula above
 
-    # ── TODO 7-B ───────────────────────────────────────────────────────────────
+    # -- TODO 7-B ---------------------------------------------------------------
     # Convert pixel row (smooth_cl[:, 1]) to world y.
     # Remember: ROS y grows UP, image rows grow DOWN.
     # y_world = origin_y + (H - row) * resolution
     #
-    y_world = None  # ← replace with the formula above
+    y_world = None  # <- replace with the formula above
 
     data = np.column_stack([x_world, y_world])
     np.savetxt(output_csv, data, delimiter=",",
@@ -486,11 +486,11 @@ def ex7_world_frame_export(smooth_cl: np.ndarray, meta: dict, img: np.ndarray,
     ax.set_ylabel("y  [m]")
     ax.set_aspect("equal")
     ax.legend()
-    ax.set_title("Exercise 7 — Centerline in World Frame", fontsize=13, fontweight="bold")
+    ax.set_title("Exercise 7 -- Centerline in World Frame", fontsize=13, fontweight="bold")
     _pause("Ex 7")
 
 
-# ── Main ───────────────────────────────────────────────────────────────────────
+# -- Main -----------------------------------------------------------------------
 
 def main():
     run_dir = os.path.join(SCRIPT_DIR, f"{CIRCUIT_NAME}_{date.today().isoformat()}")
@@ -500,7 +500,7 @@ def main():
     output_csv = os.path.join(run_dir, "centerline_output.csv")
 
     print("=" * 60)
-    print("  Racetrack Centerline Extraction  —  STUDENT TEMPLATE")
+    print("  Racetrack Centerline Extraction  --  STUDENT TEMPLATE")
     print("=" * 60)
     print(f"  Map:    {MAP_PATH}")
     print(f"  YAML:   {YAML_PATH}")
@@ -514,7 +514,7 @@ def main():
     outer_perim_m = float(np.sum(np.linalg.norm(
         np.diff(outer, axis=0, append=outer[:1]), axis=1))) * res
     n_pts = max(30, round(outer_perim_m / POINT_SPACING_M))
-    print(f"[main] Outer perimeter ≈ {outer_perim_m:.1f} m  →  n_points = {n_pts}")
+    print(f"[main] Outer perimeter ~ {outer_perim_m:.1f} m  ->  n_points = {n_pts}")
 
     outer_r          = ex4_resample_arc_length(outer, n_pts)
     _show_ex4(outer, outer_r)
@@ -523,11 +523,11 @@ def main():
     cl_perim_m = float(np.sum(np.linalg.norm(
         np.diff(raw_cl, axis=0, append=raw_cl[:1]), axis=1))) * res
     n_out = max(30, round(cl_perim_m / POINT_SPACING_M))
-    print(f"[main] Centerline arc  ≈ {cl_perim_m:.1f} m  →  n_out      = {n_out}")
+    print(f"[main] Centerline arc  ~ {cl_perim_m:.1f} m  ->  n_out      = {n_out}")
 
     smooth_cl        = ex6_smooth_centerline(raw_cl, n_out)
     sp_px = np.linalg.norm(np.diff(smooth_cl, axis=0, append=smooth_cl[:1]), axis=1)
-    print(f"[main] Output spacing   — mean: {sp_px.mean() * res:.3f} m  target: {POINT_SPACING_M} m")
+    print(f"[main] Output spacing   -- mean: {sp_px.mean() * res:.3f} m  target: {POINT_SPACING_M} m")
     ex7_world_frame_export(smooth_cl, meta, img, output_csv)
 
     print("\nAll exercises complete.")

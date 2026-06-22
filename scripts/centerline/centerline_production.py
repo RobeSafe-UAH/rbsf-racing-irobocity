@@ -4,25 +4,25 @@ Production centerline extractor.
 Extracts a smooth, closed centerline from an occupancy-grid map and exports
 it as a CSV of world-frame waypoints with heading angle.  The output is
 designed to be published directly as a nav_msgs/Path for cyclic following
-(controller iterates with  idx % n_waypoints — no duplicate first point).
+(controller iterates with  idx % n_waypoints -- no duplicate first point).
 
 Algorithm (see centerline_student.py for the step-by-step derivation):
   1. Load map image + YAML metadata
   2. Auto-detect diagram-style PNGs and preprocess in-memory if needed
-  3. Threshold white corridor pixels (> 240) → free-space mask
+  3. Threshold white corridor pixels (> 240) -> free-space mask
   4. Find outer and inner wall contours via RETR_CCOMP hierarchy
   5. Arc-length resample the outer wall at --spacing intervals
-  6. Nearest-neighbour match outer → inner; midpoint = raw centerline
+  6. Nearest-neighbour match outer -> inner; midpoint = raw centerline
   7. Fit a periodic cubic spline through all raw midpoints
   8. Evaluate at n_out uniform arc-length positions (endpoint=False)
-  9. Convert pixel → world frame; compute yaw from spline tangent
+  9. Convert pixel -> world frame; compute yaw from spline tangent
  10. Save CSV: x_meters, y_meters, yaw_rad
 
 Output (created in the current working directory):
     {CIRCUIT_NAME}_{YYYY-MM-DD}/
-        <original map image>     — copy of the source PNG/PGM
-        <original map YAML>      — copy of the source YAML
-        centerline_output.csv    — x_meters, y_meters, yaw_rad
+        <original map image>     -- copy of the source PNG/PGM
+        <original map YAML>      -- copy of the source YAML
+        centerline_output.csv    -- x_meters, y_meters, yaw_rad
 
 Usage:
     uv run scripts/centerline/centerline_production.py \\
@@ -44,11 +44,11 @@ import numpy as np
 import yaml
 from scipy.interpolate import CubicSpline
 
-# ── Default parameters ─────────────────────────────────────────────────────────
+# -- Default parameters ---------------------------------------------------------
 
 DEFAULT_SPACING = 0.10   # metres between output waypoints
 
-# ── Map loading ────────────────────────────────────────────────────────────────
+# -- Map loading ----------------------------------------------------------------
 
 def _load(map_path: str, yaml_path: str):
     with open(yaml_path) as f:
@@ -77,8 +77,8 @@ def _preprocess_diagram(img: np.ndarray) -> np.ndarray:
     Paint outer background and infield gray (127) so white = corridor only.
 
     Two passes:
-      1. Outer background — white blobs that touch the image border.
-      2. Infield          — top-level white blobs with no children in the
+      1. Outer background -- white blobs that touch the image border.
+      2. Infield          -- top-level white blobs with no children in the
                             RETR_CCOMP hierarchy (the corridor ring always
                             has a child; the infield blob does not).
     """
@@ -113,7 +113,7 @@ def _preprocess_diagram(img: np.ndarray) -> np.ndarray:
                 out[(mask == 255) & (out > 80)] = 127
     return out
 
-# ── Core pipeline ──────────────────────────────────────────────────────────────
+# -- Core pipeline --------------------------------------------------------------
 
 def _build_free_mask(img: np.ndarray) -> np.ndarray:
     _, free_raw = cv2.threshold(img, 240, 255, cv2.THRESH_BINARY)
@@ -127,14 +127,14 @@ def _find_walls(free_mask: np.ndarray):
     )
     if hierarchy is None or len(contours) < 2:
         raise RuntimeError(
-            "Expected at least 2 contours — check the free-space mask.\n"
+            "Expected at least 2 contours -- check the free-space mask.\n"
             "If using a diagram PNG, ensure it is preprocessed or run without --no-preprocess."
         )
     h = hierarchy[0]
     outer_contours = [c.reshape(-1, 2) for i, c in enumerate(contours) if h[i][3] == -1]
     hole_contours  = [c.reshape(-1, 2) for i, c in enumerate(contours) if h[i][3] != -1]
     if not hole_contours:
-        raise RuntimeError("No inner wall found — the free-space mask may not be a closed ring.")
+        raise RuntimeError("No inner wall found -- the free-space mask may not be a closed ring.")
     outer = max(outer_contours, key=cv2.contourArea).astype(np.float64)
     inner = max(hole_contours,  key=cv2.contourArea).astype(np.float64)
     return outer, inner
@@ -155,7 +155,7 @@ def _resample(pts: np.ndarray, n: int) -> np.ndarray:
 
 
 def _raw_midpoints(outer_r: np.ndarray, inner: np.ndarray) -> np.ndarray:
-    """Nearest-neighbour match outer → inner; midpoint = raw centerline."""
+    """Nearest-neighbour match outer -> inner; midpoint = raw centerline."""
     diffs = outer_r[:, None, :] - inner[None, :, :]        # (N, M, 2)
     idx   = np.argmin((diffs ** 2).sum(axis=2), axis=1)    # (N,)
     return (outer_r + inner[idx]) / 2.0
@@ -195,7 +195,7 @@ def _to_world(smooth_cl_px: np.ndarray, cs_x, cs_y, t_eval, meta: dict, H: int):
         x_w = origin_x + col * resolution
         y_w = origin_y + (H - row) * resolution
 
-    Yaw from spline tangent — the y-flip negates the row derivative:
+    Yaw from spline tangent -- the y-flip negates the row derivative:
         yaw = atan2(-dy_pixel, dx_pixel)
     """
     res      = meta["resolution"]
@@ -207,12 +207,12 @@ def _to_world(smooth_cl_px: np.ndarray, cs_x, cs_y, t_eval, meta: dict, H: int):
 
     dx = cs_x(t_eval, 1)   # pixel column derivative (right = positive)
     dy = cs_y(t_eval, 1)   # pixel row derivative    (down  = positive)
-    yaw = np.arctan2(-dy, dx)   # negate dy to convert image → world y
+    yaw = np.arctan2(-dy, dx)   # negate dy to convert image -> world y
 
     return x_world, y_world, yaw
 
 
-# ── Entry point ────────────────────────────────────────────────────────────────
+# -- Entry point ----------------------------------------------------------------
 
 def main():
     parser = argparse.ArgumentParser(
@@ -247,7 +247,7 @@ def main():
     res = meta["resolution"]
 
     if _is_diagram_png(img):
-        print("Diagram PNG detected — applying preprocessing in memory.")
+        print("Diagram PNG detected -- applying preprocessing in memory.")
         img = _preprocess_diagram(img)
 
     free_mask     = _build_free_mask(img)
@@ -257,7 +257,7 @@ def main():
         np.linalg.norm(np.diff(outer, axis=0, append=outer[:1]), axis=1)
     )) * res
     n_pts = max(30, round(outer_perim_m / args.spacing))
-    print(f"Outer perimeter ≈ {outer_perim_m:.1f} m  →  n_pts  = {n_pts}")
+    print(f"Outer perimeter ~ {outer_perim_m:.1f} m  ->  n_pts  = {n_pts}")
 
     outer_r = _resample(outer, n_pts)
     raw_cl  = _raw_midpoints(outer_r, inner)
@@ -266,19 +266,19 @@ def main():
         np.linalg.norm(np.diff(raw_cl, axis=0, append=raw_cl[:1]), axis=1)
     )) * res
     n_out = max(30, round(cl_perim_m / args.spacing))
-    print(f"Centerline arc  ≈ {cl_perim_m:.1f} m  →  n_out  = {n_out}")
+    print(f"Centerline arc  ~ {cl_perim_m:.1f} m  ->  n_out  = {n_out}")
 
     smooth_cl_px, cs_x, cs_y, t_eval = _fit_spline(raw_cl, n_out)
 
     sp_px = np.linalg.norm(np.diff(smooth_cl_px, axis=0, append=smooth_cl_px[:1]), axis=1)
-    print(f"Output spacing  — mean: {sp_px.mean() * res:.3f} m  target: {args.spacing} m")
+    print(f"Output spacing  -- mean: {sp_px.mean() * res:.3f} m  target: {args.spacing} m")
 
     x_world, y_world, yaw = _to_world(smooth_cl_px, cs_x, cs_y, t_eval, meta, img.shape[0])
 
     data = np.column_stack([x_world, y_world, yaw])
     np.savetxt(output_path, data, delimiter=",",
                header="x_meters,y_meters,yaw_rad", comments="")
-    print(f"Saved {len(data)} waypoints → {output_path}")
+    print(f"Saved {len(data)} waypoints -> {output_path}")
     print(f"  Bounding box:  x [{x_world.min():.2f}, {x_world.max():.2f}] m"
           f"   y [{y_world.min():.2f}, {y_world.max():.2f}] m")
 
@@ -300,7 +300,7 @@ def main():
         ax.invert_yaxis()
         ax.set_aspect("equal")
         ax.legend()
-        ax.set_title(f"Centerline — {os.path.basename(args.map)}", fontsize=12, fontweight="bold")
+        ax.set_title(f"Centerline -- {os.path.basename(args.map)}", fontsize=12, fontweight="bold")
         plt.tight_layout()
         plt.show()
 
