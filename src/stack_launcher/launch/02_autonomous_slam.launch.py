@@ -10,8 +10,9 @@ Quick start:
     ros2 launch stack_launcher 02_autonomous_slam.launch.py mode:=mvsim            # simulation
     ros2 launch stack_launcher 02_autonomous_slam.launch.py mode:=distributed      # compute node only
 
-Map save (mvsim):
-    Press 'm' in the xterm window that opens automatically.
+Map save:
+    mvsim            — press 'm' in the xterm window, or save_button on the gamepad (default: button 0).
+    real/distributed — press save_button on the gamepad (default: button 0).
 """
 
 import os
@@ -32,12 +33,6 @@ from launch_ros.substitutions import FindPackageShare
 # Sub-launchers (wall_following, slam_toolbox, etc.) only understand "real" and
 # "mvsim"; "distributed" uses the same hardware config as "real".
 _CONTROLLER_MODE = {
-    "real":        "real",
-    "mvsim":       "mvsim",
-    "distributed": "real",
-}
-
-_SLAM_PARAMS_KEY = {
     "real":        "real",
     "mvsim":       "mvsim",
     "distributed": "real",
@@ -102,7 +97,8 @@ def launch_setup(context, *args, **kwargs):
             )
         ),
         launch_arguments={
-            "mode": _CONTROLLER_MODE[mode],
+            "mode":          _CONTROLLER_MODE[mode],
+            "startup_delay": LaunchConfiguration("startup_delay"),
         }.items(),
     )
     nodes.append(controller)
@@ -114,7 +110,7 @@ def launch_setup(context, *args, **kwargs):
     }
     slam_params_file = LaunchConfiguration("slam_params_file").perform(context)
     resolved_slam_params = (
-        default_slam_params[_SLAM_PARAMS_KEY[mode]]
+        default_slam_params[_CONTROLLER_MODE[mode]]
         if slam_params_file == "auto"
         else slam_params_file
     )
@@ -127,10 +123,21 @@ def launch_setup(context, *args, **kwargs):
         ),
         launch_arguments={
             "slam_params_file": resolved_slam_params,
-            "use_sim_time": use_sim_time,
+            "use_sim_time":     use_sim_time,
         }.items(),
     )
     nodes.append(slam)
+
+    map_saver = Node(
+        package="rbsf_slam_toolbox",
+        executable="map_saver",
+        name="map_saver_node",
+        parameters=[{
+            "map_output_dir": LaunchConfiguration("map_output_dir"),
+            "save_button":    LaunchConfiguration("save_button"),
+        }],
+    )
+    nodes.append(map_saver)
 
     if mode == "mvsim":
         # Bridge Ackermann commands to the Twist interface used by MVSim.
@@ -170,6 +177,8 @@ def generate_launch_description():
                 ),
                 choices=["real", "mvsim", "distributed"],
             ),
+
+            # --- mvsim arguments ------------------------------------------- #
             DeclareLaunchArgument(
                 "world_file",
                 default_value=PathJoinSubstitution([
@@ -177,7 +186,7 @@ def generate_launch_description():
                     "maps",
                     "f1tenth_catalunya.world.xml",
                 ]),
-                description="MVSim world file used when mode:=mvsim",
+                description="MVSim world file  [mode:=mvsim]",
             ),
             DeclareLaunchArgument(
                 "vehicle_config_file",
@@ -186,7 +195,7 @@ def generate_launch_description():
                     "config",
                     "mvsim_vehicle.yaml",
                 ]),
-                description="MVSim vehicle config used when mode:=mvsim",
+                description="MVSim vehicle config  [mode:=mvsim]",
             ),
             DeclareLaunchArgument(
                 "world_config_file",
@@ -195,13 +204,22 @@ def generate_launch_description():
                     "config",
                     "mvsim_worlds.yaml",
                 ]),
-                description="MVSim world config used when mode:=mvsim",
+                description="MVSim world parameters  [mode:=mvsim]",
             ),
             DeclareLaunchArgument(
                 "init_pose",
                 default_value="",
-                description="MVSim initial pose override used when mode:=mvsim",
+                description="Initial pose override: 'x y yaw_deg'  [mode:=mvsim]",
             ),
+
+            # --- controller arguments -------------------------------------- #
+            DeclareLaunchArgument(
+                "startup_delay",
+                default_value="2.5",
+                description="Seconds to wait before starting the wall_follower node",
+            ),
+
+            # --- SLAM ------------------------------------------------------- #
             DeclareLaunchArgument(
                 "slam_params_file",
                 default_value="auto",
@@ -210,6 +228,19 @@ def generate_launch_description():
                     "Default 'auto' selects mapper_params_real.yaml or mapper_params_sim.yaml by mode."
                 ),
             ),
+
+            # --- map saver ------------------------------------------------- #
+            DeclareLaunchArgument(
+                "map_output_dir",
+                default_value="/ros2_ws/maps",
+                description="Directory where map files are written on save",
+            ),
+            DeclareLaunchArgument(
+                "save_button",
+                default_value="0",
+                description="Gamepad button index that triggers a map save",
+            ),
+
             OpaqueFunction(function=launch_setup),
         ]
     )

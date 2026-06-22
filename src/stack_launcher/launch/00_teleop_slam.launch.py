@@ -5,8 +5,8 @@ Drive the car while SLAM Toolbox builds a map.  Works in simulation (mvsim)
 and on the physical car (real).  Keyboard mode is only available in mvsim.
 
 Quick start:
-    ros2 launch stack_launcher 00_teleop_slam.launch.py mode:=mvsim                    # sim + keyboard
-    ros2 launch stack_launcher 00_teleop_slam.launch.py mode:=mvsim teleop:=controller # sim + gamepad
+    ros2 launch stack_launcher 00_teleop_slam.launch.py mode:=mvsim teleop:=keyboard   # sim + keyboard
+    ros2 launch stack_launcher 00_teleop_slam.launch.py mode:=mvsim                    # sim + gamepad
     ros2 launch stack_launcher 00_teleop_slam.launch.py                                # real car (controller)
 
 Map save:
@@ -45,26 +45,25 @@ def launch_setup(context, *args, **kwargs):
     }
 
     if mode not in world_launch_files:
-        raise RuntimeError(f"Unknown mode '{mode}'. Choose from: {list(world_launch_files)}")
+        raise RuntimeError(f"Unknown mode '{mode}'. Valid options: {list(world_launch_files)}")
 
-    if mode == "real":
-        world_args = {"teleop_device": "controller"}
-    else:
-        world_args = {
+    world_launch_arguments = {"teleop_device": "controller"}
+    if mode == "mvsim":
+        world_launch_arguments.update({
             "world_file":          LaunchConfiguration("world_file"),
             "vehicle_config_file": LaunchConfiguration("vehicle_config_file"),
             "world_config_file":   LaunchConfiguration("world_config_file"),
             "init_pose":           LaunchConfiguration("init_pose"),
             "teleop_device":       teleop,
-        }
+        })
         if teleop == "controller":
-            world_args["joy_config"] = os.path.join(
+            world_launch_arguments["joy_config"] = os.path.join(
                 rbsf_mvsim_share, "config", "joy_teleop_slam.yaml"
             )
 
     world_bringup = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(world_launch_files[mode]),
-        launch_arguments=world_args.items(),
+        launch_arguments=world_launch_arguments.items(),
     )
 
     # SLAM Toolbox — auto-select params by mode or use override.
@@ -75,13 +74,15 @@ def launch_setup(context, *args, **kwargs):
     slam_params_file = LaunchConfiguration("slam_params_file").perform(context)
     resolved_slam_params = default_slam_params[mode] if slam_params_file == "auto" else slam_params_file
 
+    use_sim_time = "true" if mode == "mvsim" else "false"
+
     slam = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(rbsf_slam_toolbox_share, "launch", "mapping.launch.py")
         ),
         launch_arguments={
             "slam_params_file": resolved_slam_params,
-            "use_sim_time":     "true" if mode == "mvsim" else "false",
+            "use_sim_time":     use_sim_time,
         }.items(),
     )
 
@@ -129,7 +130,7 @@ def generate_launch_description():
         ),
         DeclareLaunchArgument(
             "teleop",
-            default_value="keyboard",
+            default_value="controller",
             choices=["controller", "keyboard"],
             description="Input device: 'controller' (gamepad) or 'keyboard' (WASD / arrow keys)  [mode:=mvsim only]",
         ),

@@ -91,7 +91,8 @@ def launch_setup(context, *args, **kwargs):
             )
         ),
         launch_arguments={
-            "mode": _CONTROLLER_MODE[mode],
+            "mode":          _CONTROLLER_MODE[mode],
+            "startup_delay": LaunchConfiguration("startup_delay"),
         }.items(),
     )
     nodes.append(controller)
@@ -124,6 +125,8 @@ def generate_launch_description():
                 ),
                 choices=["real", "mvsim", "distributed"],
             ),
+
+            # --- mvsim arguments ------------------------------------------- #
             DeclareLaunchArgument(
                 "world_file",
                 default_value=PathJoinSubstitution([
@@ -131,7 +134,7 @@ def generate_launch_description():
                     "maps",
                     "f1tenth_catalunya.world.xml",
                 ]),
-                description="MVSim world file used when mode:=mvsim",
+                description="MVSim world file  [mode:=mvsim]",
             ),
             DeclareLaunchArgument(
                 "vehicle_config_file",
@@ -140,7 +143,7 @@ def generate_launch_description():
                     "config",
                     "mvsim_vehicle.yaml",
                 ]),
-                description="MVSim vehicle config used when mode:=mvsim",
+                description="MVSim vehicle config  [mode:=mvsim]",
             ),
             DeclareLaunchArgument(
                 "world_config_file",
@@ -149,13 +152,21 @@ def generate_launch_description():
                     "config",
                     "mvsim_worlds.yaml",
                 ]),
-                description="MVSim world config used when mode:=mvsim",
+                description="MVSim world parameters  [mode:=mvsim]",
             ),
             DeclareLaunchArgument(
                 "init_pose",
                 default_value="",
-                description="MVSim initial pose override used when mode:=mvsim",
+                description="Initial pose override: 'x y yaw_deg'  [mode:=mvsim]",
             ),
+
+            # --- controller arguments -------------------------------------- #
+            DeclareLaunchArgument(
+                "startup_delay",
+                default_value="2.5",
+                description="Seconds to wait before starting the wall_follower node",
+            ),
+
             OpaqueFunction(function=launch_setup),
         ]
     )
