@@ -10,7 +10,7 @@ from rclpy.node import Node
 
 class CenterlineTrackerNode(Node):
     def __init__(self) -> None:
-        super().__init__("centerline_tracker_student")
+        super().__init__("centerline_tracker")
 
         self.path_topic = "/centerline"
         self.odom_topic = "/odom"

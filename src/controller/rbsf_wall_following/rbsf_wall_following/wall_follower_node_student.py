@@ -14,7 +14,7 @@ FORWARD_ANGLE_RAD = math.pi / 3.0
 
 class WallFollowerNode(Node):
     def __init__(self) -> None:
-        super().__init__("wall_follower_student")
+        super().__init__("wall_follower")
 
         # ------------------------------------------------------------------
         # Exercise 0: Controller initialization
