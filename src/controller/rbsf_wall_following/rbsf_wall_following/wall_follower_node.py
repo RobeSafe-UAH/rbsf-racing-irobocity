@@ -46,7 +46,7 @@ class WallFollowerNode(Node):
 
         # Vehicle references.
         self.reference_distance = 0.7
-        self.speed = 0.6
+        self.speed = 1.0
 
         # Distance-controller gains and integral limit.
         self.distance_kp = 1.0
